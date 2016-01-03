@@ -1,0 +1,14 @@
+{
+  "name": "my-2d-diagram-editor",
+  "version": "1.0.0",
+  "description": "A browser-based 2D diagram editor.",
+  "main": "app-module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rob Ferguson",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}
