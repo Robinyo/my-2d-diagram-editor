@@ -4,6 +4,6 @@
 
   // 'ui.router'  'ngResource'  'ui.bootstrap'
 
-  angular.module('my-2d-diagram-editor', []);
+  angular.module('my-2d-diagram-editor', ['ui.bootstrap', 'ngAnimate']);
 
 })();

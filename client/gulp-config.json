@@ -1,0 +1,36 @@
+{
+  "test": "./test/",
+  "html": "./src/client/**/*.html",
+  "html-templates": "./src/client/app/**/*.html",
+  "vendor-js": [
+    "./bower_components/angular/angular.min.js"
+  ],
+  "vendor-css": [
+    "./bower_components/bootstrap/dist/css/bootstrap.min.css"
+  ],
+  "css": [
+    "./content/styles.css"
+  ],
+  "scss": [
+    "./content/scss/main.scss"
+  ],
+  "js": [
+    "./app/**/*module*.js",
+    "./app/**/*.js",
+    "!./app/**/hello-world-controller.js"
+  ],
+  "specs": [
+    "./test/specs/*.spec.js"
+  ],
+  "nodejs": [
+    "../server/**/*.js"
+  ],
+  "fonts": [
+    "./bower_components/font-awesome/fonts/**/*.*"
+  ],
+  "images": [
+    "./src/client/content/images/**/*"
+  ],
+  "report": "./report/",
+  "build": "./build/"
+}
