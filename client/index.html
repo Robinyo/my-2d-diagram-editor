@@ -23,50 +23,69 @@
       <div class="row">
         <div class="col-xs-4 col-sm-4 col-md-3 sidebar">
           <uib-accordion close-others="false">
-            <uib-accordion-group ng-init="project.open = true" is-open="project.open">
+
+            <uib-accordion-group ng-init="shapes.open = true" is-open="shapes.open">
               <uib-accordion-heading>
-                Basic Shapes
-                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': project.open, 'glyphicon-chevron-right': !project.open}"></i>
+                Shapes
+                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': shapes.open, 'glyphicon-chevron-right': !shapes.open}"></i>
               </uib-accordion-heading>
               <div class="media">
                 <a class="pull-left" href="#">
                   <img class="media-object" src="http://placehold.it/32x32">
                 </a>
                 <div class="media-body">
-                  <h4 class="media-heading"><a href="#/project/1">Rectangle</a></h4>
-                </div>
-              </div>
-              <div class="media">
-                <a class="pull-left" href="#">
-                  <img class="media-object" src="http://placehold.it/32x32">
-                </a>
-                <div class="media-body">
-                  <h4 class="media-heading"><a href="#/project/1">Square</a></h4>
+                  <h4 class="media-heading"><a href="#">Square</a></h4>
                 </div>
               </div>
             </uib-accordion-group>
-            <uib-accordion-group is-open="recent.open">
+
+            <uib-accordion-group is-open="containers.open">
               <uib-accordion-heading>
                 Containers
-                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': recent.open, 'glyphicon-chevron-right': !recent.open}"></i>
+                <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': containers.open, 'glyphicon-chevron-right': !containers.open}"></i>
               </uib-accordion-heading>
               <div class="media">
                 <a class="pull-left" href="#">
-                  <img class="media-object" src="http://placehold.it/32x32">
+                  <img class="media-object" src="http://placehold.it/32x32/FFFF00">
                 </a>
                 <div class="media-body">
-                  <h4 class="media-heading"><a href="#/project/1">Big</a></h4>
+                  <h4 class="media-heading"><a href="#">Controlled Zone</a></h4>
                 </div>
               </div>
               <div class="media">
                 <a class="pull-left" href="#">
-                  <img class="media-object" src="http://placehold.it/32x32">
+                  <img class="media-object" src="http://placehold.it/32x32/90C830">
                 </a>
                 <div class="media-body">
-                  <h4 class="media-heading"><a href="#/project/1">Not So Big</a></h4>
+                  <h4 class="media-heading"><a href="#">Restricted Zone</a></h4>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img class="media-object" src="http://placehold.it/32x32/308850">
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading"><a href="#">Secured Zone</a></h4>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img class="media-object" src="http://placehold.it/32x32/F0A060">
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading"><a href="#">Partner Zone</a></h4>
+                </div>
+              </div>
+              <div class="media">
+                <a class="pull-left" href="#">
+                  <img class="media-object" src="http://placehold.it/32x32/4068E0">
+                </a>
+                <div class="media-body">
+                  <h4 class="media-heading"><a href="#">Management Zone</a></h4>
                 </div>
               </div>
             </uib-accordion-group>
+
           </uib-accordion>
         </div>
         <div class="col-xs-8 col-xs-offset-4 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
@@ -79,6 +98,9 @@
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+    <script src="bower_components/fabric.js/dist/fabric.js"></script>
+
     <script src="app/app-module.js"></script>
 
   </body>
