@@ -1,25 +1,21 @@
-
 /* .nav, .pagination, .carousel, .panel-title a { cursor: pointer; } */
 
-/*
+/*  See: http://angular-ui.github.io/bootstrap/#/getting_started */
 
-https://developers.google.com/fonts/docs/getting_started
-http://www.cssfontstack.com/Web-Fonts
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Walter+Turncoat" />
-
-*/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 /* The fixed navbar will overlay your other content, unless you add padding to the top of the <body>. */
 
 body {
-  padding-top: 60px;
+  padding-top: 51px;
   font-family: 'Walter Turncoat', serif;
   font-size: 14px;
+  overflow: hidden;  /* hide scrollbar */
 }
 
 .sidebar {
   position: fixed;
-  top: 51px;
+  top: 101px;
   bottom: 0;
   left: 0;
   z-index: 1000;
@@ -28,4 +24,9 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   border-right: 1px solid #eee;
+}
+
+.content {
+  display: block;
+  padding: 5px;
 }
