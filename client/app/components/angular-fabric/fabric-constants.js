@@ -5,10 +5,10 @@ angular.module('common.fabric.constants', [])
 	var objectDefaults = {
 		rotatingPointOffset: 20,
 		padding: 0,
-		borderColor: 'EEF6FC',
-		cornerColor: 'rgba(64, 159, 221, 1)',
+		borderColor: 'rgba(102,153,255,0.75)',
+		cornerColor: 'rgba(102,153,255,0.5)',
 		cornerSize: 10,
-		transparentCorners: false,
+    transparentCorners: true,
 		hasRotatingPoint: true,
 		centerTransform: true
 	};
@@ -180,9 +180,10 @@ angular.module('common.fabric.constants', [])
 		}, objectDefaults),
 
 		textDefaults: angular.extend({
-      left: 0,             // rob
-      top: 0,              // rob
+      left: 0,               // rob
+      top: 0,                // rob
 			originX: 'left',
+      originY: 'top',        // rob
 			scaleX: 1,
 			scaleY: 1,
 			fontFamily: 'Tahoma',  // Arial

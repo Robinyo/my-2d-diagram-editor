@@ -36,7 +36,7 @@
         containerTextDefaults.top = 50;
         containerTextDefaults.fontFamily = 'Tahoma';
         containerTextDefaults.fontSize = 20;
-        // containerTextDefaults.fontWeight = 'bold';
+        containerTextDefaults.fontWeight = 'bold';
 
         $scope.newContainer = function(label) {
 
@@ -50,6 +50,8 @@
         $scope.fileNew = function() {
 
           $log.info('MainController.fileNew()');
+
+          $scope.fabric.addRect();
 
           /*
 

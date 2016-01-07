@@ -37,8 +37,8 @@ angular.module('common.fabric', [
 			textDefaults: {},
 			shapeDefaults: {},
 			windowDefaults: {
-				transparentCorners: false,
-				rotatingPointOffset: 25,
+				transparentCorners: true,  // TODO: should use FabricConstants
+				rotatingPointOffset: 40,
 				padding: 0
 			},
 			canvasDefaults: {
@@ -272,6 +272,27 @@ angular.module('common.fabric', [
 				self.addObjectToCanvas(object);
 			});
 		};
+
+    //
+    // Rect
+    // ==============================================================
+
+    /**
+     * @name addRect
+     * @desc Adds a text object to the canvas
+     * @param {Object} config - A configuration object, defaults to FabricConstants.rectDefaults
+     */
+    self.addRect = function(config) {
+
+      $log.info('addRect()');
+
+      config = config || { left: 100, top: 100, width: 300, height: 300, fill: '#FFFF00', opacity: 0.7 };
+
+      var object = new FabricWindow.Rect(config);
+      object.id = self.createId();
+
+      self.addObjectToCanvas(object);
+    };
 
 		//
 		// Text
