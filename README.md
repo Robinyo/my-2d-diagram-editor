@@ -1,11 +1,11 @@
 # my-2d-diagram-editor
-A browser-based 2D diagram editor:
-
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-1.png)
-
-TODO:
+A browser-based 2D diagram editor, built using AngularJS, Angular UI and Fabric.js
 
 ![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-2.png)
+
+Mockup:
+
+![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-1.png)
 
 A sample Logical Security Zone Model diagram:
 
