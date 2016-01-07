@@ -1,0 +1,426 @@
+<div ng-app='example' ng-controller="ExampleCtrl">
+	<div class='image-builder-container'>
+		<div
+			ng-if="fabric.isLoading()"
+			class="image-loading">
+			<div class="loading-indicator"></div>
+		</div>
+
+		<div class='row-fluid'>
+			<div class='span12'>
+				<div class="btn-toolbar">
+					<button
+						ng-click='createPage()'
+						class='btn-success btn'>
+						<i class='icon-plus'></i> Page
+					</button>
+
+					<button
+						ng-click='duplicatePage(main.selectedPage)'
+						class='btn-success btn'>
+						<i class='icon-copy'></i> Duplicate
+					</button>
+
+					<button
+						confirm="deletePage(main.selectedPage.id)"
+						title="Delete this page from the design?"
+						confirm-placement='left'
+						class='btn pull-right'>
+						<i class='icon-remove text-error'></i>
+					</button>
+				</div>
+
+				<ul class="nav nav-pills mbn">
+					<li
+						ng-class="{ active: page.id === main.selectedPage.id }"
+						ng-click='selectPage(page)'
+						ng-repeat='page in main.card.pages'>
+						<a class="pointer">{{ page.name || "Untitled Page" }}</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="row-fluid mbm mtm">
+			<div class="span12">
+				<div class='btn-group pull-left mrm'>
+					<button
+						ng-disabled="!fabric.selectedObject"
+						confirm="fabric.deleteActiveObject(); fabric.setDirty(true)"
+						title="Delete this object?"
+						confirm-placement='bottom'
+						class='btn'>
+						<i class='icon-remove'></i>
+						<div class='clearfix'></div>
+						Delete
+					</button>
+
+					<button
+						modal="/dist/apps/profile/clipboard/card/edit/templates/images/addImage.modal.html"
+						class='btn'>
+						<i class='icon-picture'></i>
+						<div class='clearfix'></div>
+						Image
+					</button>
+
+					<button
+						ng-click="fabric.addText()"
+						class='btn'>
+						<i class='icon-font'></i>
+						<div class='clearfix'></div>
+						&nbsp; Text &nbsp;
+					</button>
+
+					<button
+						modal="/dist/apps/profile/clipboard/card/edit/templates/images/addShape.modal.html"
+						class='btn'>
+						<i class='icon-star'></i>
+						<div class='clearfix'></div>
+						Shapes
+					</button>
+
+					<!--
+					<button
+						modal="/dist/apps/profile/clipboard/card/edit/templates/images/history.modal.html"
+						class='btn'>
+						<i class='icon-archive'></i>
+						<div class='clearfix'></div>
+						History
+					</button>
+					-->
+
+					<button
+						confirm="fabric.clearCanvas(); fabric.setDirty(true)"
+						confirm-placement='bottom'
+						title="Delete all elements on this design?"
+						class='btn'>
+						<i class='icon-refresh'></i>
+						<div class='clearfix'></div>
+						Restart
+					</button>
+				</div>
+
+				<div class='pull-left mtl'>
+					<i class='icon-zoom-out'></i>
+					<input
+						type='range'
+						min='.1'
+						max='3'
+						step='.1'
+						ng-change='fabric.setZoom()'
+						ng-model='fabric.canvasScale'>
+					<i class='icon-zoom-in'></i>
+
+					<button
+						class='btn btn-mini'
+						ng-click="fabric.resetZoom()">
+						Reset
+					</button>
+				</div>
+
+				<div class="pull-right">
+					<button
+						ng-click="updatePage()"
+						class='btn mrs'>
+						<i class='icon-save'></i>
+						<div class='clearfix'></div>
+						Save <strong ng-if="fabric.isDirty()" class="text-error">*</strong>
+					</button>
+
+					<button
+						ng-click="fabric.download(main.selectedPage.name)"
+						class='btn btn-success'>
+						<i class='icon-download'></i>
+						<div class='clearfix'></div>
+						Download
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="row-fluid mbm">
+			<div class="span12 form-inline">
+				<label>Name</label>
+				<input
+					type="text"
+					ng-model="main.selectedPage.name"
+					ng-change='fabric.setDirty(true); fabric.stopContinuousRendering()'
+					class="input-large mrm">
+
+				<label>Background Color</label>
+				<input
+					type="text"
+					class='input-small mrm'
+					ng-change='fabric.setDirty(true); fabric.stopContinuousRendering()'
+					ng-model="fabric.canvasBackgroundColor"
+					colorpicker>
+
+				<button
+					class='btn mrm'
+					ng-click='selectCanvas()'
+					modal='/dist/apps/profile/clipboard/card/edit/templates/images/editCanvasSize.modal.html'>
+					{{ fabric.canvasOriginalWidth }} x {{ fabric.canvasOriginalHeight }}
+				</button>
+
+				<div class="btn-group">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						Preset Sizes
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu pull-right">
+						<li
+							ng-click='fabric.setCanvasSize(size.width, size.height); fabric.setDirty(true)'
+							ng-repeat='size in FabricConstants.presetSizes'>
+							<a>{{ size.name }}</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class='object-controls-container'>
+			<div
+				class="object-controls"
+				ng-if='fabric.selectedObject'>
+				<div ng-switch='fabric.selectedObject.type'>
+					<div ng-switch-when='text'>
+						<div class="row-fluid mbm">
+							<div class="span12">
+								<textarea
+									style="text-align: {{ fabric.selectedObject.textAlign }}"
+									class="input-full"
+									rows="6"
+									ng-model="fabric.selectedObject.text"></textarea>
+							</div>
+						</div>
+
+						<div class="row-fluid mbm">
+							<div class="span12">
+								<p title="Font size">
+									<i class="icon-text-height"></i>
+									<input
+										type='number'
+										class="input-mini"
+										ng-model="fabric.selectedObject.fontSize">
+								</p>
+							</div>
+						</div>
+
+						<div class="row-fluid mbm">
+							<div class="span12">
+								<p class="mbm" title="Line height">
+									<i class="icon-align-left"></i>
+									<input
+										type='number'
+										class="input-mini"
+										ng-model="fabric.selectedObject.lineHeight"
+										step=".1">
+								</p>
+							</div>
+						</div>
+
+						<div class='btn-group mbm'>
+							<button
+								ng-class="{ active: fabric.selectedObject.textAlign == 'left' }"
+								ng-click="fabric.selectedObject.textAlign = 'left'"
+								class='btn btn-small'>
+								<i class='icon-align-left'></i>
+							</button>
+
+							<button
+								ng-class="{ active: fabric.selectedObject.textAlign == 'center' }"
+								ng-click="fabric.selectedObject.textAlign = 'center'"
+								class='btn btn-small'>
+								<i class='icon-align-center'></i>
+							</button>
+
+							<button
+								ng-class="{ active: fabric.selectedObject.textAlign == 'right' }"
+								ng-click="fabric.selectedObject.textAlign = 'right'"
+								class='btn btn-small'>
+								<i class='icon-align-right'></i>
+							</button>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class='btn-group mbm'>
+							<button
+								ng-class="{ active: fabric.isBold() }"
+								ng-click="fabric.toggleBold()"
+								class='btn btn-small'>
+								<i class='icon-bold'></i>
+							</button>
+
+							<button
+								ng-class="{ active: fabric.isItalic() }"
+								ng-click="fabric.toggleItalic()"
+								class='btn btn-small'>
+								<i class='icon-italic'></i>
+							</button>
+
+							<button
+								ng-class="{ active: fabric.isUnderline() }"
+								ng-click="fabric.toggleUnderline()"
+								class='btn btn-small'>
+								<i class='icon-underline'></i>
+							</button>
+
+							<button
+									ng-class="{ active: fabric.isLinethrough() }"
+									ng-click="fabric.toggleLinethrough()"
+									class='btn btn-small'>
+								<i class='icon-strikethrough'></i>
+							</button>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="row-fluid">
+							<div class="btn-group mbm span12">
+								<a
+									class="btn btn-small btn-block dropdown-toggle"
+									data-toggle="dropdown"
+									href="#">
+									<span
+										class='object-font-family-preview'
+										style='font-family: "{{ fabric.selectedObject.fontFamily }}";'>
+										{{ fabric.selectedObject.fontFamily }}
+									</span>
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li
+										ng-repeat='font in FabricConstants.fonts'
+										ng-click='fabric.selectedObject.fontFamily = font.name'
+										style='font-family: "{{ font.name }}";'>
+										<a>{{ font.name }}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+
+					<div ng-switch-when="image">
+						<div class="input-prepend">
+							<button
+								ng-class="{ active: fabric.isTinted() }"
+								ng-click="fabric.toggleTint()"
+								class='btn'>
+								<i class='icon-tint'></i>
+							</button>
+							<input
+								type="text"
+								class='input-small'
+								ng-model='fabric.selectedObject.tint'
+								colorpicker>
+						</div>
+					</div>
+				</div>
+
+				<div class="row-fluid">
+					<div class="span12">
+						<input
+							class='span12'
+							title="Transparency"
+							type='range'
+							min="0"
+							max="1"
+							step=".01"
+							ng-model="fabric.selectedObject.opacity">
+					</div>
+				</div>
+
+				<div class="row-fluid mbm">
+					<div class="span12">
+						<button
+							class='btn btn-small btn-block'
+							ng-class="{ active: fabric.getFlipX() }"
+							ng-click="{ active: fabric.toggleFlipX() }">
+							<i class='icon-exchange'></i> Flip
+						</button>
+					</div>
+				</div>
+
+				<div
+					class="row-fluid mbm"
+					ng-hide="fabric.selectedObject.type == 'image'">
+					<div class="span12">
+						<input
+							type="text"
+							class='input-small'
+							ng-model="fabric.selectedObject.fill"
+							colorpicker>
+					</div>
+				</div>
+
+				<div class="row-fluid mbm">
+					<div class="btn-group span12 btn-group-vertical">
+						<button
+							ng-click='fabric.center()'
+							class='btn btn-small btn-block'>
+							Center
+						</button>
+
+						<button
+							ng-click='fabric.centerH()'
+							class='btn btn-small btn-block'>
+							Center Horizontally
+						</button>
+
+						<button
+							ng-click='fabric.centerV()'
+							class='btn btn-small btn-block'>
+							Center Vertically
+						</button>
+					</div>
+				</div>
+
+				<div class="row-fluid mbm">
+					<div class="btn-group span12 btn-group-vertical">
+						<button
+							ng-click='fabric.bringToFront(); fabric.setDirty(true)'
+							class='btn btn-small btn-block'>
+							Bring to front
+						</button>
+
+						<button
+							ng-click='fabric.bringForward(); fabric.setDirty(true)'
+							class='btn btn-small btn-block'>
+							Bring forwards
+						</button>
+
+						<button
+							ng-click='fabric.sendBackwards(); fabric.setDirty(true)'
+							class='btn btn-small btn-block'>
+							Send backwards
+						</button>
+
+						<button
+							ng-click='fabric.sendToBack(); fabric.setDirty(true)'
+							class='btn btn-small btn-block'>
+							Send to back
+						</button>
+					</div>
+				</div>
+
+				<div class="row-fluid mbm">
+					<button
+						ng-click='fabric.toggleLockActiveObject(); fabric.setDirty(true)'
+						ng-class="{ active: fabric.selectedObject.lockObject }"
+						class='btn btn-small btn-block'>
+						Lock
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div
+			class='image-builder'
+			parent-click="fabric.deactivateAll()">
+			<div class='fabric-container'>
+				<canvas fabric='fabric'></canvas>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<meta name="google" value="notranslate">
+
+
+<title>CodePen - AngularJS and FabricJS</title>
+
+
+
+<link rel='stylesheet prefetch' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+<link rel='stylesheet prefetch' href='//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css'>
+
+<style>
+body {
+  padding: 10px;
+}
+.image-builder-container {
+  position: relative;
+}
+.image-builder-container .image-builder {
+  background: #cacaca;
+  box-sizing: border-box;
+  border: 1px solid #cacaca;
+  min-height: 460px;
+  text-align: center;
+  position: relative;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: auto;
+}
+.image-builder-container .image-builder .image-cover {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  position: absolute;
+  z-index: 2;
+}
+.image-builder-container .image-builder .fabric-container {
+  background: white;
+  border-radius: 1px;
+  box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  margin: 50px;
+  position: relative;
+  vertical-align: middle;
+  z-index: 0;
+}
+.image-builder-container .image-loading {
+  background: rgba(255, 255, 255, 0.4);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+.image-builder-container .image-loading .loading-indicator {
+  background: white;
+  background-image: url(/images/squareLoader.gif);
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin: 300px auto 0;
+  height: 160px;
+  width: 160px;
+}
+.image-builder-container .object-controls-container {
+  position: relative;
+}
+.image-builder-container .object-controls-container .object-controls {
+  position: absolute;
+  z-index: 1;
+  background: white;
+  left: -250px;
+  top: 0px;
+  padding: 5px;
+  width: 240px;
+}
+.image-builder-container .object-controls-container .object-controls textarea {
+  font-size: 12px;
+}
+.object-font-family-preview {
+  text-transform: capitalize;
+}
+
+</style>
+
+<script>
+window.console = window.console || function(t) {};
+</script>
+
+
+
+</head>
+
+<body>
+
+<a class='btn btn-info' target='_blank' href='https://github.com/clouddueling/angular-fabric'>
+<i class='fa fa-github'></i>
+clouddueling/angular-fabric
+</a>
+<div ng-app='example' ng-controller="ExampleCtrl">
+<div class='image-builder-container'>
+<div ng-if="fabric.isLoading()" class="image-loading">
+<div class="loading-indicator"></div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<small><em class='text-muted'>Image and shape do not work due to codepen cross-origin.</em></small>
+<br />
+<div class='btn-group pull-left mrm'>
+<button ng-disabled="!fabric.selectedObject" ng-click="fabric.deleteActiveObject(); fabric.setDirty(true)" class='btn btn-danger'>
+<i class='fa fa-trash-o'></i>
+<div class='clearfix'></div>
+Delete
+</button>
+
+<button ng-click='addImage()' class='btn btn-default'>
+<i class='fa fa-image'></i>
+<div class='clearfix'></div>
+Image
+</button>
+
+<button ng-click="fabric.addText()" class='btn btn-default'>
+<i class='fa fa-font'></i>
+<div class='clearfix'></div>
+&nbsp; Text &nbsp;
+</button>
+
+<button ng-click='addShape()' class='btn btn-default'>
+<i class='fa fa-star'></i>
+<div class='clearfix'></div>
+Shapes
+</button>
+
+<button ng-click="fabric.clearCanvas(); fabric.setDirty(true)" class='btn btn-default'>
+<i class='fa fa-refresh'></i>
+<div class='clearfix'></div>
+Restart
+</button>
+</div>
+
+<div class='pull-left' style='margin: 15px 0 0 10px;'>
+<div class='row'>
+<div class='col-xs-1 text-center'>
+<i class='fa fa-search-minus pull-left'></i>
+</div>
+<div class='col-xs-6'>
+<input type='range' class='pull-left' min='.1' max='3' step='.1' ng-change='fabric.setZoom()' ng-model='fabric.canvasScale' />
+</div>
+<div class='col-xs-1 text-center'>
+<i class='fa fa-search-plus'></i>
+</div>
+<div class='col-xs-3'>
+<button class='btn btn-xs' ng-click="fabric.resetZoom()">
+Reset
+</button>
+</div>
+</div>
+</div>
+
+<div class="pull-right">
+<button class='btn btn-default' title='Dummy button.  This is where you would take the json from the canvas and save it to your database.'>
+<i class='fa fa-save'></i>
+<div class='clearfix'></div>
+Save <span ng-show='fabric.isDirty()' class='text-danger'>*</span>
+</button>
+
+<button ng-click="fabric.download('myCanvas')" class='btn btn-success'>
+<i class='fa fa-download'></i>
+<div class='clearfix'></div>
+Download
+</button>
+</div>
+</div>
+</div>
+
+<br />
+
+<div class="row">
+<div class="col-xs-4">
+<label>Background Color</label>
+<input type="text" class='form-control' ng-change='fabric.setDirty(true); fabric.stopContinuousRendering()' ng-model="fabric.canvasBackgroundColor" />
+</div>
+
+<div class='col-xs-4'>
+<label>Canvas Size</label>
+<br />
+<button  ng-hide='canvasCopy' class='btn btn-default btn-block mrm' ng-click='selectCanvas()'>
+{{ fabric.canvasOriginalWidth }} x {{ fabric.canvasOriginalHeight }}
+</button>
+
+<div class='row' ng-show='canvasCopy'>
+<div class='col-xs-12'>
+<form ng-submit='setCanvasSize()'>
+<div class='form-group'>
+<label>Width</label>
+<input type='text' ng-model='canvasCopy.width' class='form-control' />
+</div>
+
+<div class='form-group'>
+<label>Height</label>
+<input type='text' ng-model='canvasCopy.height' class='form-control' />
+</div>
+
+<button type='submit' class='btn btn-success'>
+Submit
+</button>
+</form>
+</div>
+</div>
+</div>
+
+<div class='col-xs-4'>
+<label>&nbsp;</label>
+<br />
+<div class="btn-group col-xs-12">
+<a class="btn btn-block btn-default dropdown-toggle" data-toggle="dropdown" href="#">
+Preset Sizes
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu pull-right">
+<li ng-click='fabric.setCanvasSize(size.width, size.height); fabric.setDirty(true)' ng-repeat='size in FabricConstants.presetSizes'>
+<a>{{ size.name }}</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<br />
+
+<div class='row'>
+<div class='col-xs-3'>
+<div ng-if='fabric.selectedObject'>
+<div ng-switch='fabric.selectedObject.type'>
+<div ng-switch-when='text'>
+<p>
+<textarea style="text-align: {{ fabric.selectedObject.textAlign }}" class="form-control" rows="6" ng-model="fabric.selectedObject.text"></textarea>
+</p>
+
+<p title="Font size">
+<i class="fa fa-text-height"></i>
+<input type='number' class="form-control" ng-model="fabric.selectedObject.fontSize" />
+</p>
+
+<p title="Line height">
+<i class="fa fa-align-left"></i>
+<input type='number' class="form-control" ng-model="fabric.selectedObject.lineHeight" step=".1" />
+</p>
+
+<div class='btn-group'>
+<button ng-class="{ active: fabric.selectedObject.textAlign == 'left' }" ng-click="fabric.selectedObject.textAlign = 'left'" class='btn btn-small'>
+<i class='fa fa-align-left'></i>
+</button>
+
+<button ng-class="{ active: fabric.selectedObject.textAlign == 'center' }" ng-click="fabric.selectedObject.textAlign = 'center'" class='btn btn-small'>
+<i class='fa fa-align-center'></i>
+</button>
+
+<button ng-class="{ active: fabric.selectedObject.textAlign == 'right' }" ng-click="fabric.selectedObject.textAlign = 'right'" class='btn btn-small'>
+<i class='fa fa-align-right'></i>
+</button>
+</div>
+
+<br />
+
+<div class='btn-group'>
+<button ng-class="{ active: fabric.isBold() }" ng-click="fabric.toggleBold()" class='btn btn-small'>
+<i class='fa fa-bold'></i>
+</button>
+
+<button ng-class="{ active: fabric.isItalic() }" ng-click="fabric.toggleItalic()" class='btn btn-small'>
+<i class='fa fa-italic'></i>
+</button>
+
+<button ng-class="{ active: fabric.isUnderline() }" ng-click="fabric.toggleUnderline()" class='btn btn-small'>
+<i class='fa fa-underline'></i>
+</button>
+
+<button ng-class="{ active: fabric.isLinethrough() }" ng-click="fabric.toggleLinethrough()" class='btn btn-small'>
+<i class='fa fa-strikethrough'></i>
+</button>
+</div>
+
+<br />
+
+<div class="row">
+<div class="btn-group col-sm-12">
+<a class="btn btn-default btn-block dropdown-toggle" data-toggle="dropdown" href="#">
+<span class='object-font-family-preview' style='font-family: "{{ fabric.selectedObject.fontFamily }}";'>
+{{ fabric.selectedObject.fontFamily }}
+</span>
+  <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+  <li ng-repeat='font in FabricConstants.fonts' ng-click='fabric.selectedObject.fontFamily = font.name' style='font-family: "{{ font.name }}";'>
+  <a>{{ font.name }}</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div ng-switch-when="image">
+<div class="input-prepend">
+<button ng-class="{ active: fabric.isTinted() }" ng-click="fabric.toggleTint()" class='btn'>
+<i class='fa fa-tint'></i>
+</button>
+<input type="text" class='input-small' ng-model='fabric.selectedObject.tint' />
+</div>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-12">
+<input class='col-sm-12' title="Transparency" type='range'
+  min="0"
+  max="1"
+  step=".01"
+  ng-model="fabric.selectedObject.opacity" />
+  </div>
+  </div>
+
+  <div class="row mbm">
+  <div class="col-sm-12">
+  <button class='btn btn-small btn-block' ng-class="{ active: fabric.getFlipX() }" ng-click="{ active: fabric.toggleFlipX() }">
+  <i class='fa fa-exchange'></i> Flip
+  </button>
+  </div>
+  </div>
+
+  <div class="row" ng-hide="fabric.selectedObject.type == 'image'">
+  <div class="col-sm-12">
+  <input type="text" class='form-control' ng-model="fabric.selectedObject.fill" />
+  </div>
+  </div>
+
+  <div class="row">
+  <div class="btn-group col-xs-12 btn-group-vertical">
+  <button ng-click='fabric.center()' class='btn btn-small btn-block'>
+  Center
+  </button>
+
+  <button ng-click='fabric.centerH()' class='btn btn-small btn-block'>
+  Center Horizontally
+  </button>
+
+  <button ng-click='fabric.centerV()' class='btn btn-small btn-block'>
+  Center Vertically
+  </button>
+  </div>
+  </div>
+
+  <br />
+
+  <div class="row">
+  <div class="btn-group col-xs-12 btn-group-vertical">
+  <button ng-click='fabric.bringToFront(); fabric.setDirty(true)' class='btn btn-small btn-block'>
+  Bring to front
+  </button>
+
+  <button ng-click='fabric.bringForward(); fabric.setDirty(true)' class='btn btn-small btn-block'>
+  Bring forwards
+  </button>
+
+  <button ng-click='fabric.sendBackwards(); fabric.setDirty(true)' class='btn btn-small btn-block'>
+  Send backwards
+  </button>
+
+  <button ng-click='fabric.sendToBack(); fabric.setDirty(true)' class='btn btn-small btn-block'>
+  Send to back
+  </button>
+  </div>
+  </div>
+
+  <br />
+
+  <button ng-click='fabric.toggleLockActiveObject(); fabric.setDirty(true)' ng-class="{ active: fabric.selectedObject.lockObject }" class='btn btn-small btn-block'>
+  Lock
+  </button>
+  </div>
+  </div>
+
+  <div class='col-xs-9'>
+  <div class='image-builder' parent-click="fabric.deactivateAll()">
+  <div class='fabric-container'>
+  <canvas fabric='fabric'></canvas>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  <script src="//assets.codepen.io/assets/common/stopExecutionOnTimeout-f961f59a28ef4fd551736b43f94620b5.js"></script>
+
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src='//cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.8/fabric.min.js'></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js'></script>
+  <script src='https://rawgithub.com/clouddueling/angular-fabric/master/assets/fabric.js'></script>
+  <script src='https://rawgithub.com/clouddueling/angular-fabric/master/assets/fabricCanvas.js'></script>
+  <script src='https://rawgithub.com/clouddueling/angular-fabric/master/assets/fabricConstants.js'></script>
+  <script src='https://rawgithub.com/clouddueling/angular-fabric/master/assets/fabricDirective.js'></script>
+  <script src='https://rawgithub.com/clouddueling/angular-fabric/master/assets/fabricDirtyStatus.js'></script>
+  <script src='https://rawgithub.com/clouddueling/angular-fabric/master/assets/fabricUtilities.js'></script>
+  <script src='https://rawgithub.com/clouddueling/angular-fabric/master/assets/fabricWindow.js'></script>
+  <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js'></script>
+
+  <script>
+  angular.module('example', [
+    'common.fabric',
+    'common.fabric.utilities',
+    'common.fabric.constants'
+  ]).controller('ExampleCtrl', [
+    '$scope',
+    'Fabric',
+    'FabricConstants',
+    'Keypress',
+    function ($scope, Fabric, FabricConstants, Keypress) {
+      $scope.fabric = {};
+      $scope.FabricConstants = FabricConstants;
+      $scope.addShape = function (path) {
+        $scope.fabric.addShape('http://fabricjs.com/assets/15.svg');
+      };
+      $scope.addImage = function (image) {
+        $scope.fabric.addImage('http://stargate-sg1-solutions.com/blog/wp-content/uploads/2007/08/daniel-season-nine.jpg');
+      };
+      $scope.addImageUpload = function (data) {
+        var obj = angular.fromJson(data);
+        $scope.addImage(obj.filename);
+      };
+      $scope.selectCanvas = function () {
+        $scope.canvasCopy = {
+          width: $scope.fabric.canvasOriginalWidth,
+          height: $scope.fabric.canvasOriginalHeight
+        };
+      };
+      $scope.setCanvasSize = function () {
+        $scope.fabric.setCanvasSize($scope.canvasCopy.width, $scope.canvasCopy.height);
+        $scope.fabric.setDirty(true);
+        delete $scope.canvasCopy;
+      };
+      $scope.init = function () {
+        $scope.fabric = new Fabric({
+          JSONExportProperties: FabricConstants.JSONExportProperties,
+          textDefaults: FabricConstants.textDefaults,
+          shapeDefaults: FabricConstants.shapeDefaults,
+          json: {}
+        });
+      };
+      $scope.$on('canvas:created', $scope.init);
+      Keypress.onSave(function () {
+        $scope.updatePage();
+      });
+    }
+  ]);
+  //@ sourceURL=pen.js
+</script>
+
+
+  <script>
+  if (document.location.search.match(/type=embed/gi)) {
+    window.parent.postMessage("resize", "*");
+  }
+</script>
+
+
+  </body>
+  </html>
+

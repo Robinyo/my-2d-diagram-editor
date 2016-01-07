@@ -91,11 +91,11 @@
               <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': shapes.open, 'glyphicon-chevron-right': !shapes.open}"></i>
             </uib-accordion-heading>
             <div class="media">
-              <a class="pull-left" href="#">
+              <a class="pull-left" href="" ng-click="newContainer('Square')">
                 <img class="media-object" src="http://placehold.it/32x32">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="#">Square</a></h4>
+                <h4 class="media-heading"><a href="" ng-click="newContainer('Square')">Square</a></h4>
               </div>
             </div>
           </uib-accordion-group>
@@ -105,44 +105,47 @@
               Containers
               <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': containers.open, 'glyphicon-chevron-right': !containers.open}"></i>
             </uib-accordion-heading>
+
             <div class="media">
-              <a class="pull-left" href="#">
+              <a class="pull-left" href="" ng-click="newContainer('Controlled Zone')">
                 <img class="media-object" src="http://placehold.it/32x32/FFFF00">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="#">Controlled Zone</a></h4>
+                <h4 class="media-heading"><a href="" ng-click="newContainer('Controlled Zone')">Controlled Zone</a></h4>
               </div>
             </div>
+
             <div class="media">
-              <a class="pull-left" href="#">
+              <a class="pull-left" href="" ng-click="newContainer('Restricted Zone')">
                 <img class="media-object" src="http://placehold.it/32x32/90C830">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="#">Restricted Zone</a></h4>
+                <h4 class="media-heading"><a href="" ng-click="newContainer('Restricted Zone')">Restricted Zone</a></h4>
               </div>
             </div>
+
             <div class="media">
-              <a class="pull-left" href="#">
+              <a class="pull-left" href="" ng-click="newContainer('Secured Zone')">
                 <img class="media-object" src="http://placehold.it/32x32/308850">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="#">Secured Zone</a></h4>
+                <h4 class="media-heading"><a href="" ng-click="newContainer('Secured Zone')">Secured Zone</a></h4>
               </div>
             </div>
             <div class="media">
-              <a class="pull-left" href="#">
+              <a class="pull-left" href="" ng-click="newContainer('Partner Zone')">
                 <img class="media-object" src="http://placehold.it/32x32/F0A060">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="#">Partner Zone</a></h4>
+                <h4 class="media-heading"><a href="" ng-click="newContainer('Partner Zone')">Partner Zone</a></h4>
               </div>
             </div>
             <div class="media">
-              <a class="pull-left" href="#">
+              <a class="pull-left" href="" ng-click="newContainer('Management Zone')">
                 <img class="media-object" src="http://placehold.it/32x32/4068E0">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="#">Management Zone</a></h4>
+                <h4 class="media-heading"><a href="" ng-click="newContainer('Management Zone')">Management Zone</a></h4>
               </div>
             </div>
           </uib-accordion-group>
@@ -151,10 +154,17 @@
       </div>
       <div class="col-xs-8 col-xs-offset-4 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3">
 
-        <!-- Main Content Area -->
+        <!-- Main Content Area
         <div class="content">
-          <!-- <img src="content/images/logical-security-zone-model-diagram.png"> -->
           <canvas id="canvas" width="600" height="600"></canvas>
+        </div>
+        -->
+
+        <!-- Main Content Area -->
+        <div class="image-builder content" parent-click="fabric.deactivateAll()">
+          <div class="fabric-container">
+            <canvas fabric="fabric"></canvas>
+          </div>
         </div>
 
       </div>
@@ -162,3 +172,5 @@
   </div>
 
 <!-- </div> -->
+
+<!-- <img src="content/images/logical-security-zone-model-diagram.png"> -->

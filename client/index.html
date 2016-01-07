@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1,
+                user-scalable=no" />
     <title>my-2d-diagram-editor</title>
     <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-css/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="content/css/styles.css" />
@@ -13,6 +14,17 @@
 
     <div ui-view></div>
 
+    <!--
+    Out of the box, AngularJS provides jqLite, which is a jQuery-like library that provides a subset of jQuery
+    functionality. If you include jQuery in your page, however, AngularJS will use jQuery instead of jqLite when
+    wrapping elements within your directives.
+
+    See: https://docs.angularjs.org/misc/faq
+    -->
+
+    <!-- angular-fabric requires jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -21,10 +33,18 @@
 
     <script src="bower_components/fabric.js/dist/fabric.js"></script>
 
+    <script src="app/components/angular-fabric/fabric-module.js"></script>
+    <script src="app/components/angular-fabric/fabric-canvas.js"></script>
+    <script src="app/components/angular-fabric/fabric-constants.js"></script>
+    <script src="app/components/angular-fabric/fabric-directive.js"></script>
+    <script src="app/components/angular-fabric/fabric-dirty-status.js"></script>
+    <script src="app/components/angular-fabric/fabric-utilities.js"></script>
+    <script src="app/components/angular-fabric/fabric-window.js"></script>
+
     <script src="app/app-module.js"></script>
     <script src="app/main/main-controller.js"></script>
 
   </body>
 </html>
 
-<!-- This is a comment -->
+<!-- This is a comment :) -->

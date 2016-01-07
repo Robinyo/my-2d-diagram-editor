@@ -5,7 +5,11 @@
   angular.module('my-2d-diagram-editor', [
     'ngAnimate',
     'ui.bootstrap',
-    'ui.router'])
+    'ui.router',
+    'common.fabric',
+    'common.fabric.utilities',
+    'common.fabric.constants'
+  ])
     .config(function($stateProvider, $urlRouterProvider) {
 
       $stateProvider

@@ -1,0 +1,83 @@
+body {
+  padding: 10px;
+}
+
+.image-builder-container {
+  position: relative;
+
+  .image-builder {
+    background: #cacaca;
+    box-sizing: border-box;
+    border: 1px solid #cacaca;
+    min-height: 460px;
+    text-align: center;
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: auto;
+
+    .image-cover {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      position: absolute;
+      z-index: 2;
+    }
+
+    .fabric-container {
+      background: white;
+      border-radius: 1px;
+      box-shadow: 0 1px 4px -1px rgba(0, 0, 0, .4);
+      display: inline-block;
+      margin: 50px;
+      position: relative;
+      vertical-align: middle;
+      z-index: 0;
+    }
+  }
+
+  .image-loading {
+    background: rgba(255, 255, 255, .4);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+
+    .loading-indicator {
+      background: white;
+      background-image: url(/images/squareLoader.gif);
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+      margin: 300px auto 0;
+      height: 160px;
+      width: 160px;
+    }
+  }
+
+  .object-controls-container {
+    position: relative;
+
+    .object-controls {
+      position: absolute;
+      z-index: 1;
+      background: white;
+      left: -250px;
+      top: 0px;
+      padding: 5px;
+      width: 240px;
+
+      textarea {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+.object-font-family-preview {
+  text-transform: capitalize;
+}
