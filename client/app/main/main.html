@@ -29,36 +29,38 @@
           <ul class="dropdown-menu" role="menu">
             <li><a href="" ng-click="fileNew()">New...</a></li>
             <li class="divider"></li>
-            <li><a href="">Close</a></li>
+            <li class="disabled"><a href="">Close</a></li>
           </ul>
         </li>
 
         <li class="dropdown" uib-dropdown>
           <a href="#" uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown">Edit <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Undo</a></li>
-            <li><a href="#">Redo</a></li>
+            <li class="disabled"><a href="">Undo</a></li>
+            <li class="disabled"><a href="">Redo</a></li>
+            <li class="divider"></li>
+            <li><a href="" ng-click="editDelete()">Delete</a></li>
           </ul>
         </li>
 
         <li class="dropdown" uib-dropdown>
           <a href="#" uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown">View <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Coming Soon :)</a></li>
+            <li class="disabled"><a href="#">Coming Soon :)</a></li>
           </ul>
         </li>
 
         <li class="dropdown" uib-dropdown>
           <a href="#" uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown">Options <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Coming Soon :)</a></li>
+            <li class="disabled"><a href="#">Coming Soon :)</a></li>
           </ul>
         </li>
 
         <li class="dropdown" uib-dropdown>
           <a href="#" uib-dropdown-toggle class="dropdown-toggle" data-toggle="dropdown">Help <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Coming Soon :)</a></li>
+            <li class="disabled"><a href="#">Coming Soon :)</a></li>
           </ul>
         </li>
 
@@ -91,11 +93,11 @@
               <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': shapes.open, 'glyphicon-chevron-right': !shapes.open}"></i>
             </uib-accordion-heading>
             <div class="media">
-              <a class="pull-left" href="" ng-click="newContainer('Square')">
+              <a class="pull-left" href="">
                 <img class="media-object" src="http://placehold.it/32x32">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="" ng-click="newContainer('Square')">Square</a></h4>
+                <h4 class="media-heading"><a href="">Square</a></h4>
               </div>
             </div>
           </uib-accordion-group>
@@ -107,20 +109,20 @@
             </uib-accordion-heading>
 
             <div class="media">
-              <a class="pull-left" href="" ng-click="newContainer('Controlled Zone')">
+              <a class="pull-left" href="" ng-click="newContainer('Controlled Zone', '#FFFF00')">
                 <img class="media-object" src="http://placehold.it/32x32/FFFF00">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="" ng-click="newContainer('Controlled Zone')">Controlled Zone</a></h4>
+                <h4 class="media-heading"><a href="" ng-click="newContainer('Controlled Zone', '#FFFF00')">Controlled Zone</a></h4>
               </div>
             </div>
 
             <div class="media">
-              <a class="pull-left" href="" ng-click="newContainer('Restricted Zone')">
+              <a class="pull-left" href="" ng-click="newContainer('Restricted Zone', '#90C830')">
                 <img class="media-object" src="http://placehold.it/32x32/90C830">
               </a>
               <div class="media-body">
-                <h4 class="media-heading"><a href="" ng-click="newContainer('Restricted Zone')">Restricted Zone</a></h4>
+                <h4 class="media-heading"><a href="" ng-click="newContainer('Restricted Zone', '#90C830')">Restricted Zone</a></h4>
               </div>
             </div>
 

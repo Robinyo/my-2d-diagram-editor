@@ -18,53 +18,60 @@
         $log.info('MainController');
 
         $scope.fabric = {};
-        $scope.FabricConstants = FabricConstants;
+        // $scope.FabricConstants = FabricConstants;
 
         $scope.init = function () {
+
           $scope.fabric = new Fabric({
             JSONExportProperties: FabricConstants.JSONExportProperties,
-            textDefaults: FabricConstants.textDefaults,
             shapeDefaults: FabricConstants.shapeDefaults,
+            rectDefaults: FabricConstants.rectDefaults,
+            textDefaults: FabricConstants.textDefaults,
             json: {}
           });
+
+          var grid = 50;
+          var verticalY1= 1;
+          var horizontalX1 = 1;
+
+          for (var i = 0; i < (600 / grid); i++) {
+            // draw the Vertical grid lines
+            $scope.fabric.addLine([ i * grid, verticalY1, i * grid, 600], { stroke: '#ccc', selectable: false });
+            // draw the Horizontal grid lines
+            $scope.fabric.addLine([ horizontalX1, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false });
+          }
+
+          $scope.fabric.deselectActiveObject();
         };
 
         $scope.$on('canvas:created', $scope.init);
 
-        var containerTextDefaults = $scope.FabricConstants;
-        containerTextDefaults.left = 50;
-        containerTextDefaults.top = 50;
-        containerTextDefaults.fontFamily = 'Tahoma';
+        var containerTextDefaults = FabricConstants.textDefaults;
         containerTextDefaults.fontSize = 20;
         containerTextDefaults.fontWeight = 'bold';
 
-        $scope.newContainer = function(label) {
+        var containerRectDefaults = FabricConstants.rectDefaults;
 
-          label = label || 'New Container';
+        $scope.newContainer = function(label, fill) {
 
           $log.info('MainController.newContainer()');
 
+          label = label || 'New Container';
+          fill = fill || '#cacaca';
+
+          containerRectDefaults.fill = fill;
+
+          $scope.fabric.addRect(containerRectDefaults);
           $scope.fabric.addText(label, containerTextDefaults);
         };
 
         $scope.fileNew = function() {
-
           $log.info('MainController.fileNew()');
+        };
 
-          $scope.fabric.addRect();
-
-          /*
-
-          var containerTextDefaults = FabricConstants.textDefaults;
-          containerTextDefaults.left = 50;
-          containerTextDefaults.top = 50;
-          containerTextDefaults.fontFamily = 'Tahoma';
-          containerTextDefaults.fontSize = 20;
-          containerTextDefaults.fontWeight = 'bold';
-
-          $scope.fabric.addText('Controlled Zone', containerTextDefaults);
-
-          */
+        $scope.editDelete = function() {
+          $log.info('MainController.editDelete()');
+          $scope.fabric.deleteActiveObject();
         };
 
       }]);
@@ -72,10 +79,18 @@
 
 /*
 
+ // containerTextDefaults.left = 0;
+ // containerTextDefaults.top = 0;
+ // containerTextDefaults.fontFamily = 'Tahoma';
+
  $scope.fabric.addText('Controlled Zone');
  $scope.fabric.setFontFamily('Tahoma');
  $scope.fabric.setFontSize(20);
  $scope.fabric.toggleBold();
+
+ $scope.fabric.addLine([ 50, 25, 50, 550], { stroke: '#ccc', selectable: false });
+ $scope.fabric.addLine([ 100, 25, 100, 550], { stroke: '#ccc', selectable: false });
+ $scope.fabric.addLine([ 150, 25, 150, 550], { stroke: '#ccc', selectable: false });
 
  */
 

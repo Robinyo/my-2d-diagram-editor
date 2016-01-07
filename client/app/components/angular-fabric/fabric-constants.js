@@ -179,6 +179,15 @@ angular.module('common.fabric.constants', [])
 			fill: '#0088cc'
 		}, objectDefaults),
 
+    rectDefaults: angular.extend({
+      left: 0,
+      top: 0,
+      width: 300,
+      height: 300,
+      fill: '#FFFF00',
+      opacity: 0.7
+    }, objectDefaults),
+
 		textDefaults: angular.extend({
       left: 0,               // rob
       top: 0,                // rob

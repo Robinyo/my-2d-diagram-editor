@@ -3,6 +3,8 @@
  * @namespace Fabric
  */
 
+// console.log('Render cycle:', self.renderCount);
+
 angular.module('common.fabric', [
 	'common.fabric.window',
 	'common.fabric.directive',
@@ -11,8 +13,8 @@ angular.module('common.fabric', [
 ])
 
 .factory('Fabric', [
-	'$log', 'FabricWindow', '$timeout', '$window', 'FabricCanvas', 'FabricDirtyStatus',
-	function($log, FabricWindow, $timeout, $window, FabricCanvas, FabricDirtyStatus) {
+	'$log', 'FabricConstants', 'FabricWindow', '$timeout', '$window', 'FabricCanvas', 'FabricDirtyStatus',
+	function($log, FabricConstants, FabricWindow, $timeout, $window, FabricCanvas, FabricDirtyStatus) {
 
 	return function(options) {
 
@@ -34,8 +36,9 @@ angular.module('common.fabric', [
 			userHasClickedCanvas: false,
 			downloadMultipler: 2,
 			imageDefaults: {},
-			textDefaults: {},
-			shapeDefaults: {},
+      shapeDefaults: FabricConstants.shapeDefaults,
+      rectDefaults: FabricConstants.rectDefaults,
+			textDefaults: FabricConstants.textDefaults,
 			windowDefaults: {
 				transparentCorners: true,  // TODO: should use FabricConstants
 				rotatingPointOffset: 40,
@@ -131,7 +134,7 @@ angular.module('common.fabric', [
 			canvas.calcOffset();
 			canvas.renderAll();
 			self.renderCount++;
-			console.log('Render cycle:', self.renderCount);
+			// console.log('Render cycle:', self.renderCount);
 		};
 
 		self.setCanvas = function(newCanvas) {
@@ -274,21 +277,47 @@ angular.module('common.fabric', [
 		};
 
     //
+    // Line
+    // ==============================================================
+
+    /**
+     * @name addLine
+     * @desc Adds a text object to the canvas
+     * @param {Array} [points] An array of points
+     * @param {Object} [options] A configuration object, defaults to FabricConstants.lineDefaults
+     */
+    self.addLine = function(points, options) {
+
+      $log.info('addLine()');
+
+      options = options || { stroke: '#ccc' };  // TODO:
+
+      if (!points) {
+        points = [0, 0, 0, 0];
+      }
+
+      var object = new FabricWindow.Line(points, options);
+      object.id = self.createId();
+
+      self.addObjectToCanvas(object);
+    };
+
+    //
     // Rect
     // ==============================================================
 
     /**
      * @name addRect
      * @desc Adds a text object to the canvas
-     * @param {Object} config - A configuration object, defaults to FabricConstants.rectDefaults
+     * @param {Object} [options] A configuration object, defaults to FabricConstants.rectDefaults
      */
-    self.addRect = function(config) {
+    self.addRect = function(options) {
 
       $log.info('addRect()');
 
-      config = config || { left: 100, top: 100, width: 300, height: 300, fill: '#FFFF00', opacity: 0.7 };
+      options = options || self.rectDefaults;
 
-      var object = new FabricWindow.Rect(config);
+      var object = new FabricWindow.Rect(options);
       object.id = self.createId();
 
       self.addObjectToCanvas(object);
@@ -312,17 +341,16 @@ angular.module('common.fabric', [
      * @name addText
      * @desc Adds a text object to the canvas
      * @param {String} text - The text to render on the canvas
-     * @param {Object} config - A configuration object, defaults to FabricConstants.textDefaults
+     * @param {Object} [options] A configuration object, defaults to FabricConstants.textDefaults
      */
-    self.addText = function(text, config) {
+    self.addText = function(text, options) {
 
-      // console.log('addText = function(text, config) - no function over loading in Javascript :)' );
       $log.info('addText() - no function overloading in Javascript :)');
 
       text = text || 'New Text';
-      config = config || self.textDefaults;
+      options = options || self.textDefaults;
 
-      var object = new FabricWindow.Text(text, config);
+      var object = new FabricWindow.Text(text, options);
       object.id = self.createId();
 
       self.addObjectToCanvas(object);
@@ -712,6 +740,7 @@ angular.module('common.fabric', [
 
 		self.deselectActiveObject = function() {
 			self.selectedObject = false;
+      canvas.deactivateAll().renderAll();
 		};
 
 		self.deleteActiveObject = function() {
@@ -906,6 +935,13 @@ angular.module('common.fabric', [
 					self.setDirty(true);
 				});
 			});
+
+      canvas.on('object:moving', function(options) {
+        options.target.set({
+          left: Math.round(options.target.left / 50) * 50,
+          top: Math.round(options.target.top / 50) * 50
+        });
+      });
 
 			canvas.on('selection:created', function() {
 				self.stopContinuousRendering();
