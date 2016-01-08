@@ -1,0 +1,70 @@
+<div class="col-xs-4 col-sm-4 col-md-3 sidebar">
+  <uib-accordion close-others="false">
+
+    <uib-accordion-group ng-init="shapes.open = true" is-open="shapes.open">
+      <uib-accordion-heading>
+        Shapes
+        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': shapes.open, 'glyphicon-chevron-right': !shapes.open}"></i>
+      </uib-accordion-heading>
+      <div class="media">
+        <a class="pull-left" href="">
+          <img class="media-object" src="http://placehold.it/32x32">
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading"><a href="">Square</a></h4>
+        </div>
+      </div>
+    </uib-accordion-group>
+
+    <uib-accordion-group ng-init="containers.open = true" is-open="containers.open">
+      <uib-accordion-heading>
+        Containers
+        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': containers.open, 'glyphicon-chevron-right': !containers.open}"></i>
+      </uib-accordion-heading>
+
+      <div class="media">
+        <a class="pull-left" href="" ng-click="newContainer('Controlled Zone', '#FFFF00')">
+          <img class="media-object" src="http://placehold.it/32x32/FFFF00">
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading"><a href="" ng-click="newContainer('Controlled Zone', '#FFFF00')">Controlled Zone</a></h4>
+        </div>
+      </div>
+
+      <div class="media">
+        <a class="pull-left" href="" ng-click="newContainer('Restricted Zone', '#90C830')">
+          <img class="media-object" src="http://placehold.it/32x32/90C830">
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading"><a href="" ng-click="newContainer('Restricted Zone', '#90C830')">Restricted Zone</a></h4>
+        </div>
+      </div>
+
+      <div class="media">
+        <a class="pull-left" href="" ng-click="newContainer('Secured Zone')">
+          <img class="media-object" src="http://placehold.it/32x32/308850">
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading"><a href="" ng-click="newContainer('Secured Zone')">Secured Zone</a></h4>
+        </div>
+      </div>
+      <div class="media">
+        <a class="pull-left" href="" ng-click="newContainer('Partner Zone')">
+          <img class="media-object" src="http://placehold.it/32x32/F0A060">
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading"><a href="" ng-click="newContainer('Partner Zone')">Partner Zone</a></h4>
+        </div>
+      </div>
+      <div class="media">
+        <a class="pull-left" href="" ng-click="newContainer('Management Zone')">
+          <img class="media-object" src="http://placehold.it/32x32/4068E0">
+        </a>
+        <div class="media-body">
+          <h4 class="media-heading"><a href="" ng-click="newContainer('Management Zone')">Management Zone</a></h4>
+        </div>
+      </div>
+    </uib-accordion-group>
+
+  </uib-accordion>
+</div>
