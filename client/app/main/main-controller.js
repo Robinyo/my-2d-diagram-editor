@@ -31,14 +31,20 @@
           });
 
           var grid = 50;
-          var verticalY1= 1;
-          var horizontalX1 = 1;
+          var width = 600;
+          var height = 600;
 
-          for (var i = 0; i < (600 / grid); i++) {
-            // draw the Vertical grid lines
-            $scope.fabric.addLine([ i * grid, verticalY1, i * grid, 600], { stroke: '#ccc', selectable: false });
-            // draw the Horizontal grid lines
-            $scope.fabric.addLine([ horizontalX1, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false });
+          // Why did we start x and y at 0.5? Why not 0?
+          // See: http://diveintohtml5.info/canvas.html
+
+          // draw the Vertical lines
+          for (var x = 0.5; x < width; x += grid) {
+            $scope.fabric.addLine([ x, 0.5, x, width], { stroke: '#ccc', selectable: false });
+          }
+
+          // draw the Horizontal lines
+          for (var y = 0.5; y < height; y += grid) {
+            $scope.fabric.addLine([ 0.5, y, height, y], { stroke: '#ccc', selectable: false });
           }
 
           $scope.fabric.deselectActiveObject();
@@ -78,6 +84,18 @@
 })();
 
 /*
+
+ var grid = 100;
+ var verticalY1= 1;
+ var horizontalX1 = 1;
+
+ for (var i = 0; i < (600 / grid); i++) {
+ // draw the Vertical grid lines
+ $scope.fabric.addLine([ i * grid, verticalY1, i * grid, 600], { stroke: '#ccc', selectable: false });
+ // draw the Horizontal grid lines
+ $scope.fabric.addLine([ horizontalX1, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false });
+ }
+
 
  // containerTextDefaults.left = 0;
  // containerTextDefaults.top = 0;

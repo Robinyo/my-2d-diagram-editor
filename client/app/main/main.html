@@ -11,10 +11,15 @@
 <!--
   Notice the single quotes inside the double quotes. The single quotes tell AngularJS that
   the value passed to it is a string literal, not a variable.
+
+  <div ng-include="'app/main/header.html'"></div>
+  <div ng-include="'app/main/toolbar.html'"></div>
 -->
+
 <div ng-include="'app/main/header.html'"></div>
 
 <div class="row">
   <div ng-include="'app/main/sidebar.html'"></div>
   <div ng-include="'app/main/content.html'"></div>
-</div> <!-- <div class="row"> -->
+</div>
+

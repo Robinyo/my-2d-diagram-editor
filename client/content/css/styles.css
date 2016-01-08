@@ -14,13 +14,14 @@ body {
   /* overflow: hidden; hide scrollbar */
 }
 
-.menu-bar {
+.toolbar {
   top: 51px;
 }
 
 .sidebar {
   position: fixed;
   top: 51px;
+  /* top: 101px; */
   bottom: 0;
   left: 0;
   z-index: 1000;
@@ -32,12 +33,9 @@ body {
 }
 
 .content {
-  padding-top: 56px;
-  // border: 2px solid #eee;
-}
-
-.content {
-  padding-top: 56px;
+  padding-top: 56px;  /* top: 51px; + padding: 5px; */
+  /* padding-top: 106px; */
+  /* border: 2px solid #ccc; */
 }
 
 .sign-in {
