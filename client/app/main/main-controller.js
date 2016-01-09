@@ -113,8 +113,8 @@
             $scope.horizontalGridLines[i++] = $scope.fabric.drawGridLine([ 0.5, y, height, y], { stroke: '#ccc', selectable: false });
           }
 
-          $scope.verticalGridLinesGroup = $scope.fabric.createGroup($scope.verticalGridLines);
-          $scope.horizontalGridLinesGroup = $scope.fabric.createGroup($scope.horizontalGridLines);
+          $scope.verticalGridLinesGroup = $scope.fabric.createGroup($scope.verticalGridLines, { selectable: false });
+          $scope.horizontalGridLinesGroup = $scope.fabric.createGroup($scope.horizontalGridLines, { selectable: false });
 
           // Why did we start x and y at 0.5? Why not 0?
           // See: http://diveintohtml5.info/canvas.html

@@ -310,11 +310,7 @@ angular.module('common.fabric', [
 
       options = options || { stroke: '#ccc' };  // TODO:
 
-      if (!points) {
-        points = [0, 0, 0, 0];
-      }
-
-      var object = new FabricWindow.Line(points, options);
+       var object = new FabricWindow.Line(points, options);
       object.id = self.createId();
 
       // retained mode :)
@@ -326,8 +322,6 @@ angular.module('common.fabric', [
     self.createGroup = function(objects, options) {
 
       $log.info('createGroup()');
-
-      options = options || { };
 
       var object = new FabricWindow.Group(objects, options);
       object.id = self.createId();
