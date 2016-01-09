@@ -12,8 +12,8 @@
    */
 
   angular.module('my-2d-diagram-editor')
-    .controller('MainController', ['$log', '$scope', 'Fabric', 'FabricConstants', 'Keypress',
-      function($log, $scope, Fabric, FabricConstants, Keypress) {
+    .controller('MainController', ['$log', '$translate', '$scope', 'Fabric', 'FabricConstants', 'Keypress',
+      function($log, $translate, $scope, Fabric, FabricConstants, Keypress) {
 
         $log.info('MainController');
 
@@ -37,6 +37,8 @@
           });
 
           $scope.toggleGrid();
+
+          $scope.switchLanguage('en');
         };
 
         $scope.$on('canvas:created', $scope.init);
@@ -81,6 +83,21 @@
           }
         };
 
+        $scope.switchLanguage = function(key) {
+
+          $translate.use(key);
+
+          $translate('CONTROLLED_ZONE')
+            .then(function (translatedValue) {
+              $scope.controlledZone = translatedValue;
+            });
+
+          $translate('MANAGEMENT_ZONE')
+            .then(function (translatedValue) {
+              $scope.managementZone = translatedValue;
+            });
+        };
+
         //
         // Private methods
         //
@@ -98,8 +115,8 @@
           $log.info('MainController.drawGrid()');
 
           var grid = 50;
-          var width = 600;
-          var height = 600;
+          var width = FabricConstants.canvasDefaults.width;
+          var height = FabricConstants.canvasDefaults.height;
 
           // draw the Vertical lines
           var i = 0;

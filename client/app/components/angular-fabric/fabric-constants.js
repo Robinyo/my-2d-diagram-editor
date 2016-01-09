@@ -184,10 +184,10 @@ angular.module('common.fabric.constants', [])
     canvasDefaults: {
       backgroundColor: '#ffffff',
       selection: false,
-      width: 600,
-      height: 600,
-      originalWidth: 600,
-      originalHeight: 600
+      width: 800,
+      height: 800,
+      originalWidth: 800,
+      originalHeight: 800
     },
 
 		shapeDefaults: angular.extend({

@@ -990,6 +990,8 @@ angular.module('common.fabric', [
      */
 		self.startCanvasListeners = function() {
 
+      /*
+
       canvas.on('mouse:over', function(e) {
         e.target.setFill('red');
         canvas.renderAll();
@@ -1000,6 +1002,8 @@ angular.module('common.fabric', [
         canvas.renderAll();
       });
 
+      */
+
 			canvas.on('object:selected', function() {
 				self.stopContinuousRendering();
 				$timeout(function() {
@@ -1008,12 +1012,17 @@ angular.module('common.fabric', [
 				});
 			});
 
+      //
+      // snap to grid
+      //
+      /*
       canvas.on('object:moving', function(options) {
         options.target.set({
           left: Math.round(options.target.left / 50) * 50,
           top: Math.round(options.target.top / 50) * 50
         });
       });
+      */
 
 			canvas.on('selection:created', function() {
 				self.stopContinuousRendering();
@@ -1058,10 +1067,10 @@ angular.module('common.fabric', [
 			self.setCanvasBackgroundColor(JSONObject.background);
 
 			// Set the size of the canvas
-			JSONObject.width = JSONObject.width || 600;
+			JSONObject.width = JSONObject.width || 800;
 			self.canvasDefaults.originalWidth = JSONObject.width;
 
-			JSONObject.height = JSONObject.height || 600;
+			JSONObject.height = JSONObject.height || 800;
 			self.canvasDefaults.originalHeight = JSONObject.height;
 
 			self.setCanvasSize(self.canvasDefaults.originalWidth, self.canvasDefaults.originalHeight);

@@ -1,0 +1,44 @@
+{
+  "BRAND_NAME":                  "Robs Super 2D- Diagrammeditor",
+
+  "TOGGLE_NAVIGATION":           "Toggle -Navigation",
+  "SIGN_IN":                     "Anmelden",
+
+  "ENGLISH":                     "Englisch",
+  "GERMAN":                      "Deutsch",
+
+  "FILE":                        "Datei",
+  "FILE_NEW":                    "Neu...",
+  "CLOSE":                       "Nah dran",
+
+  "EDIT":                        "Bearbeiten",
+  "UNDO":                        "Rückgängig machen",
+  "REDO":                        "wiederholen",
+  "DELETE":                      "Löschen",
+
+  "VIEW":                        "Aussicht",
+  "GRID":                        "Gitter",
+
+  "OPTIONS":                     "Optionen",
+  "LANGUAGE":                    "Sprache",
+  "HELP":                        "Hilfe",
+
+  "ZOOM_IN":                     "Hineinzoomen",
+  "ZOOM_OUT":                    "Rauszoomen",
+
+  "LOCK":                        "Sperren",
+  "COMMENT":                     "Kommentar",
+
+  "SHAPES":                      "Shapes",
+  "SQUARE":                      "Platz",
+
+  "CONTAINERS":                  "Behälter",
+  "CONTROLLED_ZONE":             "kontrollierten Zone",
+  "RESTRICTED_ZONE":             "Restricted Zone",
+  "SECURED_ZONE":                "gesicherten Zone",
+  "PARTNER_ZONE":                "Partnerbereich",
+  "MANAGEMENT_ZONE":             "Verwaltungszone",
+
+
+  "COMING_SOON":                 "Demnächst :)"
+}

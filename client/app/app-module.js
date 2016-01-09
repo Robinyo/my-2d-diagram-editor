@@ -8,9 +8,24 @@
     'ui.router',
     'common.fabric',
     'common.fabric.utilities',
-    'common.fabric.constants'
+    'common.fabric.constants',
+    'pascalprecht.translate'
   ])
-    .config(function($stateProvider, $urlRouterProvider) {
+    .config(function($stateProvider, $urlRouterProvider, $translateProvider) {
+
+      $translateProvider
+        .useStaticFilesLoader({
+          prefix: 'app/locales/',
+          suffix: '.json'
+        })
+        .registerAvailableLanguageKeys(['en', 'de'], {
+          'en' : 'en', 'en_GB': 'en', 'en_US': 'en',
+          'de' : 'de', 'de_DE': 'de', 'de_CH': 'de'
+        })
+        .preferredLanguage('de')
+        .fallbackLanguage('de')
+        .determinePreferredLanguage()
+        .useSanitizeValueStrategy('escapeParameters');
 
       $stateProvider
         .state('home', {

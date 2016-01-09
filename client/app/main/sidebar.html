@@ -3,7 +3,7 @@
 
     <uib-accordion-group ng-init="shapes.open = true" is-open="shapes.open">
       <uib-accordion-heading>
-        Shapes
+        {{ 'SHAPES' | translate }}
         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': shapes.open, 'glyphicon-chevron-right': !shapes.open}"></i>
       </uib-accordion-heading>
       <div class="media">
@@ -11,14 +11,18 @@
           <img class="media-object" src="http://placehold.it/32x32">
         </a>
         <div class="media-body">
-          <h4 class="media-heading"><a href="">Square</a></h4>
+          <h4 class="media-heading">
+            <a href="">
+              {{ 'SQUARE' | translate }}
+            </a>
+          </h4>
         </div>
       </div>
     </uib-accordion-group>
 
     <uib-accordion-group ng-init="containers.open = true" is-open="containers.open">
       <uib-accordion-heading>
-        Containers
+        {{ 'CONTAINERS' | translate }}
         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': containers.open, 'glyphicon-chevron-right': !containers.open}"></i>
       </uib-accordion-heading>
 
@@ -27,7 +31,9 @@
           <img class="media-object" src="http://placehold.it/32x32/FFFF00">
         </a>
         <div class="media-body">
-          <h4 class="media-heading"><a href="" ng-click="newContainer('Controlled Zone', '#FFFF00')">Controlled Zone</a></h4>
+          <h4 class="media-heading">
+            <a href="" ng-click="newContainer(controlledZone, '#FFFF00')" translate="{{ 'CONTROLLED_ZONE' }}"></a>
+          </h4>
         </div>
       </div>
 
@@ -36,7 +42,11 @@
           <img class="media-object" src="http://placehold.it/32x32/90C830">
         </a>
         <div class="media-body">
-          <h4 class="media-heading"><a href="" ng-click="newContainer('Restricted Zone', '#90C830')">Restricted Zone</a></h4>
+          <h4 class="media-heading">
+            <a href="" ng-click="newContainer('Restricted Zone', '#90C830')">
+              {{ 'RESTRICTED_ZONE' | translate }}
+            </a>
+          </h4>
         </div>
       </div>
 
@@ -45,7 +55,11 @@
           <img class="media-object" src="http://placehold.it/32x32/308850">
         </a>
         <div class="media-body">
-          <h4 class="media-heading"><a href="" ng-click="newContainer('Secured Zone')">Secured Zone</a></h4>
+          <h4 class="media-heading">
+            <a href="" ng-click="newContainer('Secured Zone')">
+              {{ 'SECURED_ZONE' | translate }}
+            </a>
+          </h4>
         </div>
       </div>
       <div class="media">
@@ -53,7 +67,11 @@
           <img class="media-object" src="http://placehold.it/32x32/F0A060">
         </a>
         <div class="media-body">
-          <h4 class="media-heading"><a href="" ng-click="newContainer('Partner Zone')">Partner Zone</a></h4>
+          <h4 class="media-heading">
+            <a href="" ng-click="newContainer('Partner Zone')">
+              {{ 'PARTNER_ZONE' | translate }}
+            </a>
+          </h4>
         </div>
       </div>
       <div class="media">
@@ -61,7 +79,9 @@
           <img class="media-object" src="http://placehold.it/32x32/4068E0">
         </a>
         <div class="media-body">
-          <h4 class="media-heading"><a href="" ng-click="newContainer('Management Zone')">Management Zone</a></h4>
+          <h4 class="media-heading">
+            <a href="" ng-click="newContainer(managementZone)" translate="{{ 'MANAGEMENT_ZONE' }}"></a>
+          </h4>
         </div>
       </div>
     </uib-accordion-group>
