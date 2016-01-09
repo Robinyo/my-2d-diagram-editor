@@ -121,7 +121,7 @@ angular.module('common.fabric.constants', [])
 					'arrow1',
 					'arrow9',
 					'arrow3',
-					'arrow6',
+					'arrow6'
 				]
 			},
 			{
@@ -175,6 +175,21 @@ angular.module('common.fabric.constants', [])
 			'filters'
 		],
 
+    windowDefaults: {
+      padding: 0,
+      rotatingPointOffset: 40,
+      transparentCorners: true
+    },
+
+    canvasDefaults: {
+      backgroundColor: '#ffffff',
+      selection: false,
+      width: 600,
+      height: 600,
+      originalWidth: 600,
+      originalHeight: 600
+    },
+
 		shapeDefaults: angular.extend({
 			fill: '#0088cc'
 		}, objectDefaults),
@@ -189,15 +204,15 @@ angular.module('common.fabric.constants', [])
     }, objectDefaults),
 
 		textDefaults: angular.extend({
-      left: 0,               // rob
-      top: 0,                // rob
+      left: 0,
+      top: 0,
 			originX: 'left',
-      originY: 'top',        // rob
+      originY: 'top',
 			scaleX: 1,
 			scaleY: 1,
-			fontFamily: 'Tahoma',  // Arial
+			fontFamily: 'Tahoma',
 			fontSize: 12,
-      fontWeight: 'normal',  // rob
+      fontWeight: 'normal',
 			fill: '#454545',
 			textAlign: 'left'
 		}, objectDefaults)

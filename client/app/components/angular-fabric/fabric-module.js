@@ -21,11 +21,7 @@ angular.module('common.fabric', [
 		var canvas;
 		var JSONObject;
 		var self = angular.extend({
-			canvasBackgroundColor: '#ffffff',
-			canvasWidth: 300,
-			canvasHeight: 300,
-			canvasOriginalHeight: 300,
-			canvasOriginalWidth: 300,
+
 			maxContinuousRenderLoops: 25,
 			continuousRenderTimeDelay: 500,
 			editable: true,
@@ -34,19 +30,15 @@ angular.module('common.fabric', [
 			dirty: false,
 			initialized: false,
 			userHasClickedCanvas: false,
-			downloadMultipler: 2,
+			downloadMultiplier: 2,
+
+      windowDefaults: FabricConstants.windowDefaults,
+      canvasDefaults: FabricConstants.canvasDefaults,
 			imageDefaults: {},
       shapeDefaults: FabricConstants.shapeDefaults,
       rectDefaults: FabricConstants.rectDefaults,
-			textDefaults: FabricConstants.textDefaults,
-			windowDefaults: {
-				transparentCorners: true,  // TODO: should use FabricConstants
-				rotatingPointOffset: 40,
-				padding: 0
-			},
-			canvasDefaults: {
-				selection: false
-			}
+			textDefaults: FabricConstants.textDefaults
+
 		}, options);
 
 		function capitalize(string) {
@@ -151,19 +143,19 @@ angular.module('common.fabric', [
 		};
 
 		self.setCanvasBackgroundColor = function(color) {
-			self.canvasBackgroundColor = color;
+			self.canvasDefaults.backgroundColor = color;
 			canvas.setBackgroundColor(color);
 			self.render();
 		};
 
 		self.setCanvasWidth = function(width) {
-			self.canvasWidth = width;
+			self.canvasDefaults.canvasWidth = width;
 			canvas.setWidth(width);
 			self.render();
 		};
 
 		self.setCanvasHeight = function(height) {
-			self.canvasHeight = height;
+			self.canvasDefaults.canvasHeight = height;
 			canvas.setHeight(height);
 			self.render();
 		};
@@ -173,13 +165,13 @@ angular.module('common.fabric', [
 			var initialCanvasScale = self.canvasScale;
 			self.resetZoom();
 
-			self.canvasWidth = width;
-			self.canvasOriginalWidth = width;
+			self.canvasDefaults.canvasWidth = width;
+			self.canvasDefaults.canvasOriginalWidth = width;
 			canvas.originalWidth = width;
 			canvas.setWidth(width);
 
-			self.canvasHeight = height;
-			self.canvasOriginalHeight = height;
+			self.canvasDefaults.canvasHeight = height;
+			self.canvasDefaults.originalHeight = height;
 			canvas.originalHeight = height;
 			canvas.setHeight(height);
 
@@ -255,6 +247,8 @@ angular.module('common.fabric', [
 		//
 		// Shape
 		// ==============================================================
+    //
+
 		self.addShape = function(svgURL) {
 			fabric.loadSVGFromURL(svgURL, function(objects) {
 				var object = fabric.util.groupSVGElements(objects, self.shapeDefaults);
@@ -279,6 +273,7 @@ angular.module('common.fabric', [
     //
     // Line
     // ==============================================================
+    //
 
     /**
      * @name addLine
@@ -304,6 +299,12 @@ angular.module('common.fabric', [
       return object;
     };
 
+    /**
+     * @name drawGridLine
+     * @desc Draws a grid line but doesn't add it to the canvas
+     * @param {Array} [points] An array of points
+     * @param {Object} [options] A configuration object
+     */
     self.drawGridLine = function(points, options) {
 
       $log.info('drawGridLine() - retained mode');
@@ -319,6 +320,17 @@ angular.module('common.fabric', [
       return object;
     };
 
+    //
+    // Group
+    // ==============================================================
+    //
+
+    /**
+     * @name createGroup
+     * @desc Creates a group
+     * @param {Array} [objects] An array of objects
+     * @param {Object} [options] A configuration object
+     */
     self.createGroup = function(objects, options) {
 
       $log.info('createGroup()');
@@ -332,6 +344,11 @@ angular.module('common.fabric', [
       return object;
     };
 
+    /**
+     * @name removeGroup
+     * @desc Removes a group
+     * @param {Object} [object] A group object
+     */
     self.removeGroup = function(object) {
 
       $log.info('removeGroup()');
@@ -719,8 +736,8 @@ angular.module('common.fabric', [
 		};
 
 		self.setCanvasZoom = function() {
-			var width = self.canvasOriginalWidth;
-			var height = self.canvasOriginalHeight;
+			var width = self.canvasDefaults.originalWidth;
+			var height = self.canvasDefaults.originalHeight;
 
 			var tempWidth = width * self.canvasScale;
 			var tempHeight = height * self.canvasScale;
@@ -852,7 +869,7 @@ angular.module('common.fabric', [
 			var data = canvas.toDataURL({
 				width: canvas.getWidth(),
 				height: canvas.getHeight(),
-				multiplier: self.downloadMultipler
+				multiplier: self.downloadMultiplier
 			});
 
 			return data;
@@ -965,7 +982,24 @@ angular.module('common.fabric', [
 		//
 		// Canvas Listeners
 		// ============================================================
+    //
+
+    /**
+     * @name startCanvasListeners
+     * @desc Registers the various canvas listeners
+     */
 		self.startCanvasListeners = function() {
+
+      canvas.on('mouse:over', function(e) {
+        e.target.setFill('red');
+        canvas.renderAll();
+      });
+
+      canvas.on('mouse:out', function(e) {
+        e.target.setFill('green');
+        canvas.renderAll();
+      });
+
 			canvas.on('object:selected', function() {
 				self.stopContinuousRendering();
 				$timeout(function() {
@@ -1024,13 +1058,13 @@ angular.module('common.fabric', [
 			self.setCanvasBackgroundColor(JSONObject.background);
 
 			// Set the size of the canvas
-			JSONObject.width = JSONObject.width || 600;  // 300
-			self.canvasOriginalWidth = JSONObject.width;
+			JSONObject.width = JSONObject.width || 600;
+			self.canvasDefaults.originalWidth = JSONObject.width;
 
-			JSONObject.height = JSONObject.height || 600;  // 300
-			self.canvasOriginalHeight = JSONObject.height;
+			JSONObject.height = JSONObject.height || 600;
+			self.canvasDefaults.originalHeight = JSONObject.height;
 
-			self.setCanvasSize(self.canvasOriginalWidth, self.canvasOriginalHeight);
+			self.setCanvasSize(self.canvasDefaults.originalWidth, self.canvasDefaults.originalHeight);
 
 			self.render();
 			self.setDirty(false);
@@ -1046,7 +1080,17 @@ angular.module('common.fabric', [
 		self.init();
 
 		return self;
-
 	};
 
 }]);
+
+
+/*
+
+ canvasBackgroundColor: '#ffffff',
+ canvasWidth: 300,
+ canvasHeight: 300,
+ canvasOriginalHeight: 300,
+ canvasOriginalWidth: 300,
+
+ */
