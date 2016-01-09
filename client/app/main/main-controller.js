@@ -20,6 +20,12 @@
         $scope.fabric = {};
         // $scope.FabricConstants = FabricConstants;
 
+        $scope.grid = { show: false };
+        $scope.verticalGridLinesGroup = {};
+        $scope.horizontalGridLinesGroup = {};
+        $scope.verticalGridLines = [];
+        $scope.horizontalGridLines = [];
+
         $scope.init = function () {
 
           $scope.fabric = new Fabric({
@@ -30,24 +36,7 @@
             json: {}
           });
 
-          var grid = 50;
-          var width = 600;
-          var height = 600;
-
-          // Why did we start x and y at 0.5? Why not 0?
-          // See: http://diveintohtml5.info/canvas.html
-
-          // draw the Vertical lines
-          for (var x = 0.5; x < width; x += grid) {
-            $scope.fabric.addLine([ x, 0.5, x, width], { stroke: '#ccc', selectable: false });
-          }
-
-          // draw the Horizontal lines
-          for (var y = 0.5; y < height; y += grid) {
-            $scope.fabric.addLine([ 0.5, y, height, y], { stroke: '#ccc', selectable: false });
-          }
-
-          $scope.fabric.deselectActiveObject();
+          $scope.toggleGrid();
         };
 
         $scope.$on('canvas:created', $scope.init);
@@ -80,22 +69,79 @@
           $scope.fabric.deleteActiveObject();
         };
 
+        $scope.toggleGrid = function() {
+          $log.info('MainController.toggleGrid()');
+
+          $scope.grid.show = !$scope.grid.show;
+
+          if ($scope.grid.show) {
+            drawGrid();
+          } else {
+            removeGrid();
+          }
+        };
+
+        //
+        // Private methods
+        //
+
+        var removeGrid = function() {
+
+          $log.info('MainController.removeGrid()');
+
+          $scope.fabric.removeGroup($scope.verticalGridLinesGroup);
+          $scope.fabric.removeGroup($scope.horizontalGridLinesGroup);
+        };
+
+        var drawGrid = function() {
+
+          $log.info('MainController.drawGrid()');
+
+          var grid = 50;
+          var width = 600;
+          var height = 600;
+
+          // draw the Vertical lines
+          var i = 0;
+          for (var x = 0.5; x < width; x += grid) {
+            $scope.verticalGridLines[i++] = $scope.fabric.drawGridLine([ x, 0.5, x, width], { stroke: '#ccc', selectable: false });
+          }
+
+          // draw the Horizontal lines
+          i = 0;
+          for (var y = 0.5; y < height; y += grid) {
+            $scope.horizontalGridLines[i++] = $scope.fabric.drawGridLine([ 0.5, y, height, y], { stroke: '#ccc', selectable: false });
+          }
+
+          $scope.verticalGridLinesGroup = $scope.fabric.createGroup($scope.verticalGridLines);
+          $scope.horizontalGridLinesGroup = $scope.fabric.createGroup($scope.horizontalGridLines);
+
+          // Why did we start x and y at 0.5? Why not 0?
+          // See: http://diveintohtml5.info/canvas.html
+
+          $scope.fabric.deselectActiveObject();
+        };
+
       }]);
 })();
 
 /*
 
- var grid = 100;
- var verticalY1= 1;
- var horizontalX1 = 1;
+ $scope.viewGrid = function() {
+ $log.info('MainController.viewGrid()');
+ toggleGrid();
+ };
 
- for (var i = 0; i < (600 / grid); i++) {
- // draw the Vertical grid lines
- $scope.fabric.addLine([ i * grid, verticalY1, i * grid, 600], { stroke: '#ccc', selectable: false });
- // draw the Horizontal grid lines
- $scope.fabric.addLine([ horizontalX1, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false });
- }
+var grid = 100;
+var verticalY1= 1;
+var horizontalX1 = 1;
 
+for (var i = 0; i < (600 / grid); i++) {
+  // draw the Vertical grid lines
+  $scope.fabric.addLine([ i * grid, verticalY1, i * grid, 600], { stroke: '#ccc', selectable: false });
+  // draw the Horizontal grid lines
+  $scope.fabric.addLine([ horizontalX1, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false });
+}
 
  // containerTextDefaults.left = 0;
  // containerTextDefaults.top = 0;

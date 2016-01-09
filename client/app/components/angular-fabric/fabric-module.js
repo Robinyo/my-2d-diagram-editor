@@ -288,7 +288,7 @@ angular.module('common.fabric', [
      */
     self.addLine = function(points, options) {
 
-      $log.info('addLine()');
+      $log.info('addLine() - immediate mode');
 
       options = options || { stroke: '#ccc' };  // TODO:
 
@@ -300,7 +300,51 @@ angular.module('common.fabric', [
       object.id = self.createId();
 
       self.addObjectToCanvas(object);
+
+      return object;
     };
+
+    self.drawGridLine = function(points, options) {
+
+      $log.info('drawGridLine() - retained mode');
+
+      options = options || { stroke: '#ccc' };  // TODO:
+
+      if (!points) {
+        points = [0, 0, 0, 0];
+      }
+
+      var object = new FabricWindow.Line(points, options);
+      object.id = self.createId();
+
+      // retained mode :)
+      // self.addObjectToCanvas(object);
+
+      return object;
+    };
+
+    self.createGroup = function(objects, options) {
+
+      $log.info('createGroup()');
+
+      options = options || { };
+
+      var object = new FabricWindow.Group(objects, options);
+      object.id = self.createId();
+
+      canvas.add(object);
+      self.render();
+
+      return object;
+    };
+
+    self.removeGroup = function(object) {
+
+      $log.info('removeGroup()');
+
+      canvas.remove(object);
+      self.render();
+    }
 
     //
     // Rect

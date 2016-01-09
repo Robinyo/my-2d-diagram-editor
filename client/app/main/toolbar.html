@@ -1,16 +1,78 @@
-<nav class="navbar navbar-default toolbar">
+<nav class="navbar navbar-default navbar-fixed-top toolbar">
+  <form class="navbar-form navbar-left">
+
+    <button type="button" class="btn btn-default" ng-click="toggleGrid()" uib-tooltip="Grid" tooltip-placement="bottom">
+      <span class="glyphicon glyphicon-th"></span>
+    </button>
+
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default" disabled="disabled" uib-tooltip="Zoom In" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-zoom-in"></span>
+      </button>
+      <button type="button" class="btn btn-default" disabled="disabled" uib-tooltip="Zoom Out" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-zoom-out"></span>
+      </button>
+    </div>
+
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default" disabled="disabled" uib-tooltip="Undo" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+      </button>
+      <button type="button" class="btn btn-default" disabled="disabled" uib-tooltip="Redo" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+      </button>
+    </div>
+
+    <button type="button" class="btn btn-default" ng-click="editDelete()" uib-tooltip="Delete" tooltip-placement="bottom">
+      <span class="glyphicon glyphicon-remove"></span>
+    </button>
+
+    <button type="button" class="btn btn-default" disabled="disabled" uib-tooltip="Lock" tooltip-placement="bottom">
+      <span class="glyphicon glyphicon-pushpin"></span>
+    </button>
+
+    <button type="button" class="btn btn-default" disabled="disabled" uib-tooltip="Comment" tooltip-placement="bottom">
+      <span class="glyphicon glyphicon-comment"></span>
+    </button>
+
+  </form>
+</nav>
+
+  <!--
+
+    <form class="navbar-form navbar-left">
+    <div class="btn-toolbar" role="toolbar">
+
+      <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-th"></span>
+      </button>
+
+      <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
+          <span class="glyphicon glyphicon-zoom-in"></span>
+        </button>
+        <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
+          <span class="glyphicon glyphicon-zoom-in"></span>
+        </button>
+      </div>
+
+    </div>
+  </form>
 
   <form class="navbar-form navbar-left">
     <div class="btn-toolbar" role="toolbar">
+
+      <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom"><span class="glyphicon glyphicon-th"></span></button>
+
       <div class="btn-group btn-group-sm" role="group">
         <button type="button" class="btn btn-default">Left</button>
         <button type="button" class="btn btn-default">Middle</button>
         <button type="button" class="btn btn-default">Right</button>
+        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
       </div>
     </div>
   </form>
 
-  <!--
   <form class="navbar-form navbar-left">
     <button type="button" class="btn btn-primary" disabled="disabled">Default button</button>
     <button type="button" class="btn btn-primary btn-sm">Small button</button>
@@ -27,11 +89,9 @@
   </form>
   -->
 
-
-
-</nav>
-
 <!--
+
+  tooltip="{{item.name + (isDisabled(item.name)?' is not available' : '')}}"
 
   <div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

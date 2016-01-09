@@ -20,8 +20,8 @@ body {
 
 .sidebar {
   position: fixed;
-  top: 51px;
-  /* top: 101px; */
+  top: 101px;
+  /* top: 51px; */
   bottom: 0;
   left: 0;
   z-index: 1000;
@@ -33,8 +33,8 @@ body {
 }
 
 .content {
-  padding-top: 56px;  /* top: 51px; + padding: 5px; */
-  /* padding-top: 106px; */
+  padding-top: 106px;  /* top: 51px; + padding: 5px; */
+  /* padding-top: 56px; */
   /* border: 2px solid #ccc; */
 }
 
