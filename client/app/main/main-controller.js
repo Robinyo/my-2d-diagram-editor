@@ -12,10 +12,12 @@
    */
 
   angular.module('my-2d-diagram-editor')
-    .controller('MainController', ['$log', '$translate', '$scope', 'Fabric', 'FabricConstants', 'Keypress',
-      function($log, $translate, $scope, Fabric, FabricConstants, Keypress) {
+    .controller('MainController', ['$log', '$translate', '$scope', 'Fabric', 'FabricConstants', 'sidebarFactory',
+      function($log, $translate, $scope, Fabric, FabricConstants, sidebarFactory) {
 
         $log.info('MainController');
+
+        $scope.containers = sidebarFactory.getContainers();
 
         $scope.fabric = {};
         // $scope.FabricConstants = FabricConstants;
@@ -38,7 +40,6 @@
 
           $scope.toggleGrid();
 
-          $scope.switchLanguage('en');
         };
 
         $scope.$on('canvas:created', $scope.init);
@@ -49,17 +50,20 @@
 
         var containerRectDefaults = FabricConstants.rectDefaults;
 
-        $scope.newContainer = function(label, fill) {
+        $scope.newContainer = function(name, fill) {
 
           $log.info('MainController.newContainer()');
 
-          label = label || 'New Container';
           fill = fill || '#cacaca';
-
           containerRectDefaults.fill = fill;
 
-          $scope.fabric.addRect(containerRectDefaults);
-          $scope.fabric.addText(label, containerTextDefaults);
+          name = name || 'CONTROLLED_ZONE';
+
+          $translate(name)
+            .then(function (translatedValue) {
+              $scope.fabric.addRect(containerRectDefaults);
+              $scope.fabric.addText(translatedValue, containerTextDefaults);
+            });
         };
 
         $scope.fileNew = function() {
@@ -84,19 +88,8 @@
         };
 
         $scope.switchLanguage = function(key) {
-
           $translate.use(key);
-
-          $translate('CONTROLLED_ZONE')
-            .then(function (translatedValue) {
-              $scope.controlledZone = translatedValue;
-            });
-
-          $translate('MANAGEMENT_ZONE')
-            .then(function (translatedValue) {
-              $scope.managementZone = translatedValue;
-            });
-        };
+       };
 
         //
         // Private methods
@@ -149,16 +142,16 @@
  toggleGrid();
  };
 
-var grid = 100;
-var verticalY1= 1;
-var horizontalX1 = 1;
+ var grid = 100;
+ var verticalY1= 1;
+ var horizontalX1 = 1;
 
-for (var i = 0; i < (600 / grid); i++) {
-  // draw the Vertical grid lines
-  $scope.fabric.addLine([ i * grid, verticalY1, i * grid, 600], { stroke: '#ccc', selectable: false });
-  // draw the Horizontal grid lines
-  $scope.fabric.addLine([ horizontalX1, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false });
-}
+ for (var i = 0; i < (600 / grid); i++) {
+ // draw the Vertical grid lines
+ $scope.fabric.addLine([ i * grid, verticalY1, i * grid, 600], { stroke: '#ccc', selectable: false });
+ // draw the Horizontal grid lines
+ $scope.fabric.addLine([ horizontalX1, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false });
+ }
 
  // containerTextDefaults.left = 0;
  // containerTextDefaults.top = 0;
@@ -176,4 +169,19 @@ for (var i = 0; i < (600 / grid); i++) {
  */
 
 
+/*
 
+ $scope.newContainer = function(label, fill) {
+
+ $log.info('MainController.newContainer()');
+
+ label = label || 'New Container';
+ fill = fill || '#cacaca';
+
+ containerRectDefaults.fill = fill;
+
+ $scope.fabric.addRect(containerRectDefaults);
+ $scope.fabric.addText(label, containerTextDefaults);
+ };
+
+ */

@@ -20,6 +20,7 @@
         })
         .registerAvailableLanguageKeys(['en', 'de'], {
           'en' : 'en', 'en_GB': 'en', 'en_US': 'en',
+          'pl' : 'pl', 'pl_PL': 'pl',
           'de' : 'de', 'de_DE': 'de', 'de_CH': 'de'
         })
         .preferredLanguage('de')
@@ -39,13 +40,3 @@
     });
 
 })();
-
-/*
-
- angular.module('my-2d-diagram-editor', [
- 'ngAnimate',
- 'ui.bootstrap',
- 'ui.router'
- ]);
-
- */

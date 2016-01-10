@@ -1,0 +1,46 @@
+{
+  "BRAND_NAME":                  "Rob's Awesome 2D Diagram Editor",
+
+  "TOGGLE_NAVIGATION":           "TNawigacja",
+  "SIGN_IN":                     "Logowanie",
+
+  "ENGLISH":                     "Angielski",
+  "POLISH":                      "Polskie",
+  "GERMAN":                      "Niemiecki",
+
+  "FILE":                        "Plik",
+  "FILE_NEW":                    "Nowy...",
+  "CLOSE":                       "Zamknij",
+
+  "EDIT":                        "Edycja",
+  "UNDO":                        "Cofnij",
+  "REDO":                        "Powtorz",
+  "DELETE":                      "Usun",
+
+  "VIEW":                        "Pokaz",
+  "GRID":                        "Siec",
+
+  "OPTIONS":                     "Opcje",
+  "LANGUAGE":                    "Jezyk",
+  "HELP":                        "Pomoc",
+
+  "ZOOM_IN":                     "Zoom In",
+  "ZOOM_OUT":                    "Zoom Out",
+
+  "LOCK":                        "Zablokuj",
+  "COMMENT":                     "Komentarz",
+
+  "SHAPES":                      "Ksztalty",
+  "SQUARE":                      "Kwadraty",
+
+  "CONTAINERS":                  "Kontenery",
+  "CONTROLLED_ZONE":             "Strefa kontrolowana",
+  "RESTRICTED_ZONE":             "Strefa ograniczona",
+  "SECURED_ZONE":                "Strefa zabezpieczona",
+  "PARTNER_ZONE":                "Strefa partnerska",
+  "MANAGEMENT_ZONE":             "Strefa zarzadzania",
+
+
+  "COMING_SOON":                 "Wiecej w przyszlosci :)"
+}
+
