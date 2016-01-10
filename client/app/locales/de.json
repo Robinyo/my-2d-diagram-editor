@@ -14,7 +14,7 @@
 
   "EDIT":                        "Bearbeiten",
   "UNDO":                        "Rückgängig machen",
-  "REDO":                        "wiederholen",
+  "REDO":                        "Wiederherstellen",
   "DELETE":                      "Löschen",
 
   "VIEW":                        "Aussicht",
@@ -30,13 +30,13 @@
   "LOCK":                        "Sperren",
   "COMMENT":                     "Kommentar",
 
-  "SHAPES":                      "Shapes",
+  "SHAPES":                      "Formen",
   "SQUARE":                      "Platz",
 
   "CONTAINERS":                  "Behälter",
-  "CONTROLLED_ZONE":             "kontrollierten Zone",
-  "RESTRICTED_ZONE":             "Restricted Zone",
-  "SECURED_ZONE":                "gesicherten Zone",
+  "CONTROLLED_ZONE":             "Kontrollierten Zone",
+  "RESTRICTED_ZONE":             "Sperrzone",
+  "SECURED_ZONE":                "Gesicherten Zone",
   "PARTNER_ZONE":                "Partnerbereich",
   "MANAGEMENT_ZONE":             "Verwaltungszone",
 
