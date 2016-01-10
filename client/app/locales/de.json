@@ -19,6 +19,7 @@
 
   "VIEW":                        "Aussicht",
   "GRID":                        "Gitter",
+  "SNAP_TO_GRID":                "Snap to Grid",
 
   "OPTIONS":                     "Optionen",
   "LANGUAGE":                    "Sprache",
@@ -32,6 +33,9 @@
 
   "SHAPES":                      "Formen",
   "SQUARE":                      "Platz",
+  "RECTANGLE":                   "Rechteck",
+
+  "NODE":                        "Node",
 
   "CONTAINERS":                  "Behälter",
   "CONTROLLED_ZONE":             "Kontrollierten Zone",

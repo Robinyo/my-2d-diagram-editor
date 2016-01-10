@@ -6,11 +6,31 @@
     .factory('sidebarFactory', [
       function() {
 
-        const CONTROLLED_ZONE_ID = '0';
-        const RESTRICTED_ZONE_ID = '1';
-        const SECURED_ZONE_ID    = '2';
-        const PARTNER_ZONE_ID    = '3';
-        const MANAGEMENT_ZONE_ID = '4';
+        const CONTROLLED_ZONE_ID = 0;
+        const RESTRICTED_ZONE_ID = 1;
+        const SECURED_ZONE_ID    = 2;
+        const PARTNER_ZONE_ID    = 3;
+        const MANAGEMENT_ZONE_ID = 4;
+
+        const SQUARE_ID = 0;
+        const RECTANGLE_ID = 1;
+
+        var shapes = [
+          {
+            "id"              : SQUARE_ID,
+            "name"            : "SQUARE",
+            "value"           : "Square",
+            "src"             : "content/images/icons/32x32/light-gray.png",
+            "backgroundColor" : "LIGHTGRAY"
+          },
+          {
+            "id"              : RECTANGLE_ID,
+            "name"            : "RECTANGLE",
+            "value"           : "Rectangle",
+            "src"             : "content/images/icons/32x32/light-gray.png",
+            "backgroundColor" : "LIGHTGRAY"
+          }
+        ];
 
         var containers = [
           {
@@ -51,11 +71,17 @@
         ];
 
         return {
-          getContainer: function(id) {
-            return containers[id];
+          getShapes: function() {
+            return shapes;
+          },
+          getShape: function(id) {
+            return shapes[id];
           },
           getContainers: function() {
             return containers;
+          },
+          getContainer: function(id) {
+            return containers[id];
           }
         }
       }]);

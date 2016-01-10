@@ -6,6 +6,11 @@
       <span class="glyphicon glyphicon-th"></span>
     </button>
 
+    <button type="button" class="btn btn-default" ng-click="toggleSnapToGrid()"
+            uib-tooltip="{{ 'SNAP_TO_GRID' | translate }}" tooltip-placement="bottom">
+      <span class="glyphicon glyphicon-magnet"></span>
+    </button>
+
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default" disabled="disabled"
               uib-tooltip="{{ 'ZOOM_IN' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-zoom-in"></span>
@@ -25,11 +30,11 @@
     </div>
 
     <button type="button" class="btn btn-default" ng-click="editDelete()"
-            uib-tooltip="{{ 'DELETE' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-remove"></span>
+            uib-tooltip="{{ 'DELETE' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-trash"></span>
     </button>
 
     <button type="button" class="btn btn-default" disabled="disabled"
-            uib-tooltip="{{ 'LOCK' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-pushpin"></span>
+            uib-tooltip="{{ 'LOCK' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-lock"></span>
     </button>
 
     <button type="button" class="btn btn-default" disabled="disabled"
@@ -40,6 +45,9 @@
 </nav>
 
   <!--
+
+glyphicon-pushpin
+
 
     <form class="navbar-form navbar-left">
     <div class="btn-toolbar" role="toolbar">

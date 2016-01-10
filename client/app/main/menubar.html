@@ -69,9 +69,7 @@
           {{ 'OPTIONS' | translate }} <b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu">
           <li class="disabled">
-            <a href="">
-              {{ 'COMING_SOON' | translate }}
-            </a>
+            <a href="" translate="{{ 'COMING_SOON' }}"></a>
           </li>
         </ul>
       </li>
@@ -81,19 +79,13 @@
           {{ 'LANGUAGE' | translate }} <b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu">
           <li>
-            <a href="" ng-click="switchLanguage('en')">
-              {{ 'ENGLISH' | translate }}
-            </a>
+            <a href="" ng-click="switchLanguage('en')" translate="{{ 'ENGLISH' }}"></a>
           </li>
           <li>
-            <a href="" ng-click="switchLanguage('pl')">
-              {{ 'POLISH' | translate }}
-            </a>
+            <a href="" ng-click="switchLanguage('de')" translate="{{ 'GERMAN' }}"></a>
           </li>
           <li>
-            <a href="" ng-click="switchLanguage('de')">
-              {{ 'GERMAN' | translate }}
-            </a>
+            <a href="" ng-click="switchLanguage('pl')" translate="{{ 'POLISH' }}"></a>
           </li>
         </ul>
       </li>
@@ -103,9 +95,7 @@
           {{ 'HELP' | translate }} <b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu">
           <li class="disabled">
-            <a href="">
-              {{ 'COMING_SOON' | translate }}
-            </a>
+            <a href="" translate="{{ 'COMING_SOON' }}"></a>
           </li>
         </ul>
       </li>
@@ -113,8 +103,9 @@
     </ul>
 
     <ul class="nav navbar-nav navbar-right">
-      <li><a class="navbar-brand sign-in" style="padding-right: 35px;" href="">
-        {{ 'SIGN_IN' | translate }}</a></li>
+      <li>
+        <a class="navbar-brand sign-in" style="padding-right: 35px;" href="" translate="{{ 'SIGN_IN' }}"></a>
+      </li>
     </ul>
 
   </div><!-- /.navbar-collapse -->

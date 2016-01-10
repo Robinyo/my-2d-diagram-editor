@@ -17,6 +17,7 @@
 
         $log.info('MainController');
 
+        $scope.shapes = sidebarFactory.getShapes();
         $scope.containers = sidebarFactory.getContainers();
 
         $scope.fabric = {};
@@ -44,11 +45,34 @@
 
         $scope.$on('canvas:created', $scope.init);
 
-        var containerTextDefaults = FabricConstants.textDefaults;
+        var containerTextDefaults = angular.copy(FabricConstants.textDefaults);
         containerTextDefaults.fontSize = 20;
         containerTextDefaults.fontWeight = 'bold';
+        var containerRectDefaults = angular.copy(FabricConstants.rectDefaults);
 
-        var containerRectDefaults = FabricConstants.rectDefaults;
+        var shapeTextDefaults = angular.copy(FabricConstants.textDefaults);
+        shapeTextDefaults.fontSize = 14;
+        var shapeRectDefaults = angular.copy(FabricConstants.rectDefaults);
+        shapeRectDefaults.width = 100;
+        shapeRectDefaults.height = 100;
+
+        $scope.newShape = function(name, fill) {
+
+          $log.info('MainController.newShape()');
+
+          fill = fill || '#cacaca';
+          shapeRectDefaults.fill = fill;
+
+          // name = name || 'NODE' + ' 1';
+          name = 'NODE';
+
+          $translate(name)
+            .then(function (translatedValue) {
+              $scope.fabric.addRect(shapeRectDefaults);
+              $scope.fabric.addText(translatedValue + ' 1', shapeTextDefaults);
+            });
+
+        };
 
         $scope.newContainer = function(name, fill) {
 
@@ -76,6 +100,7 @@
         };
 
         $scope.toggleGrid = function() {
+
           $log.info('MainController.toggleGrid()');
 
           $scope.grid.show = !$scope.grid.show;
@@ -85,6 +110,11 @@
           } else {
             removeGrid();
           }
+        };
+
+        $scope.toggleSnapToGrid = function() {
+          $log.info('MainController.toggleSnapToGrid()');
+          $scope.fabric.toggleSnapToGrid();
         };
 
         $scope.switchLanguage = function(key) {
@@ -124,7 +154,9 @@
           }
 
           $scope.verticalGridLinesGroup = $scope.fabric.createGroup($scope.verticalGridLines, { selectable: false });
+          $scope.verticalGridLinesGroup.sendToBack();
           $scope.horizontalGridLinesGroup = $scope.fabric.createGroup($scope.horizontalGridLines, { selectable: false });
+          $scope.horizontalGridLinesGroup.sendToBack();
 
           // Why did we start x and y at 0.5? Why not 0?
           // See: http://diveintohtml5.info/canvas.html

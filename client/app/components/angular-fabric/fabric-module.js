@@ -198,6 +198,15 @@ angular.module('common.fabric', [
 			self.render();
 		};
 
+    //
+    // Grid
+    // ==============================================================
+    //
+
+    self.toggleSnapToGrid = function() {
+      self.canvasDefaults.grid.snapTo = !self.canvasDefaults.grid.snapTo;
+    };
+
 		//
 		// Creating Objects
 		// ==============================================================
@@ -1015,14 +1024,18 @@ angular.module('common.fabric', [
       //
       // snap to grid
       //
-      /*
       canvas.on('object:moving', function(options) {
-        options.target.set({
-          left: Math.round(options.target.left / 50) * 50,
-          top: Math.round(options.target.top / 50) * 50
-        });
+
+        if (self.canvasDefaults.grid.snapTo) {
+
+          $log.info('canvas.on(object:moving)');
+
+          options.target.set({
+            left: Math.round(options.target.left / 50) * 50,
+            top: Math.round(options.target.top / 50) * 50
+          });
+        }
       });
-      */
 
 			canvas.on('selection:created', function() {
 				self.stopContinuousRendering();

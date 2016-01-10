@@ -1,3 +1,8 @@
+<!--
+  Note: Where possible you should prefer the translateDirective (e.g., translate="{{ 'BRAND_NAME' }}") to
+  the translateFilter (e.g., {{ 'BRAND_NAME' | translate }}).
+-->
+
 <div class="col-xs-4 col-sm-4 col-md-3 sidebar">
 
   <uib-accordion close-others="false">
@@ -9,20 +14,25 @@
       <uib-accordion-heading>
         {{ 'SHAPES' | translate }}
         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': shapeGroup.open,
-          'glyphicon-chevron-right': !shapeGroup.open}"></i>
+          'glyphicon-chevron-right': !shapeGroup.open}">
+        </i>
       </uib-accordion-heading>
 
-      <div class="media">
-        <a class="pull-left" href="">
-          <img class="media-object" ng-src="content/images/icons/32x32/light-gray.png">
-        </a>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <a href="" translate="{{ 'SQUARE' }}"></a>
-            <!-- {{ 'SQUARE' | translate }} -->
-          </h4>
+      <div ng-repeat="shape in shapes track by shape.id">
+        <div class="media" style="margin-top: 15px">
+          <a class="pull-left" href="" ng-click="newShape(shape.name, shape.backgroundColor)">
+            <img class="media-object" ng-src="{{shape.src}}">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">
+              <a href="" ng-click="newShape(shape.name, shape.backgroundColor)">
+                {{ shape.name | translate }}
+              </a>
+            </h4>
+          </div>
         </div>
-      </div>
+      </div> <!-- <div ng-repeat="shape in shapes track by shape.id"> -->
+
 
      </uib-accordion-group>
 
@@ -33,11 +43,11 @@
       <uib-accordion-heading>
         {{ 'CONTAINERS' | translate }}
         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': containerGroup.open,
-          'glyphicon-chevron-right': !containerGroup.open}"></i>
+          'glyphicon-chevron-right': !containerGroup.open}">
+        </i>
       </uib-accordion-heading>
 
       <div ng-repeat="container in containers track by container.id">
-
         <div class="media" style="margin-top: 15px">
           <a class="pull-left" href="" ng-click="newContainer(container.name, container.backgroundColor)">
             <img class="media-object" ng-src="{{container.src}}">
@@ -50,9 +60,6 @@
             </h4>
           </div>
         </div>
-
-        <div></div>
-
       </div> <!-- <div ng-repeat="container in containers track by container.id"> -->
 
     </uib-accordion-group>

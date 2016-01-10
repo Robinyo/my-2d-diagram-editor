@@ -19,6 +19,7 @@
 
   "VIEW":                        "View",
   "GRID":                        "Grid",
+  "SNAP_TO_GRID":                "Snap to Grid",
 
   "OPTIONS":                     "Options",
   "LANGUAGE":                    "Language",
@@ -32,6 +33,9 @@
 
   "SHAPES":                      "Shapes",
   "SQUARE":                      "Square",
+  "RECTANGLE":                   "Rectangle",
+
+  "NODE":                        "Node",
 
   "CONTAINERS":                  "Containers",
   "CONTROLLED_ZONE":             "Controlled Zone",

@@ -3,7 +3,7 @@ angular.module('common.fabric.constants', [])
 .service('FabricConstants', [function() {
 
 	var objectDefaults = {
-		rotatingPointOffset: 20,
+		rotatingPointOffset: 40,
 		padding: 0,
 		borderColor: 'rgba(102,153,255,0.75)',
 		cornerColor: 'rgba(102,153,255,0.5)',
@@ -187,7 +187,11 @@ angular.module('common.fabric.constants', [])
       width: 800,
       height: 800,
       originalWidth: 800,
-      originalHeight: 800
+      originalHeight: 800,
+      grid: {
+        show: true,
+        snapTo: true
+      }
     },
 
 		shapeDefaults: angular.extend({
