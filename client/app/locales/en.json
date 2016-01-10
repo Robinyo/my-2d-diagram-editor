@@ -15,6 +15,9 @@
   "EDIT":                        "Edit",
   "UNDO":                        "Undo",
   "REDO":                        "Redo",
+  "CUT":                         "Cut",
+  "COPY":                        "Copy",
+  "PASTE":                       "Paste",
   "DELETE":                      "Delete",
 
   "VIEW":                        "View",
@@ -28,6 +31,8 @@
   "ZOOM_IN":                     "Zoom In",
   "ZOOM_OUT":                    "Zoom Out",
 
+  "POINTER":                     "Set Pointer Mode",
+  "CONNECTOR":                   "Set Connector Mode",
   "LOCK":                        "Lock",
   "COMMENT":                     "Comment",
 

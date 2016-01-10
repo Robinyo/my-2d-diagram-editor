@@ -41,6 +41,11 @@ angular.module('common.fabric', [
 
 		}, options);
 
+    var isDrawingMode = false;
+    var connectorLine;
+    var isMouseDown = false;
+
+
 		function capitalize(string) {
 			if (typeof string !== 'string') {
 				return '';
@@ -132,6 +137,7 @@ angular.module('common.fabric', [
 		self.setCanvas = function(newCanvas) {
 			canvas = newCanvas;
 			canvas.selection = self.canvasDefaults.selection;
+      $log.info('setCanvas - ' + self.canvasDefaults.selection.toLocaleString());
 		};
 
 		self.setTextDefaults = function(textDefaults) {
@@ -202,6 +208,11 @@ angular.module('common.fabric', [
     // Grid
     // ==============================================================
     //
+
+    self.setDrawingMode = function(flag) {
+      isDrawingMode = flag;
+      $log.info('toggleDrawingMode - ' + isDrawingMode.toLocaleString());
+    };
 
     self.toggleSnapToGrid = function() {
       self.canvasDefaults.grid.snapTo = !self.canvasDefaults.grid.snapTo;
@@ -999,6 +1010,57 @@ angular.module('common.fabric', [
      */
 		self.startCanvasListeners = function() {
 
+      canvas.on('mouse:down', function(object){
+
+        $log.info('canvas.on(mouse:down');
+
+        if (!isDrawingMode) return;
+
+        isMouseDown = true;
+
+        // self.disableEditing();
+
+        var pointer = canvas.getPointer(object.e);
+        var points = [ pointer.x, pointer.y, pointer.x, pointer.y ];
+
+        $log.info('canvas - ' + canvas.toLocaleString());
+        $log.info('points - ' + points.toLocaleString());
+
+        var options =  {
+          // selectable: false,
+          fill: 'black',
+          stroke: 'black',
+          strokeWidth: 2,
+          originX: 'center',
+          originY: 'center'
+        };
+
+        connectorLine = new FabricWindow.Line(points, options);
+        connectorLine.id = self.createId();
+
+        self.addObjectToCanvas(connectorLine);
+      });
+
+      canvas.on('mouse:move', function(object){
+
+        // $log.info('canvas.on(mouse:move - ' + isMouseDown.toLocaleString());
+
+        if (!isDrawingMode) return;
+
+        if (!isMouseDown) return;
+
+        var pointer = canvas.getPointer(object.e);
+        connectorLine.set({ x2: pointer.x, y2: pointer.y });
+        canvas.renderAll();
+
+      });
+
+      canvas.on('mouse:up', function(){
+        $log.info('canvas.on(mouse:up');
+        isMouseDown = false;
+        // self.enableEditing();
+      });
+
       /*
 
       canvas.on('mouse:over', function(e) {
@@ -1014,6 +1076,7 @@ angular.module('common.fabric', [
       */
 
 			canvas.on('object:selected', function() {
+        $log.info('canvas.on(object:selected');
 				self.stopContinuousRendering();
 				$timeout(function() {
 					self.selectActiveObject();
@@ -1024,11 +1087,12 @@ angular.module('common.fabric', [
       //
       // snap to grid
       //
+      /*
       canvas.on('object:moving', function(options) {
 
         if (self.canvasDefaults.grid.snapTo) {
 
-          $log.info('canvas.on(object:moving)');
+          // $log.info('canvas.on(object:moving)');
 
           options.target.set({
             left: Math.round(options.target.left / 50) * 50,
@@ -1036,13 +1100,16 @@ angular.module('common.fabric', [
           });
         }
       });
+      */
 
 			canvas.on('selection:created', function() {
+        $log.info('canvas.on(selection:created');
 				self.stopContinuousRendering();
 			});
 
 			canvas.on('selection:cleared', function() {
 				$timeout(function() {
+          $log.info('canvas.on(selection:cleared');
 					self.deselectActiveObject();
 				});
 			});
@@ -1052,6 +1119,7 @@ angular.module('common.fabric', [
 			});
 
 			canvas.on('object:modified', function() {
+        $log.info('canvas.on(object:modified');
 				self.stopContinuousRendering();
 				$timeout(function() {
 					self.updateActiveObjectOriginals();

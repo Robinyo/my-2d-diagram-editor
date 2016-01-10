@@ -112,6 +112,16 @@
           }
         };
 
+        $scope.setPointerMode = function() {
+          $log.info('MainController.setPointerMode()');
+          $scope.fabric.setDrawingMode(false);
+        };
+
+        $scope.setConnectorMode = function() {
+          $log.info('MainController.setConnectorMode()');
+          $scope.fabric.setDrawingMode(true);
+        };
+
         $scope.toggleSnapToGrid = function() {
           $log.info('MainController.toggleSnapToGrid()');
           $scope.fabric.toggleSnapToGrid();

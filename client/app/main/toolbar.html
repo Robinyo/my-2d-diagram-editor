@@ -29,9 +29,32 @@
       </button>
     </div>
 
-    <button type="button" class="btn btn-default" ng-click="editDelete()"
+    <!--
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default" disabled="disabled"
+              uib-tooltip="{{ 'CUT' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-asterisk"></span>
+      </button>
+      <button type="button" class="btn btn-default" disabled="disabled"
+              uib-tooltip="{{ 'COPY' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-asterisk"></span>
+      </button>
+      <button type="button" class="btn btn-default" disabled="disabled"
+              uib-tooltip="{{ 'PASTE' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-asterisk"></span>
+      </button>
+    </div>
+    -->
+
+
+    <button type="button" class="btn btn-default"
             uib-tooltip="{{ 'DELETE' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-trash"></span>
     </button>
+
+    <button type="button" class="btn btn-default" ng-click="setPointerMode()"
+            uib-tooltip="{{ 'POINTER' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-ok"></span>
+    </button>
+    <button type="button" class="btn btn-default" ng-click="setConnectorMode()"
+            uib-tooltip="{{ 'CONNECTOR' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-pencil"></span>
+    </button>
+
 
     <button type="button" class="btn btn-default" disabled="disabled"
             uib-tooltip="{{ 'LOCK' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-lock"></span>
