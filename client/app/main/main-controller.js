@@ -13,13 +13,18 @@
    * $scope is the glue between the view and controller within an AngularJS application. With the
    * introduction of the controller-as syntax, the need to explicitly use $scope has been greatly reduced.
    *
+   * However we still need it for Eventing :)
+   * $broadcast: Sends events from a parent scope downward to its children.
+   * $emit: Sends events from a child upward to its parent.
+   * $on: Listens for an event and responds.
+   *
    * We'll use the controller-as syntax by declaring the controller to be 'MainController as main', which
    * means that we’ll reference the MainController as main within our Views (e.g., layout.html).
    */
 
   angular.module('my-2d-diagram-editor.main')
-    .controller('MainController', ['$log', '$translate', 'mainService',
-      function($log, $translate, mainService) {
+    .controller('MainController', ['$log', '$translate', '$scope', 'mainService', 'fabricService', 'fabricCanvas', 'fabricWindow',
+      function($log, $translate, $scope, mainService, fabricService, fabricCanvas, fabricWindow) {
 
         $log.info('MainController as main');
 
@@ -36,8 +41,45 @@
         main.containers = mainService.getContainers();
 
         main.init = function () {
-          main.toggleGrid();
+
+          $log.info('MainController - init()');
+
+          var canvas = fabricCanvas.getCanvas();
+
+          var rectDefaults = angular.copy(fabricService.getRectDefaults);
+          rectDefaults.left = 100;
+          rectDefaults.top = 100;
+          rectDefaults.width = 100;
+          rectDefaults.height = 100;
+
+          // canvas.selection = true;
+
+          $log.info('canvas: ' + JSON.stringify(['e', canvas], null, '\t'));
+
+          var object = new fabricWindow.Rect(rectDefaults);
+
+          canvas.add(object);
+          canvas.renderAll();
+
+          /*
+
+           object.id = self.createId();
+
+           self.addObjectToCanvas(object);
+
+          var points = [100, 200, 100, 200];
+          var options = { stroke: '#ccc' };
+          var object = new fabricWindow.Line(points, options);
+
+          canvas.add(object);
+
+          canvas.renderAll();
+
+          */
+
         };
+
+        $scope.$on('canvas:created', main.init);
 
         main.newShape = function(name, fill) {
           $log.info('MainController.newShape()');
