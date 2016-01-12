@@ -8,7 +8,24 @@
 
         var service = this;
 
-        // const CONTROLLED_ZONE_ID = 0;
+        const CANVAS_WIDTH = 800;
+        const CANVAS_HEIGHT = 600;
+
+        const RECT_WIDTH = 300;
+        const RECT_HEIGHT = 300;
+
+        var canvasDefaults = {
+          backgroundColor: '#ffffff',
+          selection: true,
+          width: CANVAS_WIDTH,
+          height: CANVAS_HEIGHT,
+          originalWidth: CANVAS_WIDTH,
+          originalHeight: CANVAS_HEIGHT,
+          grid: {
+            show: true,
+            snapTo: true
+          }
+        };
 
         var objectDefaults = {
           rotatingPointOffset: 40,
@@ -24,17 +41,24 @@
         var rectDefaults = angular.extend({
           left: 0,
           top: 0,
-          width: 300,
-          height: 300,
-          fill: '#FFFF00',
+          width: RECT_WIDTH,
+          height: RECT_HEIGHT,
+          fill: 'LIGHTGRAY',
           opacity: 0.7
         }, objectDefaults);
+
+        service.getCanvasDefaults = function() {
+          return canvasDefaults;
+        };
 
         service.getRectDefaults = function() {
           return rectDefaults;
         };
 
+
+
       });
 
 })();
 
+// LIGHTGRAY  #D3D3D3  RGB(211, 211, 211)

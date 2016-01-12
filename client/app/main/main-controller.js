@@ -46,19 +46,29 @@
 
           var canvas = fabricCanvas.getCanvas();
 
-          var rectDefaults = angular.copy(fabricService.getRectDefaults);
+          var rectDefaults = angular.copy(fabricService.getRectDefaults());
+
+          // $log.info('rectDefaults: ' + JSON.stringify(['e', rectDefaults], null, '\t'));
+
           rectDefaults.left = 100;
           rectDefaults.top = 100;
           rectDefaults.width = 100;
           rectDefaults.height = 100;
 
-          // canvas.selection = true;
-
-          $log.info('canvas: ' + JSON.stringify(['e', canvas], null, '\t'));
+          // $log.info('canvas: ' + JSON.stringify(['e', canvas], null, '\t'));
 
           var object = new fabricWindow.Rect(rectDefaults);
 
           canvas.add(object);
+
+          rectDefaults.left = 200;
+          rectDefaults.top = 200;
+
+          var object = new fabricWindow.Rect(rectDefaults);
+
+          canvas.add(object);
+
+          canvas.setActiveObject(object);
           canvas.renderAll();
 
           /*

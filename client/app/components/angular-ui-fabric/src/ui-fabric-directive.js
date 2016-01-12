@@ -5,37 +5,37 @@
   angular.module('ui.fabric')
     .directive('fabric', function($log, fabricCanvas) {
       return {
-        scope: {
-          fabric: '='
-        },
 
-        /*
         restrict: 'A',
         scope: {
           options: '='
         },
-        link: function postLink(scope, element) {
-          $log.info('postLink()');
+        link: function link(scope, element) {
+
+          $log.info('fabric - link()');
 
           var options = scope.options;
 
+          // var options = scope.options || angular.copy(fabricService.getCanvasDefaults());
           // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
 
-          $log.info('id: ' + element.attr('id'));
-          // $log.info('element: ' + JSON.stringify(['e', element], null, '\t'));
-          element.attr('id', 'fabric-canvas-101' );
-          $log.info('id: ' + element.attr('id'));
-
+          fabricCanvas.setElement(element);
+          fabricCanvas.createCanvas(options);
 
         },
 
+        /*
+        scope: {
+          fabric: '='
+        },
         */
+
         controller: function($scope, $element) {
 
-          $log.info('controller()');
+          $log.info('fabric - controller()');
 
-          fabricCanvas.setElement($element);
-          fabricCanvas.createCanvas();
+          // fabricCanvas.setElement($element);
+          // fabricCanvas.createCanvas();
 
         }
       };

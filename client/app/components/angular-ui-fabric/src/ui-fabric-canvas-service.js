@@ -1,8 +1,10 @@
 (function() {
 
+  'use strict';
+
   angular.module('ui.fabric')
     .service('fabricCanvas',
-      function ($log, $rootScope, fabricWindow) {
+      function ($log, $rootScope, fabricService, fabricWindow) {
 
         var service = this;
 
@@ -15,11 +17,15 @@
           $rootScope.$broadcast('canvas:element:selected');
         };
 
-        service.createCanvas = function() {
+        service.createCanvas = function(options) {
+
+          options = options || angular.copy(fabricService.getCanvasDefaults());
+
+          $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
 
           service.canvasId = 'fabric-canvas-' + createId();
           service.element.attr('id', service.canvasId);
-          service.canvas = new fabricWindow.Canvas(service.canvasId, { selection: false, width: 600, height: 600 });
+          service.canvas = new fabricWindow.Canvas(service.canvasId, options);
           $rootScope.$broadcast('canvas:created');
 
           $log.info('service.element: ' + JSON.stringify(['e', service.element], null, '\t'));
@@ -39,3 +45,5 @@
 
 })();
 
+// { selection: false, width: 600, height: 600 }
+// { width: 600, height: 600, backgroundColor: '#DCDCDC' }
