@@ -9,221 +9,83 @@
    * The notation that we have used is one of the two ways in which we can declare AngularJS controllers
    * (or services, directives, or filters). The style we have used, which is also the recommended way,
    * is the safe-style of Dependency Injection, or declaration.
+   *
+   * $scope is the glue between the view and controller within an AngularJS application. With the
+   * introduction of the controller-as syntax, the need to explicitly use $scope has been greatly reduced.
+   *
+   * We'll use the controller-as syntax by declaring the controller to be 'MainController as main', which
+   * means that we’ll reference the MainController as main within our Views (e.g., layout.html).
    */
 
-  angular.module('my-2d-diagram-editor')
-    .controller('MainController', ['$log', '$translate', '$scope', 'Fabric', 'FabricConstants', 'sidebarFactory',
-      function($log, $translate, $scope, Fabric, FabricConstants, sidebarFactory) {
+  angular.module('my-2d-diagram-editor.main')
+    .controller('MainController', ['$log', '$translate', 'mainService',
+      function($log, $translate, mainService) {
 
-        $log.info('MainController');
+        $log.info('MainController as main');
 
-        $scope.shapes = sidebarFactory.getShapes();
-        $scope.containers = sidebarFactory.getContainers();
+        /*
+         * Per common convention, I like to store a reference to the top-level this object (this has a habit
+         * of changing context based on function level scope). I also like to name the reference to this, the
+         * same name that I declare the controller-as (e.g., MainController as main).
+         * This makes it easier to read and connect the dots as you jump between the HTML and the JavaScript.
+         */
 
-        $scope.fabric = {};
-        // $scope.FabricConstants = FabricConstants;
+        var main = this;
 
-        $scope.grid = { show: false };
-        $scope.verticalGridLinesGroup = {};
-        $scope.horizontalGridLinesGroup = {};
-        $scope.verticalGridLines = [];
-        $scope.horizontalGridLines = [];
+        main.shapes = mainService.getShapes();
+        main.containers = mainService.getContainers();
 
-        $scope.init = function () {
-
-          $scope.fabric = new Fabric({
-            JSONExportProperties: FabricConstants.JSONExportProperties,
-            shapeDefaults: FabricConstants.shapeDefaults,
-            rectDefaults: FabricConstants.rectDefaults,
-            textDefaults: FabricConstants.textDefaults,
-            json: {}
-          });
-
-          $scope.toggleGrid();
-
+        main.init = function () {
+          main.toggleGrid();
         };
 
-        $scope.$on('canvas:created', $scope.init);
-
-        var containerTextDefaults = angular.copy(FabricConstants.textDefaults);
-        containerTextDefaults.fontSize = 20;
-        containerTextDefaults.fontWeight = 'bold';
-        var containerRectDefaults = angular.copy(FabricConstants.rectDefaults);
-
-        var shapeTextDefaults = angular.copy(FabricConstants.textDefaults);
-        shapeTextDefaults.fontSize = 14;
-        var shapeRectDefaults = angular.copy(FabricConstants.rectDefaults);
-        shapeRectDefaults.width = 100;
-        shapeRectDefaults.height = 100;
-
-        $scope.newShape = function(name, fill) {
-
+        main.newShape = function(name, fill) {
           $log.info('MainController.newShape()');
-
-          fill = fill || '#cacaca';
-          shapeRectDefaults.fill = fill;
-
-          // name = name || 'NODE' + ' 1';
-          name = 'NODE';
-
-          $translate(name)
-            .then(function (translatedValue) {
-              $scope.fabric.addRect(shapeRectDefaults);
-              $scope.fabric.addText(translatedValue + ' 1', shapeTextDefaults);
-            });
-
         };
 
-        $scope.newContainer = function(name, fill) {
-
+        main.newContainer = function(name, fill) {
           $log.info('MainController.newContainer()');
-
-          fill = fill || '#cacaca';
-          containerRectDefaults.fill = fill;
-
-          name = name || 'CONTROLLED_ZONE';
-
-          $translate(name)
-            .then(function (translatedValue) {
-              $scope.fabric.addRect(containerRectDefaults);
-              $scope.fabric.addText(translatedValue, containerTextDefaults);
-            });
         };
 
-        $scope.fileNew = function() {
+        main.fileNew = function() {
           $log.info('MainController.fileNew()');
         };
 
-        $scope.editDelete = function() {
+        main.editDelete = function() {
           $log.info('MainController.editDelete()');
-          $scope.fabric.deleteActiveObject();
         };
 
-        $scope.toggleGrid = function() {
-
+        main.toggleGrid = function() {
           $log.info('MainController.toggleGrid()');
-
-          $scope.grid.show = !$scope.grid.show;
-
-          if ($scope.grid.show) {
-            drawGrid();
-          } else {
-            removeGrid();
-          }
         };
 
-        $scope.setPointerMode = function() {
+        main.setPointerMode = function() {
           $log.info('MainController.setPointerMode()');
-          $scope.fabric.setDrawingMode(false);
         };
 
-        $scope.setConnectorMode = function() {
+        main.setConnectorMode = function() {
           $log.info('MainController.setConnectorMode()');
-          $scope.fabric.setDrawingMode(true);
         };
 
-        $scope.toggleSnapToGrid = function() {
+        main.toggleSnapToGrid = function() {
           $log.info('MainController.toggleSnapToGrid()');
-          $scope.fabric.toggleSnapToGrid();
         };
 
-        $scope.switchLanguage = function(key) {
+        main.switchLanguage = function(key) {
+          $log.info('MainController.switchLanguage() - ' + key.toLocaleString());
           $translate.use(key);
-       };
+        };
 
         //
         // Private methods
         //
 
         var removeGrid = function() {
-
           $log.info('MainController.removeGrid()');
-
-          $scope.fabric.removeGroup($scope.verticalGridLinesGroup);
-          $scope.fabric.removeGroup($scope.horizontalGridLinesGroup);
         };
 
         var drawGrid = function() {
-
           $log.info('MainController.drawGrid()');
-
-          var grid = 50;
-          var width = FabricConstants.canvasDefaults.width;
-          var height = FabricConstants.canvasDefaults.height;
-
-          // draw the Vertical lines
-          var i = 0;
-          for (var x = 0.5; x < width; x += grid) {
-            $scope.verticalGridLines[i++] = $scope.fabric.drawGridLine([ x, 0.5, x, width], { stroke: '#ccc', selectable: false });
-          }
-
-          // draw the Horizontal lines
-          i = 0;
-          for (var y = 0.5; y < height; y += grid) {
-            $scope.horizontalGridLines[i++] = $scope.fabric.drawGridLine([ 0.5, y, height, y], { stroke: '#ccc', selectable: false });
-          }
-
-          $scope.verticalGridLinesGroup = $scope.fabric.createGroup($scope.verticalGridLines, { selectable: false });
-          $scope.verticalGridLinesGroup.sendToBack();
-          $scope.horizontalGridLinesGroup = $scope.fabric.createGroup($scope.horizontalGridLines, { selectable: false });
-          $scope.horizontalGridLinesGroup.sendToBack();
-
-          // Why did we start x and y at 0.5? Why not 0?
-          // See: http://diveintohtml5.info/canvas.html
-
-          $scope.fabric.deselectActiveObject();
         };
-
       }]);
 })();
-
-/*
-
- $scope.viewGrid = function() {
- $log.info('MainController.viewGrid()');
- toggleGrid();
- };
-
- var grid = 100;
- var verticalY1= 1;
- var horizontalX1 = 1;
-
- for (var i = 0; i < (600 / grid); i++) {
- // draw the Vertical grid lines
- $scope.fabric.addLine([ i * grid, verticalY1, i * grid, 600], { stroke: '#ccc', selectable: false });
- // draw the Horizontal grid lines
- $scope.fabric.addLine([ horizontalX1, i * grid, 600, i * grid], { stroke: '#ccc', selectable: false });
- }
-
- // containerTextDefaults.left = 0;
- // containerTextDefaults.top = 0;
- // containerTextDefaults.fontFamily = 'Tahoma';
-
- $scope.fabric.addText('Controlled Zone');
- $scope.fabric.setFontFamily('Tahoma');
- $scope.fabric.setFontSize(20);
- $scope.fabric.toggleBold();
-
- $scope.fabric.addLine([ 50, 25, 50, 550], { stroke: '#ccc', selectable: false });
- $scope.fabric.addLine([ 100, 25, 100, 550], { stroke: '#ccc', selectable: false });
- $scope.fabric.addLine([ 150, 25, 150, 550], { stroke: '#ccc', selectable: false });
-
- */
-
-
-/*
-
- $scope.newContainer = function(label, fill) {
-
- $log.info('MainController.newContainer()');
-
- label = label || 'New Container';
- fill = fill || '#cacaca';
-
- containerRectDefaults.fill = fill;
-
- $scope.fabric.addRect(containerRectDefaults);
- $scope.fabric.addText(label, containerTextDefaults);
- };
-
- */

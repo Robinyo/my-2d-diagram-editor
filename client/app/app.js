@@ -2,14 +2,21 @@
 
   'use strict';
 
+  /*
+   * Declare a new module called 'my-2d-diagram-editor', and list its dependencies.
+   * Modules serve as containers to help you organise code within your AngularJS application.
+   * Modules can contain sub-modules, making it easy to compose functionality as needed.
+   */
+
   angular.module('my-2d-diagram-editor', [
     'ngAnimate',
     'ui.bootstrap',
     'ui.router',
-    'common.fabric',
-    'common.fabric.utilities',
-    'common.fabric.constants',
-    'pascalprecht.translate'
+    'pascalprecht.translate',
+
+    'ui.fabric',
+
+    'my-2d-diagram-editor.main'
   ])
     .config(function($stateProvider, $urlRouterProvider, $translateProvider) {
 
@@ -28,11 +35,18 @@
         .determinePreferredLanguage()
         .useSanitizeValueStrategy('escapeParameters');
 
+      /*
+       * Routes allow you to define ways to navigate to specific states within your application.
+       * They also allow you to define configuration options for each specific route, such as
+       * which template and controller to use.
+       */
+
       $stateProvider
         .state('home', {
           url: '/',
-          templateUrl: 'app/main/main.html',
-          controller: 'MainController'
+          templateUrl: 'app/main/layout.html',
+          controller: 'MainController',
+          controllerAs: 'main'
         });
 
       $urlRouterProvider.otherwise('/');
@@ -40,3 +54,4 @@
     });
 
 })();
+

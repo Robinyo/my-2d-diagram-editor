@@ -1,12 +1,12 @@
 <nav class="navbar navbar-default navbar-fixed-top toolbar">
   <form class="navbar-form navbar-left">
 
-    <button type="button" class="btn btn-default" ng-click="toggleGrid()"
+    <button type="button" class="btn btn-default" ng-click="main.toggleGrid()"
             uib-tooltip="{{ 'GRID' | translate }}" tooltip-placement="bottom">
       <span class="glyphicon glyphicon-th"></span>
     </button>
 
-    <button type="button" class="btn btn-default" ng-click="toggleSnapToGrid()"
+    <button type="button" class="btn btn-default" ng-click="main.toggleSnapToGrid()"
             uib-tooltip="{{ 'SNAP_TO_GRID' | translate }}" tooltip-placement="bottom">
       <span class="glyphicon glyphicon-magnet"></span>
     </button>
@@ -44,14 +44,14 @@
     -->
 
 
-    <button type="button" class="btn btn-default"
+    <button type="button" class="btn btn-default" ng-click="main.editDelete()"
             uib-tooltip="{{ 'DELETE' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-trash"></span>
     </button>
 
-    <button type="button" class="btn btn-default" ng-click="setPointerMode()"
+    <button type="button" class="btn btn-default" ng-click="main.setPointerMode()"
             uib-tooltip="{{ 'POINTER' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-ok"></span>
     </button>
-    <button type="button" class="btn btn-default" ng-click="setConnectorMode()"
+    <button type="button" class="btn btn-default" ng-click="main.setConnectorMode()"
             uib-tooltip="{{ 'CONNECTOR' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-pencil"></span>
     </button>
 

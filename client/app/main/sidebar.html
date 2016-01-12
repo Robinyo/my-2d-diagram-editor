@@ -18,14 +18,14 @@
         </i>
       </uib-accordion-heading>
 
-      <div ng-repeat="shape in shapes track by shape.id">
+      <div ng-repeat="shape in main.shapes track by shape.id">
         <div class="media" style="margin-top: 15px">
-          <a class="pull-left" href="" ng-click="newShape(shape.name, shape.backgroundColor)">
+          <a class="pull-left" href="" ng-click="main.newShape(shape.name, shape.backgroundColor)">
             <img class="media-object" ng-src="{{shape.src}}">
           </a>
           <div class="media-body">
             <h4 class="media-heading">
-              <a href="" ng-click="newShape(shape.name, shape.backgroundColor)">
+              <a href="" ng-click="main.newShape(shape.name, shape.backgroundColor)">
                 {{ shape.name | translate }}
               </a>
             </h4>
@@ -47,14 +47,14 @@
         </i>
       </uib-accordion-heading>
 
-      <div ng-repeat="container in containers track by container.id">
+      <div ng-repeat="container in main.containers track by container.id">
         <div class="media" style="margin-top: 15px">
-          <a class="pull-left" href="" ng-click="newContainer(container.name, container.backgroundColor)">
+          <a class="pull-left" href="" ng-click="main.newContainer(container.name, container.backgroundColor)">
             <img class="media-object" ng-src="{{container.src}}">
           </a>
           <div class="media-body">
             <h4 class="media-heading">
-              <a href="" ng-click="newContainer(container.name, container.backgroundColor)">
+              <a href="" ng-click="main.newContainer(main.container.name, container.backgroundColor)">
                 {{ container.name | translate }}
               </a>
             </h4>
@@ -67,4 +67,11 @@
   </uib-accordion>
 
 </div>
+
+<!--
+
+ng-style="{color: car.color}"
+
+ -->
+
 

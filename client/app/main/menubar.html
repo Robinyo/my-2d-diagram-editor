@@ -27,7 +27,7 @@
         </a>
         <ul class="dropdown-menu" role="menu">
           <li>
-            <a href="" ng-click="fileNew()" translate="{{ 'FILE_NEW' }}"></a>
+            <a href="" ng-click="main.fileNew()" translate="{{ 'FILE_NEW' }}"></a>
           </li>
           <li class="divider"></li>
           <li class="disabled">
@@ -49,7 +49,7 @@
           </li>
           <li class="divider"></li>
           <li>
-            <a href="" ng-click="editDelete()" translate="{{ 'DELETE' }}"></a>
+            <a href="" ng-click="main.editDelete()" translate="{{ 'DELETE' }}"></a>
           </li>
         </ul>
       </li>
@@ -59,7 +59,7 @@
           {{ 'VIEW' | translate }} <b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu">
           <li>
-            <a href="" ng-click="toggleGrid()" translate="{{ 'GRID' }}"></a>
+            <a href="" ng-click="main.toggleGrid()" translate="{{ 'GRID' }}"></a>
           </li>
         </ul>
       </li>
@@ -79,13 +79,13 @@
           {{ 'LANGUAGE' | translate }} <b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu">
           <li>
-            <a href="" ng-click="switchLanguage('en')" translate="{{ 'ENGLISH' }}"></a>
+            <a href="" ng-click="main.switchLanguage('en')" translate="{{ 'ENGLISH' }}"></a>
           </li>
           <li>
-            <a href="" ng-click="switchLanguage('de')" translate="{{ 'GERMAN' }}"></a>
+            <a href="" ng-click="main.switchLanguage('de')" translate="{{ 'GERMAN' }}"></a>
           </li>
           <li>
-            <a href="" ng-click="switchLanguage('pl')" translate="{{ 'POLISH' }}"></a>
+            <a href="" ng-click="main.switchLanguage('pl')" translate="{{ 'POLISH' }}"></a>
           </li>
         </ul>
       </li>

@@ -1,10 +1,12 @@
 (function() {
 
-'use strict';
+  'use strict';
 
-  angular.module('my-2d-diagram-editor')
-    .factory('sidebarFactory', [
-      function() {
+  angular.module('my-2d-diagram-editor.main')
+    .service('mainService',
+      function () {
+
+        var service = this;
 
         const CONTROLLED_ZONE_ID = 0;
         const RESTRICTED_ZONE_ID = 1;
@@ -25,14 +27,14 @@
           }
 
           /* ,
-          {
-            "id"              : RECTANGLE_ID,
-            "name"            : "RECTANGLE",
-            "value"           : "Rectangle",
-            "src"             : "content/images/icons/32x32/light-gray.png",
-            "backgroundColor" : "LIGHTGRAY"
-          }
-          */
+           {
+           "id"              : RECTANGLE_ID,
+           "name"            : "RECTANGLE",
+           "value"           : "Rectangle",
+           "src"             : "content/images/icons/32x32/light-gray.png",
+           "backgroundColor" : "LIGHTGRAY"
+           }
+           */
 
         ];
 
@@ -79,28 +81,30 @@
           }
         ];
 
-        return {
-          getShapes: function() {
-            return shapes;
-          },
-          getShape: function(id) {
-            return shapes[id];
-          },
-          getContainers: function() {
-            return containers;
-          },
-          getContainer: function(id) {
-            return containers[id];
-          }
-        }
-      }]);
-})();
+        service.getShapes = function() {
+          return shapes;
+        };
 
+        service.getShape = function(id) {
+          return shapes[id];
+        };
+
+        service.getContainers = function() {
+          return containers;
+        };
+
+        service.getContainer = function(id) {
+          return containers[id];
+        };
+
+      });
+
+})();
 
 /*
 
-  // http://www.awwwards.com/trendy-web-color-palettes-and-material-design-color-schemes-tools.html
-  // http://htmlcolorcodes.com/color-names/
-  "src" : "http://placehold.it/32x32/FFFF00",  // YELLOW
+ // http://www.awwwards.com/trendy-web-color-palettes-and-material-design-color-schemes-tools.html
+ // http://htmlcolorcodes.com/color-names/
+ "src" : "http://placehold.it/32x32/FFFF00",  // YELLOW
 
-*/
+ */
