@@ -139,5 +139,6 @@
         var drawGrid = function() {
           $log.info('MainController.drawGrid()');
         };
+
       }]);
 })();

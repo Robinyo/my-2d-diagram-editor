@@ -37,10 +37,6 @@
           return service.canvas;
         };
 
-        // service.getShapes = function() {
-        //   return shapes;
-        // };
-
     });
 
 })();
