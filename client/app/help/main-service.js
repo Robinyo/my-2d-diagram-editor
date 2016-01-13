@@ -2,8 +2,20 @@
 
   'use strict';
 
+  /*
+   * Use camelCase when naming services and factories.
+   */
+
   angular.module('my-2d-diagram-editor.main')
     .service('mainService', mainService);
+
+  /*
+   * Use $inject to manually identify your dependencies for Angular components.
+   * This technique mirrors the technique used by ng-annotate, for automating the creation of minification safe
+   * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
+   */
+
+  // mainService.$inject = [''];
 
   function mainService() {
 

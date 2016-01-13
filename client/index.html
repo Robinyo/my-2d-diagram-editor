@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="my-2d-diagram-editor">
+<html ng-app="my-2d-diagram-editor" ng-strict-di>
 
 <head>
   <meta charset="utf-8" />
@@ -28,17 +28,20 @@
 
   <script src="bower_components/fabric.js/dist/fabric.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric.js"></script>
-  <script src="app/components/angular-ui-fabric/src/ui-fabric-service.js"></script>
-  <script src="app/components/angular-ui-fabric/src/ui-fabric-directive.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-canvas-service.js"></script>
+  <script src="app/components/angular-ui-fabric/src/ui-fabric-directive.js"></script>
+  <script src="app/components/angular-ui-fabric/src/ui-fabric-service.js"></script>
+  <script src="app/components/angular-ui-fabric/src/ui-fabric-shape.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-window.js"></script>
+
 
   <script src="app/app.js"></script>
   <script src="app/app-config.js"></script>
 
   <script src="app/main/main-module.js"></script>
   <script src="app/main/main-controller.js"></script>
-  <script src="app/main/main-service.js"></script>
+  <script src="app/main/shapes-service.js"></script>
+  <script src="app/main/containers-service.js"></script>
 
 </body>
 

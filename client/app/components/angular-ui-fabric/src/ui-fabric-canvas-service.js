@@ -5,6 +5,12 @@
   angular.module('ui.fabric')
     .service('fabricCanvas', fabricCanvas);
 
+  /*
+   * Use $inject to manually identify your dependencies for Angular components.
+   * This technique mirrors the technique used by ng-annotate, for automating the creation of minification safe
+   * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
+   */
+
   fabricCanvas.$inject = ['$log', '$rootScope', 'fabricService', 'fabricWindow'];
 
   function fabricCanvas($log, $rootScope, fabricService, fabricWindow) {
@@ -24,7 +30,7 @@
 
       options = options || angular.copy(fabricService.getCanvasDefaults());
 
-      $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+      // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
 
       service.canvasId = 'fabric-canvas-' + createId();
       service.element.attr('id', service.canvasId);

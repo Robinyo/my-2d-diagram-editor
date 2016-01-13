@@ -5,6 +5,14 @@
   angular.module('ui.fabric')
     .service('fabricService', fabricService);
 
+  /*
+   * Use $inject to manually identify your dependencies for Angular components.
+   * This technique mirrors the technique used by ng-annotate, for automating the creation of minification safe
+   * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
+   */
+
+  // fabricService.$inject = [''];
+
   function fabricService() {
 
     var service = this;

@@ -9,21 +9,31 @@
    * Helps avoid the temptation of using $scope methods inside a controller when it may otherwise be better to
    * avoid them or move the method to a factory, and reference them from the controller.
    *
+   * We'll use the controllerAs syntax by declaring the controller to be 'MainController as main', which
+   * means that we’ll reference the MainController as main within our Views (e.g., layout.html).
+   *
    * Consider using $scope in a controller only when needed. For example when publishing or subscribing to events.
    * $broadcast: Sends events from a parent scope downward to its children.
    * $emit: Sends events from a child upward to its parent.
    * $on: Listens for an event and responds.
-   *
-   * We'll use the controllerAs syntax by declaring the controller to be 'MainController as main', which
-   * means that we’ll reference the MainController as main within our Views (e.g., layout.html).
+   */
+
+  /*
+   * Use UpperCamelCase when naming controllers, as they are constructors.
    */
 
   angular.module('my-2d-diagram-editor.main')
     .controller('MainController', MainController);
 
-  MainController.$inject = ['$log', '$translate', '$scope', 'mainService', 'fabricService', 'fabricCanvas', 'fabricWindow'];
+  /*
+   * Use $inject to manually identify your dependencies for Angular components.
+   * This technique mirrors the technique used by ng-annotate, for automating the creation of minification safe
+   * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
+   */
 
-  function MainController($log, $translate, $scope, mainService, fabricService, fabricCanvas, fabricWindow) {
+  MainController.$inject = ['$log', '$translate', '$scope', 'shapesService', 'containersService', 'fabricShape'];
+
+  function MainController($log, $translate, $scope, shapesService, containersService, fabricShape) {
 
     $log.info('MainController');
 
@@ -36,57 +46,14 @@
 
     var main = this;
 
-    main.shapes = mainService.getShapes();
-    main.containers = mainService.getContainers();
+    main.shapes = shapesService.getShapes();
+    main.containers = containersService.getContainers();
 
     main.init = function () {
 
       $log.info('MainController - init()');
 
-      // Defer Controller Logic to Services :)
-
-      var canvas = fabricCanvas.getCanvas();
-
-      var rectDefaults = angular.copy(fabricService.getRectDefaults());
-
-      // $log.info('rectDefaults: ' + JSON.stringify(['e', rectDefaults], null, '\t'));
-
-      rectDefaults.left = 100;
-      rectDefaults.top = 100;
-      rectDefaults.width = 100;
-      rectDefaults.height = 100;
-
-      // $log.info('canvas: ' + JSON.stringify(['e', canvas], null, '\t'));
-
-      var object = new fabricWindow.Rect(rectDefaults);
-
-      canvas.add(object);
-
-      rectDefaults.left = 200;
-      rectDefaults.top = 200;
-
-      var object = new fabricWindow.Rect(rectDefaults);
-
-      canvas.add(object);
-
-      canvas.setActiveObject(object);
-      canvas.renderAll();
-
-      /*
-
-       object.id = self.createId();
-
-       self.addObjectToCanvas(object);
-
-       var points = [100, 200, 100, 200];
-       var options = { stroke: '#ccc' };
-       var object = new fabricWindow.Line(points, options);
-
-       canvas.add(object);
-
-       canvas.renderAll();
-
-       */
+      fabricShape.addRect();
 
     };
 

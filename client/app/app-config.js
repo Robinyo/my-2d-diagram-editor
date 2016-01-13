@@ -5,6 +5,14 @@
   angular.module('my-2d-diagram-editor')
     .config(configApp);
 
+  /*
+   * Use $inject to manually identify your dependencies for Angular components.
+   * This technique mirrors the technique used by ng-annotate, for automating the creation of minification safe
+   * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
+   */
+
+  configApp.$inject = ['$translateProvider', '$stateProvider', '$urlRouterProvider'];
+
   function configApp($translateProvider, $stateProvider, $urlRouterProvider) {
     configTranslations($translateProvider);
     configRoutes($stateProvider, $urlRouterProvider);
@@ -42,7 +50,25 @@
         templateUrl: 'app/main/layout.html',
         controller: 'MainController',
         controllerAs: 'main'
+        /*
+        resolve: {
+          moviesPrepService: moviesPrepService
+        }
+        */
       });
+
+    /*
+     * Use $inject to manually identify your route resolver dependencies for Angular components.
+     * This technique breaks out the anonymous function for the route resolver, making it easier to read.
+     * $inject statement can easily precede the resolver to handle making any dependencies minification safe.
+     */
+
+    /*
+    moviesPrepService.$inject = ['movieService'];
+    function moviesPrepService(movieService) {
+      return movieService.getMovies();
+    }
+    */
 
     $urlRouterProvider.otherwise('/');
   }
