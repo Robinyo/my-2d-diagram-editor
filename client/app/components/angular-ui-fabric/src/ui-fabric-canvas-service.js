@@ -3,41 +3,44 @@
   'use strict';
 
   angular.module('ui.fabric')
-    .service('fabricCanvas',
-      function ($log, $rootScope, fabricService, fabricWindow) {
+    .service('fabricCanvas', fabricCanvas);
 
-        var service = this;
+  fabricCanvas.$inject = ['$log', '$rootScope', 'fabricService', 'fabricWindow'];
 
-        function createId() {
-          return Math.floor(Math.random() * 10000);
-        }
+  function fabricCanvas($log, $rootScope, fabricService, fabricWindow) {
 
-        service.setElement = function(element) {
-          service.element = element;
-          $rootScope.$broadcast('canvas:element:selected');
-        };
+    var service = this;
 
-        service.createCanvas = function(options) {
+    function createId() {
+      return Math.floor(Math.random() * 10000);
+    }
 
-          options = options || angular.copy(fabricService.getCanvasDefaults());
+    service.setElement = function(element) {
+      service.element = element;
+      $rootScope.$broadcast('canvas:element:selected');
+    };
 
-          $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+    service.createCanvas = function(options) {
 
-          service.canvasId = 'fabric-canvas-' + createId();
-          service.element.attr('id', service.canvasId);
-          service.canvas = new fabricWindow.Canvas(service.canvasId, options);
-          $rootScope.$broadcast('canvas:created');
+      options = options || angular.copy(fabricService.getCanvasDefaults());
 
-          $log.info('service.element: ' + JSON.stringify(['e', service.element], null, '\t'));
+      $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
 
-          return service.canvas;
-        };
+      service.canvasId = 'fabric-canvas-' + createId();
+      service.element.attr('id', service.canvasId);
+      service.canvas = new fabricWindow.Canvas(service.canvasId, options);
+      $rootScope.$broadcast('canvas:created');
 
-        service.getCanvas = function() {
-          return service.canvas;
-        };
+      $log.info('service.element: ' + JSON.stringify(['e', service.element], null, '\t'));
 
-    });
+      return service.canvas;
+    };
+
+    service.getCanvas = function() {
+      return service.canvas;
+    };
+
+  }
 
 })();
 

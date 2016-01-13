@@ -3,43 +3,39 @@
   'use strict';
 
   angular.module('ui.fabric')
-    .directive('fabric', function($log, fabricCanvas) {
-      return {
+    .directive('fabric', fabric);
 
-        restrict: 'A',
-        scope: {
-          options: '='
-        },
-        link: function link(scope, element) {
+  fabric.$inject = ['$log', 'fabricCanvas'];
 
-          $log.info('fabric - link()');
+  function fabric($log, fabricCanvas) {
+    return {
 
-          var options = scope.options;
+      restrict: 'A',
+      scope: {
+        options: '='
+      },
+      link: function link(scope, element) {
 
-          // var options = scope.options || angular.copy(fabricService.getCanvasDefaults());
-          // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+        $log.info('fabric - link()');
 
-          fabricCanvas.setElement(element);
-          fabricCanvas.createCanvas(options);
+        var options = scope.options;
 
-        },
+        // var options = scope.options || angular.copy(fabricService.getCanvasDefaults());
+        // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
 
-        /*
-        scope: {
-          fabric: '='
-        },
-        */
+        fabricCanvas.setElement(element);
+        fabricCanvas.createCanvas(options);
 
-        controller: function($scope, $element) {
+      }
 
-          $log.info('fabric - controller()');
+      /*
 
-          // fabricCanvas.setElement($element);
-          // fabricCanvas.createCanvas();
+       controller: function($scope, $element) {
+       $log.info('fabric - controller()');
+       }
 
-        }
-      };
-    });
-
+       */
+    };
+  }
 
 })();

@@ -1,11 +1,10 @@
 (function() {
 
   angular.module('ui.fabric')
-    .factory('fabricWindow',
-      function ($window) {
+    .factory('fabricWindow', fabricWindow);
 
-        return $window.fabric;
-
-      });
+  function fabricWindow($window) {
+    return $window.fabric;
+  }
 
 })();
