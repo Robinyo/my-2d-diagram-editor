@@ -8,6 +8,8 @@
    * Modules can contain sub-modules, making it easy to compose functionality as needed.
    */
 
-  angular.module('my-2d-diagram-editor.main', []);
+  angular.module('my-2d-diagram-editor.main', [
+    'ui.fabric'
+  ]);
 
 })();

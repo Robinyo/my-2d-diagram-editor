@@ -72,6 +72,8 @@
       return rectDefaults;
     };
 
+    return service;
+
   }
 
 })();

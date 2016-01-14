@@ -31,9 +31,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  MainController.$inject = ['$log', '$translate', '$scope', 'shapesService', 'containersService', 'fabricShape'];
+  MainController.$inject = ['$log', '$translate', '$scope', 'shapesService', 'containersService', 'fabric'];
 
-  function MainController($log, $translate, $scope, shapesService, containersService, fabricShape) {
+  function MainController($log, $translate, $scope, shapesService, containersService, fabric) {
 
     $log.info('MainController');
 
@@ -49,13 +49,21 @@
     main.shapes = shapesService.getShapes();
     main.containers = containersService.getContainers();
 
+    main.canvas = null;
+
     main.init = function () {
 
       $log.info('MainController - init()');
 
-      fabricShape.addRect();
+      main.canvas = fabric.getCanvas();
+
+      fabric.addRect();
 
     };
+
+    /*
+     * Listen for 'canvas:created' event $broadcast by fabricCanvas
+     */
 
     $scope.$on('canvas:created', main.init);
 

@@ -16,10 +16,19 @@
   function fabricShape($log, fabricCanvas, fabricService, fabricWindow) {
 
     var service = this;
+
     service.canvas = null;
     service.rectDefaults = null;
 
     $log.info('fabricShape');
+
+    /*
+     * Listen for 'canvas:created' event $broadcast by fabricCanvas
+     */
+
+    /*
+
+    $scope.$on('canvas:created', service.init);
 
     service.init = function () {
 
@@ -34,12 +43,6 @@
 
     };
 
-    /**
-     * @name addRect
-     * @desc Adds a Rect to the canvas
-     * @param {Object} [options] A configuration object, defaults to FabricConstants.rectDefaults
-     */
-
     service.addRect = function(options) {
 
       $log.info('addRect()');
@@ -51,11 +54,6 @@
       // object.id = self.createId();
       // self.addObjectToCanvas(object);
 
-      if (typeof service.canvas === 'undefined') {
-        $log.info('typeof service.canvas === undefined');
-        service.canvas = fabricCanvas.getCanvas();
-      }
-
       service.canvas.add(object);
       // canvas.setActiveObject(object);
       service.canvas.renderAll();
@@ -63,11 +61,27 @@
       return object;
     };
 
-    service.init();
+    */
 
     return service;
+
   }
 
 })();
 
+     /**
+     * @name addRect
+     * @desc Adds a Rect to the canvas
+     * @param {Object} [options] A configuration object, defaults to FabricConstants.rectDefaults
+     */
+
 // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+
+/*
+
+ if (typeof service.canvas === 'undefined') {
+ $log.info('typeof service.canvas === undefined');
+ service.canvas = fabricCanvas.getCanvas();
+ }
+
+ */
