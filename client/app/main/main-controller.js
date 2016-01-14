@@ -31,9 +31,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  MainController.$inject = ['$log', '$translate', '$scope', 'shapesService', 'containersService', 'fabric'];
+  MainController.$inject = ['$log', '$translate', '$scope', 'shapesService', 'containersService', 'fabric', 'fabricService'];
 
-  function MainController($log, $translate, $scope, shapesService, containersService, fabric) {
+  function MainController($log, $translate, $scope, shapesService, containersService, fabric, fabricService) {
 
     $log.info('MainController');
 
@@ -50,6 +50,18 @@
     main.containers = containersService.getContainers();
 
     main.canvas = null;
+    main.grid = { show: false };
+
+    var containerTextDefaults = angular.copy(fabricService.getTextDefaults());
+    containerTextDefaults.fontSize = 20;
+    containerTextDefaults.fontWeight = 'bold';
+    var containerRectDefaults = angular.copy(fabricService.getRectDefaults());
+
+    var shapeTextDefaults = angular.copy(fabricService.getTextDefaults());
+    shapeTextDefaults.fontSize = 14;
+    var shapeRectDefaults = angular.copy(fabricService.getRectDefaults());
+    shapeRectDefaults.width = 100;
+    shapeRectDefaults.height = 100;
 
     main.init = function () {
 
@@ -57,8 +69,9 @@
 
       main.canvas = fabric.getCanvas();
 
-      fabric.addRect();
+      main.toggleGrid();
 
+      // fabric.addRect();
     };
 
     /*
@@ -67,8 +80,20 @@
 
     $scope.$on('canvas:created', main.init);
 
+
     main.newShape = function(name, fill) {
       $log.info('MainController.newShape()');
+
+      fill = fill || '#cacaca';
+      shapeRectDefaults.fill = fill;
+
+      name = 'NODE';
+
+      $translate(name)
+        .then(function (translatedValue) {
+          fabric.addRect(shapeRectDefaults);
+          // $scope.fabric.addText(translatedValue + ' 1', shapeTextDefaults);
+        });
     };
 
     main.newContainer = function(name, fill) {
@@ -81,11 +106,27 @@
 
     main.editDelete = function() {
       $log.info('MainController.editDelete()');
+      fabric.removeActiveObjectFromCanvas();
     };
 
     main.toggleGrid = function() {
       $log.info('MainController.toggleGrid()');
+
+      main.grid.show = !main.grid.show;
+
+      if (main.grid.show) {
+        fabric.showGrid();
+      } else {
+        fabric.hideGrid();
+      }
     };
+
+    main.toggleSnapToGrid = function() {
+      $log.info('MainController.toggleSnapToGrid()');
+      fabric.toggleSnapToGrid();
+    };
+
+
 
     main.setPointerMode = function() {
       $log.info('MainController.setPointerMode()');
@@ -95,25 +136,9 @@
       $log.info('MainController.setConnectorMode()');
     };
 
-    main.toggleSnapToGrid = function() {
-      $log.info('MainController.toggleSnapToGrid()');
-    };
-
     main.switchLanguage = function(key) {
       $log.info('MainController.switchLanguage() - ' + key.toLocaleString());
       $translate.use(key);
-    };
-
-    //
-    // Private methods
-    //
-
-    var removeGrid = function() {
-      $log.info('MainController.removeGrid()');
-    };
-
-    var drawGrid = function() {
-      $log.info('MainController.drawGrid()');
     };
 
   }

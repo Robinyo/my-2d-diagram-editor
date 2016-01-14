@@ -331,7 +331,7 @@ angular.module('common.fabric', [
 
       options = options || { stroke: '#ccc' };  // TODO:
 
-       var object = new FabricWindow.Line(points, options);
+      var object = new FabricWindow.Line(points, options);
       object.id = self.createId();
 
       // retained mode :)

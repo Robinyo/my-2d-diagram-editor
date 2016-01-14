@@ -28,6 +28,8 @@
     const CANVAS_WIDTH = LANDSCAPE_WIDTH;
     const CANVAS_HEIGHT = LANDSCAPE_HEIGHT;
 
+    const GRID_SIZE = 50;
+
     const RECT_WIDTH = 300;
     const RECT_HEIGHT = 300;
 
@@ -40,6 +42,7 @@
       originalHeight: CANVAS_HEIGHT,
       grid: {
         show: true,
+        size: GRID_SIZE,
         snapTo: true
       }
     };
@@ -55,6 +58,10 @@
       centerTransform: true
     };
 
+    var gridLineDefaults = {
+      stroke: '#ccc'
+    };
+
     var rectDefaults = angular.extend({
       left: 0,
       top: 0,
@@ -64,12 +71,35 @@
       opacity: 0.7
     }, objectDefaults);
 
+
+    var textDefaults = angular.extend({
+      left: 0,
+      top: 0,
+      originX: 'left',
+      originY: 'top',
+      scaleX: 1,
+      scaleY: 1,
+      fontFamily: 'Tahoma',
+      fontSize: 12,
+      fontWeight: 'normal',
+      fill: 'LIGHTGRAY',
+      textAlign: 'left'
+    }, objectDefaults);
+
     service.getCanvasDefaults = function() {
       return canvasDefaults;
     };
 
+    service.getGridLineDefaults = function() {
+      return gridLineDefaults;
+    };
+
     service.getRectDefaults = function() {
       return rectDefaults;
+    };
+
+    service.getTextDefaults = function() {
+      return textDefaults;
     };
 
     return service;
