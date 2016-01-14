@@ -27,3 +27,5 @@
 
 })();
 
+// $log.info('service.canvas: ' + JSON.stringify(['e', service.canvas], null, '\t'));
+

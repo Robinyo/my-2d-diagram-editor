@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html ng-app="my-2d-diagram-editor" ng-strict-di>
-<!-- <html ng-app="my-2d-diagram-editor"> -->
+<html>
+<!-- <html ng-app="my-2d-diagram-editor" ng-strict-di> -->
 
 <head>
   <meta charset="utf-8" />
@@ -13,7 +13,7 @@
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Walter+Turncoat" />
 </head>
 
-<body>
+<body ng-app="my-2d-diagram-editor" ng-strict-di>
 
   <!-- $stateProvider maps Controller to View -->
   <div ui-view></div>
@@ -33,6 +33,7 @@
   <script src="app/components/angular-ui-fabric/src/ui-fabric-directive.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-service.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-shape.js"></script>
+  <script src="app/components/angular-ui-fabric/src/ui-fabric-text.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-window.js"></script>
 
 

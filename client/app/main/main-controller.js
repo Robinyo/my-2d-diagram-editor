@@ -52,16 +52,24 @@
     main.canvas = null;
     main.grid = { show: false };
 
-    var containerTextDefaults = angular.copy(fabricService.getTextDefaults());
-    containerTextDefaults.fontSize = 20;
-    containerTextDefaults.fontWeight = 'bold';
-    var containerRectDefaults = angular.copy(fabricService.getRectDefaults());
+    const CONTAINER_TEXT_FONT_WEIGHT = 'bold';
+    const SHAPE_TEXT_FONT_WEIGHT = 'bold';
+    const SHAPE_RECT_WIDTH = 100;
+    const SHAPE_RECT_HEIGHT = 100;
+
+    var shapeRectDefaults = angular.copy(fabricService.getRectDefaults());
+    shapeRectDefaults.width = SHAPE_RECT_WIDTH;
+    shapeRectDefaults.height = SHAPE_RECT_HEIGHT;
 
     var shapeTextDefaults = angular.copy(fabricService.getTextDefaults());
-    shapeTextDefaults.fontSize = 14;
-    var shapeRectDefaults = angular.copy(fabricService.getRectDefaults());
-    shapeRectDefaults.width = 100;
-    shapeRectDefaults.height = 100;
+    shapeTextDefaults.fontSize = shapeTextDefaults.fontSize + 4;
+    shapeTextDefaults.fontWeight = SHAPE_TEXT_FONT_WEIGHT;
+
+    var containerRectDefaults = angular.copy(fabricService.getRectDefaults());
+
+    var containerTextDefaults = angular.copy(fabricService.getTextDefaults());
+    containerTextDefaults.fontSize = containerTextDefaults.fontSize + 8;
+    containerTextDefaults.fontWeight = CONTAINER_TEXT_FONT_WEIGHT;
 
     main.init = function () {
 
@@ -70,8 +78,6 @@
       main.canvas = fabric.getCanvas();
 
       main.toggleGrid();
-
-      // fabric.addRect();
     };
 
     /*
@@ -82,9 +88,10 @@
 
 
     main.newShape = function(name, fill) {
+
       $log.info('MainController.newShape()');
 
-      fill = fill || '#cacaca';
+      fill = fill || 'GRAY';
       shapeRectDefaults.fill = fill;
 
       name = 'NODE';
@@ -92,12 +99,24 @@
       $translate(name)
         .then(function (translatedValue) {
           fabric.addRect(shapeRectDefaults);
-          // $scope.fabric.addText(translatedValue + ' 1', shapeTextDefaults);
+          fabric.addText(translatedValue + ' 1', shapeTextDefaults);
         });
     };
 
     main.newContainer = function(name, fill) {
+
       $log.info('MainController.newContainer()');
+
+      fill = fill || 'GRAY';
+      containerRectDefaults.fill = fill;
+
+      name = name || 'CONTROLLED_ZONE';
+
+      $translate(name)
+        .then(function (translatedValue) {
+          fabric.addRect(containerRectDefaults);
+          fabric.addText(translatedValue, containerTextDefaults);
+        });
     };
 
     main.fileNew = function() {

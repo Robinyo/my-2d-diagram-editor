@@ -34,6 +34,13 @@
     // Shapes
     //
 
+    /**
+     * @name gridLine
+     * @desc Creates a new Line object
+     * @param {Array} [points] An array of points (where each point is an object with x and y)
+     * @param {Object} [options] A configuration object, defaults to gridLineDefaults
+     * @return {Object} Returns the new Line object
+     */
     service.gridLine = function(points, options) {
 
       $log.info('fabricShape - gridLine()');
@@ -75,61 +82,3 @@
 // $log.info('service.canvas: ' + JSON.stringify(['e', service.canvas], null, '\t'));
 
 // service.rectDefaults = angular.copy(fabricService.getRectDefaults());
-
-     /**
-     * @name addRect
-     * @desc Adds a Rect to the canvas
-     * @param {Object} [options] A configuration object, defaults to FabricConstants.rectDefaults
-     */
-
-// $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
-
-/*
-
- if (typeof service.canvas === 'undefined') {
- $log.info('typeof service.canvas === undefined');
- service.canvas = fabricCanvas.getCanvas();
- }
-
- */
-
-/*
- * Listen for 'canvas:created' event $broadcast by fabricCanvas
- */
-
-/*
-
- $scope.$on('canvas:created', service.init);
-
- service.init = function () {
-
- $log.info('fabricShape - init()');
-
- service.canvas = fabricCanvas.getCanvas();
-
- $log.info('service.canvas: ' + JSON.stringify(['e', service.canvas], null, '\t'));
-
- // service.rectDefaults = FabricConstants.rectDefaults,
- service.rectDefaults = angular.copy(fabricService.getRectDefaults());
-
- };
-
- service.addRect = function(options) {
-
- $log.info('addRect()');
-
- options = options || service.rectDefaults;
-
- var object = new fabricWindow.Rect(options);
-
- // object.id = self.createId();
- // self.addObjectToCanvas(object);
-
- service.canvas.add(object);
- // canvas.setActiveObject(object);
- service.canvas.renderAll();
-
- return object;
- };
-
- */

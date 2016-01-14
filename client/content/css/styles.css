@@ -33,7 +33,7 @@ body {
   position: fixed;
   top: 101px;  /* menubar 50 + toolbar 51 */
   display: block;
-  padding: 25px;
+  padding: 10px;
   background-color: #f5f5f5;
   overflow-x: auto;
   overflow-y: auto;

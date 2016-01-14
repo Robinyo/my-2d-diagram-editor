@@ -30,7 +30,7 @@
         "name"            : "SQUARE",
         "value"           : "Square",
         "src"             : "content/images/icons/32x32/light-gray.png",
-        "backgroundColor" : "LIGHTGRAY"
+        "backgroundColor" : "GRAY"
       }
 
       /* ,

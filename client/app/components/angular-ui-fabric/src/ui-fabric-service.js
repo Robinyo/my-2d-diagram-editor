@@ -33,6 +33,9 @@
     const RECT_WIDTH = 300;
     const RECT_HEIGHT = 300;
 
+    const FONT_SIZE = 12;
+    const FONT_WEIGHT = 'normal';
+
     var canvasDefaults = {
       backgroundColor: '#ffffff',
       selection: true,
@@ -59,30 +62,30 @@
     };
 
     var gridLineDefaults = {
-      stroke: '#ccc'
+      stroke: 'LIGHTGRAY'
     };
 
     var rectDefaults = angular.extend({
-      left: 0,
-      top: 0,
+      left: GRID_SIZE,
+      top: GRID_SIZE,
       width: RECT_WIDTH,
       height: RECT_HEIGHT,
-      fill: 'LIGHTGRAY',
+      fill: 'GRAY',
       opacity: 0.7
     }, objectDefaults);
 
 
     var textDefaults = angular.extend({
-      left: 0,
-      top: 0,
+      left: GRID_SIZE,
+      top: GRID_SIZE,
       originX: 'left',
       originY: 'top',
       scaleX: 1,
       scaleY: 1,
       fontFamily: 'Tahoma',
-      fontSize: 12,
-      fontWeight: 'normal',
-      fill: 'LIGHTGRAY',
+      fontSize: FONT_SIZE,
+      fontWeight: FONT_WEIGHT,
+      fill: 'BLACK',
       textAlign: 'left'
     }, objectDefaults);
 
@@ -109,3 +112,5 @@
 })();
 
 // LIGHTGRAY  #D3D3D3  RGB(211, 211, 211)
+
+// http://htmlcolorcodes.com/color-names/
