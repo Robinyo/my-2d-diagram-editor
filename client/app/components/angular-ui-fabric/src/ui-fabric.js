@@ -24,17 +24,23 @@
     var service = this;
 
     service.canvas = null;
+
     service.canvasDefaults = null;
+    service.controlDefaults = null;
+    service.rectDefaults = null;
 
     service.verticalGridLinesGroup = {};
     service.horizontalGridLinesGroup = {};
     service.verticalGridLines = [];
     service.horizontalGridLines = [];
 
+    service.connectorMode = false;
+
     service.activeObject = null;
     service.selectedObject = null;
 
-    service.connectorMode = false;
+    service.connectorLine = null;
+    service.isMouseDown = false;
 
     $log.info('fabric');
 
@@ -44,14 +50,15 @@
 
       service.canvasDefaults = fabricService.getCanvasDefaults();
       service.controlDefaults = fabricService.getControlDefaults();
+      service.rectDefaults = fabricService.getRectDefaults();
     };
 
     service.setConnectorMode = function (mode) {
 
       $log.info('fabric - setConnectorMode(): ' + mode);
 
-      // mode = mode || true;
       service.connectorMode = mode;
+      service.canvas.selection = !mode;
     };
 
     //
@@ -163,8 +170,8 @@
 
       $log.info('fabric - removeActiveObjectFromCanvas()');
 
-      var activeObject = service.canvas.getActiveObject();
-      service.canvas.remove(activeObject);
+      var object = service.canvas.getActiveObject();
+      service.canvas.remove(object);
       service.canvas.renderAll();
     };
 
@@ -238,14 +245,14 @@
     service.configCanvasListeners = function() {
 
       //
-      // Snap to grid
+      // Object - Snap to grid
       //
 
       service.canvas.on('object:moving', function(options) {
 
         if (service.canvasDefaults.grid.snapTo) {
 
-          // $log.info('canvas.on(object:moving)');
+          $log.info('canvas.on(object:moving)');
 
           options.target.set({
             left: Math.round(options.target.left /
@@ -257,17 +264,54 @@
 
       });
 
-      service.canvas.on('selection:cleared', function(element) {
+      //
+      // Mouse
+      //
 
-        $log.info('selection:cleared');
+      service.canvas.on('mouse:down', function(object){
 
-        service.activeObject = null;
+        $log.info('mouse:down');
 
+        if (service.connectorMode) {
+
+          if (service.selectedObject) {
+
+            service.isMouseDown = true;
+
+            var pointer = service.canvas.getPointer(object.e);
+            var points = [ pointer.x, pointer.y, pointer.x, pointer.y ];
+
+            $log.info('mouse:down - points: ' + points.toLocaleString());
+
+            service.connectorLine = service.addLine(points);
+          }
+        }
+
+      });
+
+      service.canvas.on('mouse:move', function(object){
+
+        // $log.info('mouse:move');
+
+        if (!service.isMouseDown) return;
+
+        if (service.connectorMode) {
+
+          var pointer = service.canvas.getPointer(object.e);
+          service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
+          service.canvas.renderAll();
+        }
+
+      });
+
+      service.canvas.on('mouse:up', function(){
+        $log.info('mouse:up');
+        service.isMouseDown = false;
       });
 
       service.canvas.on('mouse:over', function(element) {
 
-        // $log.info('mouse:over');
+        $log.info('mouse:over');
 
         if (service.connectorMode) {
 
@@ -284,6 +328,13 @@
             }
 
             service.selectedObject.set('active', true);
+            service.selectedObject.set('selectable', false);
+            service.selectedObject.set('hasRotatingPoint', false);
+            // service.selectedObject.set('cornerColor', 'green');
+            service.selectedObject.set('hasBorders', false);
+            service.selectedObject.set('cornerSize', 10);
+            service.selectedObject.set('transparentCorners', false);
+            service.selectedObject.setControlsVisibility({ tl: false, tr: false, br: false, bl: false });
 
             service.canvas.renderAll();
           }
@@ -292,15 +343,21 @@
 
       service.canvas.on('mouse:out', function(element) {
 
-        // $log.info('mouse:out');
+        $log.info('mouse:out');
 
         if (service.connectorMode) {
 
           if (element.target.type === 'node') {
 
             if (service.selectedObject) {
-              // canvas.item(canvas._objects.length-1).set('active',true);
+
               service.selectedObject.set('active', false);
+              service.selectedObject.set('hasRotatingPoint', true);
+              // service.selectedObject.set('cornerColor', service.rectDefaults.cornerColor);
+              service.selectedObject.set('hasBorders', service.rectDefaults.hasBorders);
+              service.selectedObject.set('cornerSize', service.rectDefaults.cornerSize);
+              service.selectedObject.set('transparentCorners', service.rectDefaults.transparentCorners);
+              service.selectedObject.setControlsVisibility({ tl: true, tr: true, br: true, bl: true });
 
               service.selectedObject = null;
 
@@ -309,11 +366,40 @@
                 service.canvas._activeObject = service.activeObject;
               }
 
-              // canvas.setActiveObject(canvas._objects[canvas._objects.length-1]);
               service.canvas.renderAll();
             }
           }
         }
+      });
+
+
+      service.canvas.on('object:selected', function(element) {
+
+        $log.info('object:selected');
+
+        if (service.connectorMode) {
+
+          if (element.target.type === 'node') {
+
+            $log.info('object:selected - element.target.type === node');
+
+            service.selectedObject = element.target;
+            service.activeObject = service.selectedObject;
+            service.selectedObject.set('hasRotatingPoint', true);
+            // service.selectedObject.set('cornerColor', service.rectDefaults.cornerColor);
+            service.selectedObject.set('hasBorders', service.rectDefaults.hasBorders);
+            service.selectedObject.set('cornerSize', service.rectDefaults.cornerSize);
+            service.selectedObject.set('transparentCorners', service.rectDefaults.transparentCorners);
+            service.selectedObject.setControlsVisibility({ tl: true, tr: true, br: true, bl: true });
+
+            service.canvas.renderAll();
+          }
+        }
+      });
+
+      service.canvas.on('selection:cleared', function(element) {
+        $log.info('selection:cleared');
+        service.activeObject = null;
       });
 
     };
@@ -327,6 +413,23 @@
 })();
 
 /*
+
+ // canvas.item(canvas._objects.length-1).set('active',true);
+
+ // canvas.setActiveObject(canvas._objects[canvas._objects.length-1]);
+
+ var object = element.target;
+
+ object.set('hasRotatingPoint', true);
+ object.setControlsVisibility({
+ tl: true,
+ tr: true,
+ br: true,
+ bl: true
+ });
+
+ // service.selectedObject.lockUniScaling = true; you only get the corners
+
 
  // var rectDefaults = angular.copy(fabricService.getRectDefaults());
  // var objectControls = null;

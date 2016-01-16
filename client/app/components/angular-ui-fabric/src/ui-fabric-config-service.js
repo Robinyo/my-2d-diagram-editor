@@ -49,7 +49,7 @@
       grid: {
         show: true,
         size: GRID_SIZE,
-        snapTo: true
+        snapTo: false
       }
     };
 
