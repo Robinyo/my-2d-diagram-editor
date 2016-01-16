@@ -31,17 +31,10 @@
     service.verticalGridLines = [];
     service.horizontalGridLines = [];
 
-    // var rectDefaults = angular.copy(fabricService.getRectDefaults());
-    // var objectControls = null;
-    // const LINE_WIDTH = 1;
-
-    service.objectControls = false;
-    service.controlDefaults = null;
-    service.controlsGroup = {};
-    service.controlLines = [];
-
     service.activeObject = null;
     service.selectedObject = null;
+
+    service.connectorMode = false;
 
     $log.info('fabric');
 
@@ -51,6 +44,14 @@
 
       service.canvasDefaults = fabricService.getCanvasDefaults();
       service.controlDefaults = fabricService.getControlDefaults();
+    };
+
+    service.setConnectorMode = function (mode) {
+
+      $log.info('fabric - setConnectorMode(): ' + mode);
+
+      // mode = mode || true;
+      service.connectorMode = mode;
     };
 
     //
@@ -266,50 +267,51 @@
 
       service.canvas.on('mouse:over', function(element) {
 
-        $log.info('mouse:over');
+        // $log.info('mouse:over');
 
-        if (element.target.type === 'node') {
+        if (service.connectorMode) {
 
-          service.selectedObject = element.target;
+          if (element.target.type === 'node') {
 
-          if (!service.activeObject) {
-            service.activeObject = service.canvas.getActiveObject();
+            service.selectedObject = element.target;
+
+            if (!service.activeObject) {
+              service.activeObject = service.canvas.getActiveObject();
+            }
+
+            if (service.activeObject) {
+              service.activeObject.set('active', false);
+            }
+
+            service.selectedObject.set('active', true);
+
+            service.canvas.renderAll();
           }
-
-          if (service.activeObject) {
-            service.activeObject.set('active', false);
-          }
-
-          service.selectedObject.set('active', true);
-
-          service.canvas.renderAll();
-
-          // service.canvas.setActiveObject(service.selectedObject);
         }
-
       });
 
       service.canvas.on('mouse:out', function(element) {
 
-        $log.info('mouse:out');
+        // $log.info('mouse:out');
 
-        if (element.target.type === 'node') {
+        if (service.connectorMode) {
 
-          if (service.selectedObject) {
-            // canvas.item(canvas._objects.length-1).set('active',true);
-            service.selectedObject.set('active', false);
+          if (element.target.type === 'node') {
 
-            service.selectedObject = null;
+            if (service.selectedObject) {
+              // canvas.item(canvas._objects.length-1).set('active',true);
+              service.selectedObject.set('active', false);
 
-            if (service.activeObject) {
-              service.activeObject.set('active', true);
-              service.canvas._activeObject = service.activeObject;
+              service.selectedObject = null;
+
+              if (service.activeObject) {
+                service.activeObject.set('active', true);
+                service.canvas._activeObject = service.activeObject;
+              }
+
+              // canvas.setActiveObject(canvas._objects[canvas._objects.length-1]);
+              service.canvas.renderAll();
             }
-
-            // service.canvas._activeObject = null;
-
-            // canvas.setActiveObject(canvas._objects[canvas._objects.length-1]);
-            service.canvas.renderAll();
           }
         }
       });
@@ -325,6 +327,15 @@
 })();
 
 /*
+
+ // var rectDefaults = angular.copy(fabricService.getRectDefaults());
+ // var objectControls = null;
+ // const LINE_WIDTH = 1;
+
+ service.objectControls = false;
+ service.controlDefaults = null;
+ service.controlsGroup = {};
+ service.controlLines = [];
 
  // $log.info('element: ' + JSON.stringify(['e', element], null, '\t'));
 

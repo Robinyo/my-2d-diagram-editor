@@ -116,7 +116,8 @@
 
       $translate(name)
         .then(function (translatedValue) {
-          fabric.addRect(containerRectDefaults);
+          var object = fabric.addRect(containerRectDefaults);
+          // object.set('type', 'container');
           fabric.addText(translatedValue, containerTextDefaults);
         });
     };
@@ -147,14 +148,14 @@
       fabric.toggleSnapToGrid();
     };
 
-
-
     main.setPointerMode = function() {
       $log.info('MainController.setPointerMode()');
+      fabric.setConnectorMode(false);
     };
 
     main.setConnectorMode = function() {
       $log.info('MainController.setConnectorMode()');
+      fabric.setConnectorMode(true);
     };
 
     main.switchLanguage = function(key) {
