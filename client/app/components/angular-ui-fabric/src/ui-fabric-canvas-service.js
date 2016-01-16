@@ -17,6 +17,20 @@
 
     var service = this;
 
+    service.canvasId = null;
+    service.canvas = null;
+    service.element = null;
+
+    service.canvasDefaults = null;
+
+    service.init = function () {
+
+      $log.info('fabricCanvas - init()');
+
+      service.canvasDefaults = fabricService.getCanvasDefaults();
+      // service.canvasDefaults = angular.copy(fabricService.getCanvasDefaults());
+    };
+
     function createId() {
       return Math.floor(Math.random() * 10000);
     }
@@ -28,7 +42,7 @@
 
     service.createCanvas = function(options) {
 
-      options = options || angular.copy(fabricService.getCanvasDefaults());
+      options = options || service.canvasDefaults;
 
       // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
 
@@ -45,6 +59,10 @@
     service.getCanvas = function() {
       return service.canvas;
     };
+
+    service.init();
+
+    return service;
 
   }
 

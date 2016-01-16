@@ -30,6 +30,9 @@
 
     const GRID_SIZE = 50;
 
+    // const LINE_WIDTH = 4;
+    const STROKE_WIDTH = 1;
+
     const RECT_WIDTH = 300;
     const RECT_HEIGHT = 300;
 
@@ -65,6 +68,18 @@
       stroke: 'LIGHTGRAY'
     };
 
+    var lineDefaults = {
+      selectable: true,
+      stroke: 'BLACK',
+      strokeWidth: STROKE_WIDTH
+    };
+
+    var controlDefaults = {
+      selectable: false,
+      stroke: 'LIGHTBLUE',
+      strokeWidth: STROKE_WIDTH
+    };
+
     var rectDefaults = angular.extend({
       left: GRID_SIZE,
       top: GRID_SIZE,
@@ -95,6 +110,14 @@
 
     service.getGridLineDefaults = function() {
       return gridLineDefaults;
+    };
+
+    service.getControlDefaults = function() {
+      return controlDefaults;
+    };
+
+    service.getLineDefaults = function() {
+      return lineDefaults;
     };
 
     service.getRectDefaults = function() {

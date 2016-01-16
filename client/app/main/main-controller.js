@@ -50,7 +50,7 @@
     main.containers = containersService.getContainers();
 
     main.canvas = null;
-    main.grid = { show: false };
+    main.grid = { show: true };  // TODO: the grid which is not selectable seems to cause other issues)
 
     const CONTAINER_TEXT_FONT_WEIGHT = 'bold';
     const SHAPE_TEXT_FONT_WEIGHT = 'bold';
@@ -98,7 +98,9 @@
 
       $translate(name)
         .then(function (translatedValue) {
-          fabric.addRect(shapeRectDefaults);
+          var object = fabric.addRect(shapeRectDefaults);
+          object.set('hasRotatingPoint', false);
+          object.set('type', 'node');
           fabric.addText(translatedValue + ' 1', shapeTextDefaults);
         });
     };

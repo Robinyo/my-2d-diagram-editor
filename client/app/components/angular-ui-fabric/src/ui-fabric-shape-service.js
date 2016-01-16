@@ -18,6 +18,7 @@
     var service = this;
 
     service.gridLineDefaults = null;
+    service.controlDefaults = null;
     service.rectDefaults = null;
 
     $log.info('fabricShape');
@@ -27,6 +28,7 @@
       $log.info('fabricShape - init()');
 
       service.gridLineDefaults = fabricService.getGridLineDefaults();
+      service.controlDefaults = fabricService.getLineDefaults();
       service.rectDefaults = fabricService.getRectDefaults();
     };
 
@@ -43,9 +45,32 @@
      */
     service.gridLine = function(points, options) {
 
-      $log.info('fabricShape - gridLine()');
+      // $log.info('fabricShape - gridLine()');
 
       options = options || service.gridLineDefaults;
+
+      // $log.info('points: ' + JSON.stringify(['e', points], null, '\t'));
+
+      return new fabricWindow.Line(points, options);
+
+      // var object = new FabricWindow.Line(points, options);
+      // return object;
+    };
+
+    /**
+     * @name line
+     * @desc Creates a new Line object
+     * @param {Array} [points] An array of points (where each point is an object with x and y)
+     * @param {Object} [options] A configuration object, defaults to lineDefaults
+     * @return {Object} Returns the new Line object
+     */
+    service.line = function(points, options) {
+
+      $log.info('fabricShape - line()');
+
+      options = options || service.controlDefaults;
+
+      // $log.info('points: ' + JSON.stringify(['e', points], null, '\t'));
 
       return new fabricWindow.Line(points, options);
 

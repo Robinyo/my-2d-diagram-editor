@@ -3,8 +3,17 @@
   'use strict';
 
   angular.module('my-2d-diagram-editor', []).
-    controller('HelloWorldController',function ($scope) {
-      $scope.name = { first: "Rob", last: "Ferguson" };
-    });
+    controller('HelloWorldController', HelloWorldController);
+
+  HelloWorldController.$inject = ['$log'];
+
+  function HelloWorldController($log) {
+
+    $log.info('HelloWorldController');
+
+    var hello = this;
+
+    hello.name = { first: "Rob", last: "Ferguson" };
+  }
 
 })();

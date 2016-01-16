@@ -31,6 +31,18 @@
     service.verticalGridLines = [];
     service.horizontalGridLines = [];
 
+    // var rectDefaults = angular.copy(fabricService.getRectDefaults());
+    // var objectControls = null;
+    // const LINE_WIDTH = 1;
+
+    service.objectControls = false;
+    service.controlDefaults = null;
+    service.controlsGroup = {};
+    service.controlLines = [];
+
+    service.activeObject = null;
+    service.selectedObject = null;
+
     $log.info('fabric');
 
     service.init = function () {
@@ -38,6 +50,7 @@
       $log.info('fabric - init()');
 
       service.canvasDefaults = fabricService.getCanvasDefaults();
+      service.controlDefaults = fabricService.getControlDefaults();
     };
 
     //
@@ -60,14 +73,14 @@
 
     service.showGrid = function() {
 
-      $log.info('fabric - drawGrid()');
+      $log.info('fabric - showGrid()');
 
       var grid = service.canvasDefaults.grid.size;
       var width = service.canvasDefaults.width;
       var height = service.canvasDefaults.height;
 
-      $log.info('width: ' + service.canvasDefaults.width);
-      $log.info('height: ' + service.canvasDefaults.height);
+      // $log.info('width: ' + service.canvasDefaults.width);
+      // $log.info('height: ' + service.canvasDefaults.height);
 
       // draw the Vertical lines
       var i = 0;
@@ -93,6 +106,7 @@
       // Why did we start x and y at 0.5? Why not 0?
       // See: http://diveintohtml5.info/canvas.html
 
+      $log.info('fabric - showGrid() - deactivateAll().renderAll()');
       service.canvas.deactivateAll().renderAll();
     };
 
@@ -110,21 +124,44 @@
 
     var addObjectToCanvas = function(object, render) {
 
+      render = render || false;
+
       if (service.canvas === null) {
         $log.error('You must call getCanvas() before you try to add shapes to a canvas.');
         service.getCanvas();
       }
 
       service.canvas.add(object);
+      // service.setObjectZoom(object);
+      // service.canvas.setActiveObject(object);
+      object.bringToFront();
 
-      if (render) {
+      $log.info('fabric - addObjectToCanvas() - render: ' + render.toLocaleString());
+
+      if (render !== false) {
+        $log.info('fabric - addObjectToCanvas() - renderAll');
         service.canvas.renderAll();
       }
 
       return object;
     };
 
+    var removeObjectFromCanvas = function(object, render) {
+
+      service.canvas.remove(object);
+
+      $log.info('fabric - removeObjectFromCanvas() - render: ' + render.toLocaleString());
+
+      if (render) {
+        $log.info('fabric - removeObjectFromCanvas() - renderAll');
+        service.canvas.renderAll();
+      }
+    };
+
     service.removeActiveObjectFromCanvas = function() {
+
+      $log.info('fabric - removeActiveObjectFromCanvas()');
+
       var activeObject = service.canvas.getActiveObject();
       service.canvas.remove(activeObject);
       service.canvas.renderAll();
@@ -136,24 +173,33 @@
      * @param {Object} [options] A configuration object, defaults to FabricConstants.rectDefaults
      * @return {Object} Returns the new Rect object
      */
-    service.addRect = function(options) {
+    service.addRect = function(options, render) {
 
       $log.info('fabric - addRect()');
 
-      return addObjectToCanvas(fabricShape.rect(options));
+      return addObjectToCanvas(fabricShape.rect(options), render);
+    };
+
+    //
+    // Line
+    //
+
+    service.addLine = function(points, options, render) {
+
+      $log.info('fabric - addLine()');
+
+      return addObjectToCanvas(fabricShape.line(points, options), render);
     };
 
     //
     // Text
     //
 
-    service.addText = function(text, options) {
+    service.addText = function(text, options, render) {
 
       $log.info('fabric - addText()');
 
-      $log.info('fabric - addText() - options.fontSize: ' + options.fontSize);
-
-      return addObjectToCanvas(fabricText.text(text, options));
+      return addObjectToCanvas(fabricText.text(text, options), render);
     };
 
     //
@@ -172,21 +218,21 @@
     };
 
     service.removeGroup = function(object, render) {
-
       $log.info('fabric - removeGroup()');
-
-      service.canvas.remove(object);
-
-      $log.info('fabric - removeGroup() - render: ' + render.toLocaleString());
-
-      if (render) {
-        service.canvas.renderAll();
-      }
+      removeObjectFromCanvas(object, render);
     };
+
+    //
+    // Grid
+    //
 
     service.toggleSnapToGrid = function() {
       service.canvasDefaults.grid.snapTo = !service.canvasDefaults.grid.snapTo;
     };
+
+    //
+    // Listeners
+    //
 
     service.configCanvasListeners = function() {
 
@@ -202,10 +248,69 @@
 
           options.target.set({
             left: Math.round(options.target.left /
-              service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size,
+            service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size,
             top: Math.round(options.target.top /
-              service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size
+            service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size
           });
+        }
+
+      });
+
+      service.canvas.on('selection:cleared', function(element) {
+
+        $log.info('selection:cleared');
+
+        service.activeObject = null;
+
+      });
+
+      service.canvas.on('mouse:over', function(element) {
+
+        $log.info('mouse:over');
+
+        if (element.target.type === 'node') {
+
+          service.selectedObject = element.target;
+
+          if (!service.activeObject) {
+            service.activeObject = service.canvas.getActiveObject();
+          }
+
+          if (service.activeObject) {
+            service.activeObject.set('active', false);
+          }
+
+          service.selectedObject.set('active', true);
+
+          service.canvas.renderAll();
+
+          // service.canvas.setActiveObject(service.selectedObject);
+        }
+
+      });
+
+      service.canvas.on('mouse:out', function(element) {
+
+        $log.info('mouse:out');
+
+        if (element.target.type === 'node') {
+
+          if (service.selectedObject) {
+            // canvas.item(canvas._objects.length-1).set('active',true);
+            service.selectedObject.set('active', false);
+
+            service.selectedObject = null;
+
+            if (service.activeObject) {
+              service.activeObject.set('active', true);
+              service.canvas._activeObject = service.activeObject;
+            }
+
+            // service.canvas._activeObject = null;
+
+            // canvas.setActiveObject(canvas._objects[canvas._objects.length-1]);
+            service.canvas.renderAll();
+          }
         }
       });
 
@@ -219,4 +324,117 @@
 
 })();
 
+/*
 
+ // $log.info('element: ' + JSON.stringify(['e', element], null, '\t'));
+
+ // drawControls(element);
+
+ // eraseControls(element);
+
+//
+// Controls
+//
+
+var drawControls = function(element) {
+  drawObjectControls(element);
+};
+
+var eraseControls = function(element) {
+  eraseObjectControls(element);
+};
+
+var drawObjectControls = function(element) {
+
+  $log.info('fabric - drawObjectControls()');
+
+  $log.info('element: ' + JSON.stringify(['e', element], null, '\t'));
+
+  if (service.objectControls === false) {
+
+    $log.info('service.objectControls === false');
+
+    var topLeft = {x: element.target.left - 2, y: element.target.top - 2};
+    var topRight = {x: element.target.top + element.target.width, y: element.target.top - 2};
+    var bottomLeft = {x: element.target.left - 2, y: element.target.top + element.target.height};
+    var bottomRight = {x: element.target.top + element.target.width, y: element.target.top + element.target.height};
+
+    var i = 0;
+    service.controlLines[i++] = fabricShape.line([ topLeft.x, topLeft.y, topRight.x, topRight.y],
+      service.controlDefaults);
+    service.controlLines[i++] = fabricShape.line([ topRight.x, topRight.y, bottomRight.x, bottomRight.y],
+      service.controlDefaults);
+    service.controlLines[i++] = fabricShape.line([ bottomRight.x, bottomRight.y, bottomLeft.x, bottomLeft.y],
+      service.controlDefaults);
+    service.controlLines[i++] = fabricShape.line([ bottomLeft.x, bottomLeft.y, topLeft.x, topLeft.y],
+      service.controlDefaults);
+
+    service.controlsGroup = service.createGroup(service.controlLines, { selectable: false }, false);
+
+    service.objectControls = true;
+
+    // top-left
+    // top-right
+    // bottom-left
+    // bottom-right
+
+  }
+
+};
+
+var eraseObjectControls = function(element) {
+
+  $log.info('fabric - eraseObjectControls()');
+
+  if (service.objectControls === true) {
+
+    $log.info('service.objectControls === true');
+
+    service.removeGroup(service.controlsGroup, true)
+
+    service.objectControls = false;
+  }
+};
+
+ // element.target.setFill('red');
+ // service.canvas.renderAll();
+
+
+ // element.target.setFill('green');
+ // service.canvas.renderAll();
+
+ rectDefaults.strokeWidth = 5;
+
+ rectDefaults.left = element.target.left - (rectDefaults.strokeWidth + 1);
+ rectDefaults.top = element.target.top - (rectDefaults.strokeWidth + 1);
+ rectDefaults.width = element.target.width + (2 * rectDefaults.strokeWidth);
+ rectDefaults.height = element.target.height + (2 * rectDefaults.strokeWidth);
+ rectDefaults.fill = 'none';
+ rectDefaults.stroke = 'rgba(100,200,200,0.5)';
+ rectDefaults.opacity = 0.5;
+
+ // $log.info('rectDefaults: ' + JSON.stringify(['e', rectDefaults], null, '\t'));
+
+ objectControls = service.addRect(rectDefaults, false);
+
+if (object.left === canvasDefaults.grid.size || object.top === canvasDefaults.grid.size) {
+  $log.info('fabric - addObjectToCanvas() - centerObject()');
+  fabricWindow.centerObject();
+}
+
+// $log.info('mouse:over - element.target: ' + JSON.stringify(['e', element.target], null, '\t'));
+
+ rectDefaults.left = 50 - (rectDefaults.strokeWidth + 1);
+ rectDefaults.top = 50 - (rectDefaults.strokeWidth + 1);
+ rectDefaults.width = 300 + (2 * rectDefaults.strokeWidth);
+ rectDefaults.height = 300 + (2 * rectDefaults.strokeWidth);
+
+ var activeGroup = this.getActiveGroup();
+
+ if (activeGroup) {
+ drawGroupControls();
+ } else {
+ drawObjectControls();
+ }
+
+ */

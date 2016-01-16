@@ -45,8 +45,6 @@
       text = text || 'New Text';
       options = options || service.textDefaults;
 
-      $log.info('fabric - addText() - options.fontSize: ' + options.fontSize);
-
       return new fabricWindow.Text(text, options);
     };
 
