@@ -28,6 +28,7 @@
     service.canvasDefaults = null;
     service.controlDefaults = null;
     service.rectDefaults = null;
+    service.triangleDefaults = null;
 
     service.verticalGridLinesGroup = {};
     service.horizontalGridLinesGroup = {};
@@ -52,6 +53,7 @@
       service.canvasDefaults = fabricService.getCanvasDefaults();
       service.controlDefaults = fabricService.getControlDefaults();
       service.rectDefaults = fabricService.getRectDefaults();
+      service.triangleDefaults = fabricService.getTriangleDefaults();
     };
 
     service.setConnectorMode = function (mode) {
@@ -176,6 +178,10 @@
       service.canvas.renderAll();
     };
 
+    //
+    // Rect
+    //
+
     /**
      * @name addRect
      * @desc Creates a new Rect and adds it to the canvas
@@ -188,6 +194,18 @@
 
       return addObjectToCanvas(fabricShape.rect(options), render);
     };
+
+    //
+    // Triangle
+    //
+
+    service.addTriangle = function(options, render) {
+
+      $log.info('fabric - addTriangle()');
+
+      return addObjectToCanvas(fabricShape.triangle(options), render);
+    };
+
 
     //
     // Line
@@ -240,6 +258,35 @@
     };
 
     //
+    // Create Arrow Head
+    //
+
+    var createArrowHead = function(points) {
+
+      var x1 = points[0];
+      var y1 = points[1];
+      var x2 = points[2];
+      var y2 = points[3];
+
+      // $log.info('createArrowHead - points: ' + JSON.stringify(['e', points], null, '\t'));
+
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+
+      var angle = Math.atan2(dy, dx);
+      angle *= 180 / Math.PI;
+      angle += 90;
+
+      var options = service.triangleDefaults;
+      options.angle = angle;
+      options.top = y2;
+      options.left = x2;
+      options.selectable = false;
+
+      service.addTriangle(options);
+    };
+
+    //
     // Listeners
     //
 
@@ -261,14 +308,14 @@
 
           if (object.connectors.from) {
             object.connectors.from.forEach(function (line) {
-              $log.info('object:moving - object.connectors.from.forEach');
+              // $log.info('object:moving - object.connectors.from.forEach');
               line.set({'x1': objectCenter.x, 'y1': objectCenter.y});
             });
           }
 
           if (object.connectors.to) {
             object.connectors.to.forEach(function (line) {
-              $log.info('object:moving - object.connectors.to.forEach');
+              // $log.info('object:moving - object.connectors.to.forEach');
               line.set({'x2': objectCenter.x, 'y2': objectCenter.y});
             });
           }
@@ -294,7 +341,7 @@
 
       service.canvas.on('mouse:down', function(object){
 
-        $log.info('mouse:down');
+        // $log.info('mouse:down');
 
         if (service.connectorMode) {
 
@@ -331,7 +378,7 @@
 
       service.canvas.on('mouse:up', function(){
 
-        $log.info('mouse:up');
+        // $log.info('mouse:up');
 
         if (service.connectorMode) {
 
@@ -346,6 +393,11 @@
 
             service.fromObject.connectors.from.push(service.connectorLine);
             service.selectedObject.connectors.to.push(service.connectorLine);
+
+            createArrowHead([service.connectorLine.left, service.connectorLine.top,
+              objectCenter.x, objectCenter.y]);
+            createArrowHead([objectCenter.x, objectCenter.y,
+              service.connectorLine.left, service.connectorLine.top]);
 
             service.connectorLine = null;
 
@@ -366,7 +418,7 @@
 
       service.canvas.on('mouse:over', function(element) {
 
-        $log.info('mouse:over');
+        // $log.info('mouse:over');
 
         if (service.connectorMode) {
 
@@ -398,7 +450,7 @@
 
       service.canvas.on('mouse:out', function(element) {
 
-        $log.info('mouse:out');
+        // $log.info('mouse:out');
 
         if (service.connectorMode) {
 

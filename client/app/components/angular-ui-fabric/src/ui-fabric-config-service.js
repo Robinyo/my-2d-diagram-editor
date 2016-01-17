@@ -39,6 +39,8 @@
     const FONT_SIZE = 12;
     const FONT_WEIGHT = 'normal';
 
+    const ARROW_HEAD_LENGTH = 15;
+
     var canvasDefaults = {
       backgroundColor: '#ffffff',
       selection: true,
@@ -91,6 +93,17 @@
       opacity: 0.7
     }, objectDefaults);
 
+    var triangleDefaults = angular.extend({
+      // angle: angle,
+      fill: 'BLACK',
+      top: GRID_SIZE,
+      left: GRID_SIZE,
+      height: ARROW_HEAD_LENGTH,
+      width: ARROW_HEAD_LENGTH,
+      originX: 'center',
+      originY: 'center',
+      selectable: false
+    }, objectDefaults);
 
     var textDefaults = angular.extend({
       left: GRID_SIZE,
@@ -124,6 +137,10 @@
 
     service.getRectDefaults = function() {
       return rectDefaults;
+    };
+
+    service.getTriangleDefaults = function() {
+      return triangleDefaults;
     };
 
     service.getTextDefaults = function() {

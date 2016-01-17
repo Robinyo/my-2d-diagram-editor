@@ -20,6 +20,7 @@
     service.gridLineDefaults = null;
     service.controlDefaults = null;
     service.rectDefaults = null;
+    service.triangleDefaults = null;
 
     $log.info('fabricShape');
 
@@ -30,6 +31,7 @@
       service.gridLineDefaults = fabricService.getGridLineDefaults();
       service.controlDefaults = fabricService.getLineDefaults();
       service.rectDefaults = fabricService.getRectDefaults();
+      service.triangleDefaults = fabricService.getTriangleDefaults();
     };
 
     //
@@ -52,9 +54,6 @@
       // $log.info('points: ' + JSON.stringify(['e', points], null, '\t'));
 
       return new fabricWindow.Line(points, options);
-
-      // var object = new FabricWindow.Line(points, options);
-      // return object;
     };
 
     /**
@@ -66,16 +65,13 @@
      */
     service.line = function(points, options) {
 
-      $log.info('fabricShape - line()');
+      // $log.info('fabricShape - line()');
 
       options = options || service.controlDefaults;
 
       // $log.info('points: ' + JSON.stringify(['e', points], null, '\t'));
 
       return new fabricWindow.Line(points, options);
-
-      // var object = new FabricWindow.Line(points, options);
-      // return object;
     };
 
     /**
@@ -86,7 +82,7 @@
      */
     service.rect = function(options) {
 
-      $log.info('fabricShape - addRect()');
+      // $log.info('fabricShape - rect()');
 
       options = options || service.rectDefaults;
 
@@ -94,6 +90,17 @@
 
       // var object = new fabricWindow.Rect(options);
       // return object;
+    };
+
+    service.triangle = function(options) {
+
+      $log.info('fabricShape - triangle()');
+
+      options = options || service.triangleDefaults;
+
+      $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+
+      return new fabricWindow.Triangle(options);
     };
 
     service.init();
