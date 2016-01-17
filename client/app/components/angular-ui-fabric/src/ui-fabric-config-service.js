@@ -54,12 +54,14 @@
     };
 
     var objectDefaults = {
+      selectable: true,
       rotatingPointOffset: 40,
       padding: 0,
       borderColor: 'rgba(102,153,255,0.75)',
       cornerColor: 'rgba(102,153,255,0.5)',
       cornerSize: 10,
       transparentCorners: true,
+      hasBorders: true,
       hasRotatingPoint: true,
       centerTransform: true
     };

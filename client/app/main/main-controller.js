@@ -99,8 +99,8 @@
       $translate(name)
         .then(function (translatedValue) {
           var object = fabric.addRect(shapeRectDefaults);
-          // object.set('hasRotatingPoint', false);
           object.set('type', 'node');
+          object.connectors = { from: [], to: [] };
           fabric.addText(translatedValue + ' 1', shapeTextDefaults);
         });
     };

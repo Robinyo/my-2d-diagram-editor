@@ -41,6 +41,7 @@
 
     service.connectorLine = null;
     service.isMouseDown = false;
+    service.fromObject = null;
 
     $log.info('fabric');
 
@@ -250,9 +251,32 @@
 
       service.canvas.on('object:moving', function(options) {
 
-        if (service.canvasDefaults.grid.snapTo) {
+        // $log.info('object:moving');
 
-          $log.info('canvas.on(object:moving)');
+        var object = options.target;
+        var objectCenter = object.getCenterPoint();
+
+        // update Connectors
+        if (object.connectors) {
+
+          if (object.connectors.from) {
+            object.connectors.from.forEach(function (line) {
+              $log.info('object:moving - object.connectors.from.forEach');
+              line.set({'x1': objectCenter.x, 'y1': objectCenter.y});
+            });
+          }
+
+          if (object.connectors.to) {
+            object.connectors.to.forEach(function (line) {
+              $log.info('object:moving - object.connectors.to.forEach');
+              line.set({'x2': objectCenter.x, 'y2': objectCenter.y});
+            });
+          }
+
+          service.canvas.renderAll();
+        }
+
+        if (service.canvasDefaults.grid.snapTo) {
 
           options.target.set({
             left: Math.round(options.target.left /
@@ -278,10 +302,10 @@
 
             service.isMouseDown = true;
 
-            var pointer = service.canvas.getPointer(object.e);
-            var points = [ pointer.x, pointer.y, pointer.x, pointer.y ];
+            service.fromObject = service.selectedObject;
 
-            $log.info('mouse:down - points: ' + points.toLocaleString());
+            var objectCenter = service.fromObject.getCenterPoint();
+            var points = [ objectCenter.x, objectCenter.y, objectCenter.x, objectCenter.y ];
 
             service.connectorLine = service.addLine(points);
           }
@@ -299,14 +323,45 @@
 
           var pointer = service.canvas.getPointer(object.e);
           service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
+
           service.canvas.renderAll();
         }
 
       });
 
       service.canvas.on('mouse:up', function(){
+
         $log.info('mouse:up');
-        service.isMouseDown = false;
+
+        if (service.connectorMode) {
+
+          service.isMouseDown = false;
+
+          if (service.selectedObject) {
+
+            var objectCenter = service.selectedObject.getCenterPoint();
+
+            service.connectorLine.set({ x2: objectCenter.x, y2: objectCenter.y });
+            service.connectorLine.sendToBack();
+
+            service.fromObject.connectors.from.push(service.connectorLine);
+            service.selectedObject.connectors.to.push(service.connectorLine);
+
+            service.connectorLine = null;
+
+          } else {
+
+            if (service.connectorLine) {
+
+              $log.info('mouse:up - removeObjectFromCanvas()');
+
+              removeObjectFromCanvas(service.connectorLine, false);
+            }
+          }
+
+          service.canvas.renderAll();
+        }
+
       });
 
       service.canvas.on('mouse:over', function(element) {
@@ -352,6 +407,7 @@
             if (service.selectedObject) {
 
               service.selectedObject.set('active', false);
+              service.selectedObject.set('selectable', true);
               service.selectedObject.set('hasRotatingPoint', true);
               // service.selectedObject.set('cornerColor', service.rectDefaults.cornerColor);
               service.selectedObject.set('hasBorders', service.rectDefaults.hasBorders);
@@ -385,6 +441,7 @@
 
             service.selectedObject = element.target;
             service.activeObject = service.selectedObject;
+            service.selectedObject.set('selectable', true);
             service.selectedObject.set('hasRotatingPoint', true);
             // service.selectedObject.set('cornerColor', service.rectDefaults.cornerColor);
             service.selectedObject.set('hasBorders', service.rectDefaults.hasBorders);
@@ -413,6 +470,18 @@
 })();
 
 /*
+
+ // add a reference to the line to each object
+ service.fromObject.addChild = {
+ // this retains the existing arrays (if there were any)
+ from: (service.fromObject.addChild && service.fromObject.addChild.from),
+ to: (service.fromObject.addChild && service.fromObject.addChild.to)
+ };
+
+ // var pointer = service.canvas.getPointer(object.e);
+ // var points = [ pointer.x, pointer.y, pointer.x, pointer.y ];
+
+ // $log.info('mouse:down - points: ' + points.toLocaleString());
 
  // canvas.item(canvas._objects.length-1).set('active',true);
 
