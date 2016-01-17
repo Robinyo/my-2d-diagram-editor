@@ -29,6 +29,7 @@
     service.controlDefaults = null;
     service.rectDefaults = null;
     service.triangleDefaults = null;
+    service.lineDefaults = null;
 
     service.verticalGridLinesGroup = {};
     service.horizontalGridLinesGroup = {};
@@ -54,6 +55,7 @@
       service.controlDefaults = fabricService.getControlDefaults();
       service.rectDefaults = fabricService.getRectDefaults();
       service.triangleDefaults = fabricService.getTriangleDefaults();
+      service.lineDefaults = fabricService.getLineDefaults();
     };
 
     service.setConnectorMode = function (mode) {
@@ -354,7 +356,11 @@
             var objectCenter = service.fromObject.getCenterPoint();
             var points = [ objectCenter.x, objectCenter.y, objectCenter.x, objectCenter.y ];
 
-            service.connectorLine = service.addLine(points);
+            var options = service.lineDefaults;
+            options.selectable = false;
+            options.strokeWidth = 2;
+
+            service.connectorLine = service.addLine(points, options);
           }
         }
 
@@ -389,7 +395,6 @@
             var objectCenter = service.selectedObject.getCenterPoint();
 
             service.connectorLine.set({ x2: objectCenter.x, y2: objectCenter.y });
-            service.connectorLine.sendToBack();
 
             service.fromObject.connectors.from.push(service.connectorLine);
             service.selectedObject.connectors.to.push(service.connectorLine);
