@@ -3,7 +3,7 @@ A browser-based 2D diagram editor, built using AngularJS, Angular UI and Fabric.
 
 Currently working on how to highlight (connection) ports:
  
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports.png)
+![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports-2.png)
 
 And, how to draw connections::
 

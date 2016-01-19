@@ -44,6 +44,7 @@
     service.connectorLine = null;
     service.isMouseDown = false;
     service.fromObject = null;
+    service.fromObjectPort = 'mr';  // 'mt', 'mr', 'mb', 'ml'
 
     $log.info('fabric');
 
@@ -149,7 +150,7 @@
       // service.canvas.setActiveObject(object);
       object.bringToFront();
 
-      $log.info('fabric - addObjectToCanvas() - render: ' + render.toLocaleString());
+      // $log.info('fabric - addObjectToCanvas() - render: ' + render.toLocaleString());
 
       if (render !== false) {
         $log.info('fabric - addObjectToCanvas() - renderAll');
@@ -341,9 +342,54 @@
       // Mouse
       //
 
+      // See: _findTargetCorner()
+
+      var findTargetPort = function(object) {
+
+        var points = new Array(4);
+        var port = object.__corner;
+
+        $log.info('findTargetPort - port: ' + object.__corner);
+
+        switch (port) {
+
+          case 'mt':
+            points = [
+              object.left + (object.width / 2), object.top,
+              object.left + (object.width / 2), object.top
+            ];
+            break;
+          case 'mr':
+            points = [
+              object.left + object.width, object.top + (object.height / 2),
+              object.left + object.width, object.top + (object.height / 2)
+            ];
+            break;
+          case 'mb':
+            points = [
+              object.left + (object.width / 2), object.top + object.height,
+              object.left + (object.width / 2), object.top + object.height
+            ];
+            break;
+          case 'ml':
+            points = [
+              object.left, object.top + (object.height / 2),
+              object.left, object.top + (object.height / 2)
+            ];
+            break;
+
+          default:
+            $log.error('findTargetPort() - service.fromObject.__corner === undefined');
+            break;
+        }
+
+        return points
+
+      };
+
       service.canvas.on('mouse:down', function(object){
 
-        // $log.info('mouse:down');
+        $log.info('mouse:down');
 
         if (service.connectorMode) {
 
@@ -353,8 +399,16 @@
 
             service.fromObject = service.selectedObject;
 
-            var objectCenter = service.fromObject.getCenterPoint();
-            var points = [ objectCenter.x, objectCenter.y, objectCenter.x, objectCenter.y ];
+            var points = null;
+
+            if (service.fromObject.__corner !== undefined) {
+              points = findTargetPort(service.fromObject);
+            } else {
+              var objectCenter = service.fromObject.getCenterPoint();
+              points = [ objectCenter.x, objectCenter.y, objectCenter.x, objectCenter.y ];
+            }
+
+            $log.info('mouse:down - points: ' + JSON.stringify(['e', points], null, '\t'));
 
             var options = service.lineDefaults;
             options.selectable = false;
@@ -384,7 +438,7 @@
 
       service.canvas.on('mouse:up', function(){
 
-        // $log.info('mouse:up');
+        $log.info('mouse:up');
 
         if (service.connectorMode) {
 
@@ -392,17 +446,27 @@
 
           if (service.selectedObject) {
 
-            var objectCenter = service.selectedObject.getCenterPoint();
+            var points = null;
 
-            service.connectorLine.set({ x2: objectCenter.x, y2: objectCenter.y });
+            if (service.selectedObject.__corner !== undefined) {
+              points = findTargetPort(service.selectedObject);
+            } else {
+              var objectCenter = service.selectedObject.getCenterPoint();
+              points = [ objectCenter.x, objectCenter.y, objectCenter.x, objectCenter.y ];
+            }
+
+            $log.info('mouse:up - points: ' + JSON.stringify(['e', points], null, '\t'));
+
+            var x2 = points[2];
+            var y2 = points[3];
+
+            service.connectorLine.set({ x2: x2, y2: y2 });
 
             service.fromObject.connectors.from.push(service.connectorLine);
             service.selectedObject.connectors.to.push(service.connectorLine);
 
-            createArrowHead([service.connectorLine.left, service.connectorLine.top,
-              objectCenter.x, objectCenter.y]);
-            createArrowHead([objectCenter.x, objectCenter.y,
-              service.connectorLine.left, service.connectorLine.top]);
+            createArrowHead([service.connectorLine.left, service.connectorLine.top, x2, y2]);
+            createArrowHead([x2, y2, service.connectorLine.left, service.connectorLine.top]);
 
             service.connectorLine = null;
 
@@ -444,7 +508,7 @@
             service.selectedObject.set('hasRotatingPoint', false);
             // service.selectedObject.set('cornerColor', 'green');
             service.selectedObject.set('hasBorders', false);
-            service.selectedObject.set('cornerSize', 10);
+            service.selectedObject.set('cornerSize', service.rectDefaults.cornerSize * 2);
             service.selectedObject.set('transparentCorners', false);
             service.selectedObject.setControlsVisibility({ tl: false, tr: false, br: false, bl: false });
 
@@ -527,6 +591,14 @@
 })();
 
 /*
+
+
+ var objectCenter = service.selectedObject.getCenterPoint();
+
+ $log.info('mouse:up - service.selectedObject.__corner: ' + service.selectedObject.__corner);
+
+ service.connectorLine.set({ x2: objectCenter.x, y2: objectCenter.y });
+
 
  // add a reference to the line to each object
  service.fromObject.addChild = {

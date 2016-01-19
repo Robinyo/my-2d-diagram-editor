@@ -79,7 +79,7 @@
     };
 
     var controlDefaults = {
-      selectable: false,
+      selectable: true,
       stroke: 'LIGHTBLUE',
       strokeWidth: STROKE_WIDTH
     };
@@ -102,7 +102,7 @@
       width: ARROW_HEAD_LENGTH,
       originX: 'center',
       originY: 'center',
-      selectable: false
+      selectable: true
     }, objectDefaults);
 
     var textDefaults = angular.extend({

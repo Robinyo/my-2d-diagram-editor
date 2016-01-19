@@ -98,7 +98,7 @@
 
       options = options || service.triangleDefaults;
 
-      $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+      // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
 
       return new fabricWindow.Triangle(options);
     };
