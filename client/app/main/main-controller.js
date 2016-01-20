@@ -50,7 +50,7 @@
     main.containers = containersService.getContainers();
 
     main.canvas = null;
-    main.grid = { show: true };  // TODO: the grid which is not selectable seems to cause other issues)
+    main.grid = { show: true, snapTo: false};
 
     const CONTAINER_TEXT_FONT_WEIGHT = 'bold';
     const SHAPE_TEXT_FONT_WEIGHT = 'bold';
@@ -100,7 +100,7 @@
         .then(function (translatedValue) {
           var object = fabric.addRect(shapeRectDefaults);
           object.set('type', 'node');
-          object.connectors = { from: [], to: [] };
+          object.connectors = { fromPort: [], from: [], toPort: [], to: [] };
           fabric.addText(translatedValue + ' 1', shapeTextDefaults);
         });
     };
@@ -132,20 +132,29 @@
     };
 
     main.toggleGrid = function() {
+
       $log.info('MainController.toggleGrid()');
 
       main.grid.show = !main.grid.show;
 
       if (main.grid.show) {
-        fabric.showGrid();
+        fabric.showGrid(true);
       } else {
-        fabric.hideGrid();
+        fabric.showGrid(false);
       }
     };
 
     main.toggleSnapToGrid = function() {
+
       $log.info('MainController.toggleSnapToGrid()');
-      fabric.toggleSnapToGrid();
+
+      main.grid.snapTo = !main.grid.snapTo;
+
+      if (main.grid.snapTo) {
+        fabric.snapToGrid(true);
+      } else {
+        fabric.snapToGrid(false);
+      }
     };
 
     main.setPointerMode = function() {
@@ -156,6 +165,7 @@
     main.setConnectorMode = function() {
       $log.info('MainController.setConnectorMode()');
       fabric.setConnectorMode(true);
+      fabric.snapToGrid(false);
     };
 
     main.switchLanguage = function(key) {

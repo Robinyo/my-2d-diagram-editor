@@ -42,9 +42,10 @@
     service.selectedObject = null;
 
     service.connectorLine = null;
+    service.connectorLineFromPort = null;
     service.isMouseDown = false;
     service.fromObject = null;
-    service.fromObjectPort = 'mr';  // 'mt', 'mr', 'mb', 'ml'
+    // service.fromObjectPort = 'mr';  // 'mt', 'mr', 'mb', 'ml'
 
     $log.info('fabric');
 
@@ -85,9 +86,7 @@
     // Grid
     //
 
-    service.showGrid = function() {
-
-      $log.info('fabric - showGrid()');
+    service.showGrid = function(show) {
 
       var grid = service.canvasDefaults.grid.size;
       var width = service.canvasDefaults.width;
@@ -96,40 +95,44 @@
       // $log.info('width: ' + service.canvasDefaults.width);
       // $log.info('height: ' + service.canvasDefaults.height);
 
-      // draw the Vertical lines
-      var i = 0;
-      for (var x = 0.5; x < width; x += grid) {
-        service.verticalGridLines[i++] = fabricShape.gridLine([ x, 0.5, x, width],
-          { stroke: '#ccc', selectable: false });
+      if (show) {
+
+        $log.info('fabric - showGrid(true)');
+
+        // draw the Vertical lines
+        var i = 0;
+        for (var x = 0.5; x < width; x += grid) {
+          service.verticalGridLines[i++] = fabricShape.gridLine([ x, 0.5, x, width],
+            { stroke: '#ccc', selectable: false });
+        }
+
+        // draw the Horizontal lines
+        i = 0;
+        for (var y = 0.5; y < height; y += grid) {
+          service.horizontalGridLines[i++] = fabricShape.gridLine([ 0.5, y, height, y],
+            { stroke: '#ccc', selectable: false });
+        }
+
+        service.verticalGridLinesGroup = service.createGroup(service.verticalGridLines,
+          { selectable: false }, false);
+        service.verticalGridLinesGroup.sendToBack();
+        service.horizontalGridLinesGroup = service.createGroup(service.horizontalGridLines,
+          { selectable: false }, false);
+        service.horizontalGridLinesGroup.sendToBack();
+
+        // Why did we start x and y at 0.5? Why not 0?
+        // See: http://diveintohtml5.info/canvas.html
+
+        $log.info('fabric - showGrid() - deactivateAll().renderAll()');
+        service.canvas.deactivateAll().renderAll();
+
+      } else {
+
+        $log.info('fabric - showGrid(false)');
+
+        service.removeGroup(service.verticalGridLinesGroup, false);
+        service.removeGroup(service.horizontalGridLinesGroup, true);
       }
-
-      // draw the Horizontal lines
-      i = 0;
-      for (var y = 0.5; y < height; y += grid) {
-        service.horizontalGridLines[i++] = fabricShape.gridLine([ 0.5, y, height, y],
-          { stroke: '#ccc', selectable: false });
-      }
-
-      service.verticalGridLinesGroup = service.createGroup(service.verticalGridLines,
-        { selectable: false }, false);
-      service.verticalGridLinesGroup.sendToBack();
-      service.horizontalGridLinesGroup = service.createGroup(service.horizontalGridLines,
-        { selectable: false }, false);
-      service.horizontalGridLinesGroup.sendToBack();
-
-      // Why did we start x and y at 0.5? Why not 0?
-      // See: http://diveintohtml5.info/canvas.html
-
-      $log.info('fabric - showGrid() - deactivateAll().renderAll()');
-      service.canvas.deactivateAll().renderAll();
-    };
-
-    service.hideGrid = function() {
-
-      $log.info('fabric - hideGrid()');
-
-      service.removeGroup(service.verticalGridLinesGroup, false);
-      service.removeGroup(service.horizontalGridLinesGroup, true);
     };
 
     //
@@ -256,8 +259,8 @@
     // Grid
     //
 
-    service.toggleSnapToGrid = function() {
-      service.canvasDefaults.grid.snapTo = !service.canvasDefaults.grid.snapTo;
+    service.snapToGrid = function(snapTo) {
+      service.canvasDefaults.grid.snapTo = snapTo;
     };
 
     //
@@ -296,43 +299,58 @@
     service.configCanvasListeners = function() {
 
       //
-      // Object - Snap to grid
+      // Object
       //
 
       service.canvas.on('object:moving', function(options) {
 
-        // $log.info('object:moving');
+        $log.info('object:moving');
 
         var object = options.target;
-        var objectCenter = object.getCenterPoint();
 
-        // update Connectors
+        //
+        // If the Object being moved has Connectors, we need to update there position.
+        //
         if (object.connectors) {
 
-          if (object.connectors.from) {
-            object.connectors.from.forEach(function (line) {
-              // $log.info('object:moving - object.connectors.from.forEach');
-              line.set({'x1': objectCenter.x, 'y1': objectCenter.y});
+          var portCenter = null;
+          var i = null;
+
+          if (object.connectors.from.length) {
+
+            $log.info('object:moving - object.connectors.from.length: ' + object.connectors.from.length);
+
+            i = 0;
+            object.connectors.from.forEach(function(line) {
+              portCenter = getPortCenterPoint(object, object.connectors.fromPort[i++]);
+              line.set({'x1': portCenter.x1, 'y1': portCenter.y1});
             });
           }
 
-          if (object.connectors.to) {
-            object.connectors.to.forEach(function (line) {
-              // $log.info('object:moving - object.connectors.to.forEach');
-              line.set({'x2': objectCenter.x, 'y2': objectCenter.y});
+          if (object.connectors.to.length) {
+
+            $log.info('object:moving - object.connectors.to.length: ' + object.connectors.to.length);
+
+            i = 0;
+            object.connectors.to.forEach(function(line) {
+              portCenter = getPortCenterPoint(object, object.connectors.toPort[i++]);
+              line.set({'x2': portCenter.x2, 'y2': portCenter.y2});
             });
           }
 
           service.canvas.renderAll();
         }
 
-        if (service.canvasDefaults.grid.snapTo) {
+        //
+        // Snap to grid
+        //
 
-          options.target.set({
+        if (service.canvasDefaults.grid.snapTo) {
+          object.set({
             left: Math.round(options.target.left /
-            service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size,
+              service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size,
             top: Math.round(options.target.top /
-            service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size
+              service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size
           });
         }
 
@@ -387,6 +405,57 @@
 
       };
 
+      var getPortCenterPoint = function(object, port) {
+
+        var x1 = 0;
+        var y1 = 0;
+
+        switch (port) {
+
+          case 'mt':
+            x1 = object.left + (object.width / 2);
+            y1 = object.top;
+            break;
+
+          case 'mr':
+            x1 = object.left + object.width;
+            y1 = object.top + (object.height / 2);
+            break;
+
+          case 'mb':
+            x1 = object.left + (object.width / 2);
+            y1 = object.top + object.height;
+            break;
+          case 'ml':
+            x1 = object.left;
+            y1 = object.top + (object.height / 2);
+            break;
+
+          default:
+            $log.error('getPortCenterPoint() - port === undefined');
+            break;
+        }
+
+        return {
+          x1: x1, y1: y1,
+          x2: x1, y2: y1
+        }
+      };
+
+      service.canvas.on('mouse:move', function(object){
+
+        // $log.info('mouse:move');
+
+        if (!service.isMouseDown) return;
+
+        if (service.connectorMode) {
+          var pointer = service.canvas.getPointer(object.e);
+
+          service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
+          service.canvas.renderAll();
+        }
+      });
+
       service.canvas.on('mouse:down', function(object){
 
         $log.info('mouse:down');
@@ -403,15 +472,16 @@
 
             if (service.fromObject.__corner !== undefined) {
               points = findTargetPort(service.fromObject);
+              service.connectorLineFromPort = service.fromObject.__corner;
             } else {
               var objectCenter = service.fromObject.getCenterPoint();
               points = [ objectCenter.x, objectCenter.y, objectCenter.x, objectCenter.y ];
             }
 
-            $log.info('mouse:down - points: ' + JSON.stringify(['e', points], null, '\t'));
+            // $log.info('mouse:down - points: ' + JSON.stringify(['e', points], null, '\t'));
 
             var options = service.lineDefaults;
-            options.selectable = false;
+            options.selectable = true;
             options.strokeWidth = 2;
 
             service.connectorLine = service.addLine(points, options);
@@ -420,70 +490,6 @@
 
       });
 
-      service.canvas.on('mouse:move', function(object){
-
-        // $log.info('mouse:move');
-
-        if (!service.isMouseDown) return;
-
-        if (service.connectorMode) {
-
-          var pointer = service.canvas.getPointer(object.e);
-          service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
-
-          service.canvas.renderAll();
-        }
-
-      });
-
-      service.canvas.on('mouse:up', function(){
-
-        $log.info('mouse:up');
-
-        if (service.connectorMode) {
-
-          service.isMouseDown = false;
-
-          if (service.selectedObject) {
-
-            var points = null;
-
-            if (service.selectedObject.__corner !== undefined) {
-              points = findTargetPort(service.selectedObject);
-            } else {
-              var objectCenter = service.selectedObject.getCenterPoint();
-              points = [ objectCenter.x, objectCenter.y, objectCenter.x, objectCenter.y ];
-            }
-
-            $log.info('mouse:up - points: ' + JSON.stringify(['e', points], null, '\t'));
-
-            var x2 = points[2];
-            var y2 = points[3];
-
-            service.connectorLine.set({ x2: x2, y2: y2 });
-
-            service.fromObject.connectors.from.push(service.connectorLine);
-            service.selectedObject.connectors.to.push(service.connectorLine);
-
-            createArrowHead([service.connectorLine.left, service.connectorLine.top, x2, y2]);
-            createArrowHead([x2, y2, service.connectorLine.left, service.connectorLine.top]);
-
-            service.connectorLine = null;
-
-          } else {
-
-            if (service.connectorLine) {
-
-              $log.info('mouse:up - removeObjectFromCanvas()');
-
-              removeObjectFromCanvas(service.connectorLine, false);
-            }
-          }
-
-          service.canvas.renderAll();
-        }
-
-      });
 
       service.canvas.on('mouse:over', function(element) {
 
@@ -515,6 +521,66 @@
             service.canvas.renderAll();
           }
         }
+      });
+
+      service.canvas.on('mouse:up', function(){
+
+        $log.info('mouse:up');
+
+        if (service.connectorMode) {
+
+          service.isMouseDown = false;
+
+          //
+          // If we're over (mouse:over) a Shape that supports connections.
+          //
+          if (service.selectedObject) {
+
+            var portCenter = null;
+
+            if (service.selectedObject.__corner === undefined) {
+              if (service.connectorLine) {
+                $log.info('mouse:up - removeObjectFromCanvas()');
+                removeObjectFromCanvas(service.connectorLine, false);
+              }
+
+              // service.canvas.renderAll();
+              return;
+            }
+
+            var toPort = service.selectedObject.__corner;
+
+            $log.info('mouse:up - toPort: ' + toPort);
+
+            portCenter = getPortCenterPoint(service.selectedObject, toPort);
+
+            service.connectorLine.set({ x2: portCenter.x2, y2: portCenter.y2 });
+
+            service.fromObject.connectors.fromPort.push(service.connectorLineFromPort);
+            service.fromObject.connectors.from.push(service.connectorLine);
+
+            service.selectedObject.connectors.toPort.push(toPort);
+            service.selectedObject.connectors.to.push(service.connectorLine);
+
+            // createArrowHead([service.connectorLine.left, service.connectorLine.top, portCenter.x2, portCenter.y2]);
+            // createArrowHead([portCenter.x2, portCenter.y2, service.connectorLine.left, service.connectorLine.top]);
+
+            service.connectorLineFromPort = null;
+            service.connectorLine = null;
+
+          } else {
+
+            if (service.connectorLine) {
+
+              $log.info('mouse:up - removeObjectFromCanvas()');
+
+              removeObjectFromCanvas(service.connectorLine, false);
+            }
+          }
+
+          service.canvas.renderAll();
+        }
+
       });
 
       service.canvas.on('mouse:out', function(element) {
