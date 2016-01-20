@@ -264,17 +264,17 @@
     };
 
     //
-    // Create Arrow Head
+    // Create Arrow
     //
 
-    var createArrowHead = function(points) {
+    var createArrow = function(points) {
 
       var x1 = points[0];
       var y1 = points[1];
       var x2 = points[2];
       var y2 = points[3];
 
-      // $log.info('createArrowHead - points: ' + JSON.stringify(['e', points], null, '\t'));
+      $log.info('createArrowHead - points: ' + JSON.stringify(['e', points], null, '\t'));
 
       var dx = x2 - x1;
       var dy = y2 - y1;
@@ -289,7 +289,7 @@
       options.left = x2;
       options.selectable = false;
 
-      service.addTriangle(options);
+      return service.addTriangle(options);
     };
 
     //
@@ -316,14 +316,33 @@
           var portCenter = null;
           var i = null;
 
+          var x1 = null;
+          var y1 = null;
+          var x2 = null;
+          var y2 = null;
+
           if (object.connectors.from.length) {
 
             $log.info('object:moving - object.connectors.from.length: ' + object.connectors.from.length);
 
             i = 0;
             object.connectors.from.forEach(function(line) {
-              portCenter = getPortCenterPoint(object, object.connectors.fromPort[i++]);
+              portCenter = getPortCenterPoint(object, object.connectors.fromPort[i]);
               line.set({'x1': portCenter.x1, 'y1': portCenter.y1});
+
+              // Remove from (destination) arrow
+              removeObjectFromCanvas(object.connectors.fromArrow[i], false);
+
+              x1 = portCenter.x1;
+              y1 = portCenter.y1;
+              x2 = object.connectors.from[i].x2;
+              y2 = object.connectors.from[i].y2;
+
+              // $log.info('x1: ' + x1 + ' y1: ' + y1 + ' x2: ' + x2 + ' y2: ' + y2);
+
+              // Create from (destination) arrow
+              object.connectors.fromArrow[i] = createArrow([ x1, y1, x2, y2 ]);
+              i++;
             });
           }
 
@@ -333,8 +352,22 @@
 
             i = 0;
             object.connectors.to.forEach(function(line) {
-              portCenter = getPortCenterPoint(object, object.connectors.toPort[i++]);
+              portCenter = getPortCenterPoint(object, object.connectors.toPort[i]);
               line.set({'x2': portCenter.x2, 'y2': portCenter.y2});
+
+              // Remove to (source) arrow
+              removeObjectFromCanvas(object.connectors.toArrow[i], false);
+
+              x1 = portCenter.x2;
+              y1 = portCenter.y2;
+              x2 = object.connectors.to[i].x1;
+              y2 = object.connectors.to[i].y1;
+
+              // $log.info('x1: ' + x1 + ' y1: ' + y1 + ' x2: ' + x2 + ' y2: ' + y2);
+
+              // Create to (source) arrow
+              object.connectors.toArrow[i] = createArrow([ x1, y1, x2, y2 ]);
+              i++;
             });
           }
 
@@ -558,12 +591,13 @@
 
             service.fromObject.connectors.fromPort.push(service.connectorLineFromPort);
             service.fromObject.connectors.from.push(service.connectorLine);
+            service.fromObject.connectors.fromArrow.push(createArrow([service.connectorLine.left,
+              service.connectorLine.top, portCenter.x2, portCenter.y2]));
 
             service.selectedObject.connectors.toPort.push(toPort);
             service.selectedObject.connectors.to.push(service.connectorLine);
-
-            // createArrowHead([service.connectorLine.left, service.connectorLine.top, portCenter.x2, portCenter.y2]);
-            // createArrowHead([portCenter.x2, portCenter.y2, service.connectorLine.left, service.connectorLine.top]);
+            service.selectedObject.connectors.toArrow.push(createArrow([portCenter.x2, portCenter.y2,
+              service.connectorLine.left, service.connectorLine.top]));
 
             service.connectorLineFromPort = null;
             service.connectorLine = null;
