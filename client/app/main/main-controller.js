@@ -100,7 +100,7 @@
         .then(function (translatedValue) {
           var object = fabric.addRect(shapeRectDefaults);
           object.set('type', 'node');
-          object.connectors = { fromPort: [], from: [], fromArrow: [], toPort: [], to: [], toArrow: [] };
+          object.connectors = { fromPort: [], from: [], fromArrow: [], toPort: [], to: [], toArrow: [], otherObject: [] };
           fabric.addText(translatedValue + ' 1', shapeTextDefaults);
         });
     };
