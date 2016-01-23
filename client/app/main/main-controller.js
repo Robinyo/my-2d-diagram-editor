@@ -52,6 +52,8 @@
     main.canvas = null;
     main.grid = { show: true, snapTo: false};
 
+    main.nodeId = 1;
+
     const CONTAINER_TEXT_FONT_WEIGHT = 'bold';
     const SHAPE_TEXT_FONT_WEIGHT = 'bold';
     const SHAPE_RECT_WIDTH = 100;
@@ -86,7 +88,6 @@
 
     $scope.$on('canvas:created', main.init);
 
-
     main.newShape = function(name, fill) {
 
       $log.info('MainController.newShape()');
@@ -101,7 +102,7 @@
           var object = fabric.addRect(shapeRectDefaults);
           object.set('type', 'node');
           object.connectors = { fromPort: [], from: [], fromArrow: [], toPort: [], to: [], toArrow: [], otherObject: [] };
-          fabric.addText(translatedValue + ' 1', shapeTextDefaults);
+          fabric.addText(translatedValue + ' ' + main.nodeId++, shapeTextDefaults);
         });
     };
 

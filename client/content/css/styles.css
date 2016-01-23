@@ -27,6 +27,11 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
   border-right: 1px solid #eee;
+
+  /*
+  overflow-x: auto;
+  width: 300px;
+  */
 }
 
 .content {
