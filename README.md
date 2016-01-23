@@ -17,6 +17,10 @@ And, how to update connections:
 
 ![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports-3.png)
 
+In English:
+
+![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-5-english.png)
+
 In Polish:
 
 ![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-4-polish.png)
@@ -24,10 +28,6 @@ In Polish:
 In German:
 
 ![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-4-german.png)
-
-In English:
-
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-4-english.png)
 
 A sample Logical Security Zone Model diagram:
 
