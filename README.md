@@ -15,7 +15,7 @@ How to draw connections:
 
 And, how to update connections:
 
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports-2.png)
+![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports-3.png)
 
 In Polish:
 
