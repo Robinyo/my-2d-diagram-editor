@@ -30,7 +30,6 @@
 
     const GRID_SIZE = 50;
 
-    // const LINE_WIDTH = 4;
     const STROKE_WIDTH = 1;
 
     const RECT_WIDTH = 300;
@@ -43,39 +42,72 @@
 
     var canvasDefaults = {
       backgroundColor: '#ffffff',
-      selection: true,
-      width: CANVAS_WIDTH,
-      height: CANVAS_HEIGHT,
-      originalWidth: CANVAS_WIDTH,
-      originalHeight: CANVAS_HEIGHT,
       grid: {
         show: true,
         size: GRID_SIZE,
         snapTo: false
-      }
+      },
+      height: CANVAS_HEIGHT,
+      originalHeight: CANVAS_HEIGHT,
+      originalWidth: CANVAS_WIDTH,
+      selection: true,
+      width: CANVAS_WIDTH
     };
 
     var objectDefaults = {
-      selectable: true,
-      rotatingPointOffset: 40,
-      padding: 0,
       borderColor: 'rgba(102,153,255,0.75)',
+      centerTransform: true,
       cornerColor: 'rgba(102,153,255,0.5)',
       cornerSize: 10,
-      transparentCorners: true,
       hasBorders: true,
       hasRotatingPoint: true,
-      centerTransform: true
+      padding: 0,
+      rotatingPointOffset: 40,
+      selectable: true,
+      transparentCorners: true
     };
+
+    var lineDefaults = angular.extend({
+      stroke: 'BLACK',
+      strokeWidth: STROKE_WIDTH
+    }, objectDefaults);
+
+    var rectDefaults = angular.extend({
+      fill: 'GRAY',
+      height: RECT_HEIGHT,
+      left: GRID_SIZE,
+      opacity: 0.7,
+      top: GRID_SIZE,
+      width: RECT_WIDTH
+    }, objectDefaults);
+
+    var triangleDefaults = angular.extend({
+      // angle: angle,
+      fill: 'BLUE',
+      height: GRID_SIZE,
+      left: GRID_SIZE,
+      originX: 'center',
+      originY: 'center',
+      top: GRID_SIZE,
+      width: GRID_SIZE
+    }, objectDefaults);
+
+    var textDefaults = angular.extend({
+      fill: 'BLACK',
+      fontFamily: 'Tahoma',
+      fontSize: FONT_SIZE,
+      fontWeight: FONT_WEIGHT,
+      left: GRID_SIZE,
+      originX: 'left',
+      originY: 'top',
+      scaleX: 1,
+      scaleY: 1,
+      textAlign: 'left',
+      top: GRID_SIZE
+    }, objectDefaults);
 
     var gridLineDefaults = {
       stroke: 'LIGHTGRAY'
-    };
-
-    var lineDefaults = {
-      selectable: true,
-      stroke: 'BLACK',
-      strokeWidth: STROKE_WIDTH
     };
 
     var controlDefaults = {
@@ -84,51 +116,37 @@
       strokeWidth: STROKE_WIDTH
     };
 
-    var rectDefaults = angular.extend({
-      left: GRID_SIZE,
-      top: GRID_SIZE,
-      width: RECT_WIDTH,
-      height: RECT_HEIGHT,
-      fill: 'GRAY',
-      opacity: 0.7
-    }, objectDefaults);
+    //
+    // Connectors (a line) are not selectable (but the arrows on either end are).
+    //
 
-    var triangleDefaults = angular.extend({
+    var connectorDefaults = {
+      selectable: false,
+      stroke: 'BLACK',
+      strokeWidth: 2 // STROKE_WIDTH
+    };
+
+    //
+    // Arrows (a triangle)
+    //
+
+    var arrowDefaults = angular.extend({
       // angle: angle,
       fill: 'BLACK',
-      top: GRID_SIZE,
-      left: GRID_SIZE,
+      hasControls: false,
       height: ARROW_HEAD_LENGTH,
-      width: ARROW_HEAD_LENGTH,
+      left: GRID_SIZE,
       originX: 'center',
       originY: 'center',
-      selectable: true
+      top: GRID_SIZE,
+      width: ARROW_HEAD_LENGTH
     }, objectDefaults);
 
-    var textDefaults = angular.extend({
-      left: GRID_SIZE,
-      top: GRID_SIZE,
-      originX: 'left',
-      originY: 'top',
-      scaleX: 1,
-      scaleY: 1,
-      fontFamily: 'Tahoma',
-      fontSize: FONT_SIZE,
-      fontWeight: FONT_WEIGHT,
-      fill: 'BLACK',
-      textAlign: 'left'
-    }, objectDefaults);
+    arrowDefaults.hasRotatingPoint = false;
+    arrowDefaults.selectable = false;
 
     service.getCanvasDefaults = function() {
       return canvasDefaults;
-    };
-
-    service.getGridLineDefaults = function() {
-      return gridLineDefaults;
-    };
-
-    service.getControlDefaults = function() {
-      return controlDefaults;
     };
 
     service.getLineDefaults = function() {
@@ -145,6 +163,22 @@
 
     service.getTextDefaults = function() {
       return textDefaults;
+    };
+
+    service.getGridLineDefaults = function() {
+      return gridLineDefaults;
+    };
+
+    service.getControlDefaults = function() {
+      return controlDefaults;
+    };
+
+    service.getConnectorDefaults = function() {
+      return connectorDefaults;
+    };
+
+    service.getArrowDefaults = function() {
+      return arrowDefaults;
     };
 
     return service;

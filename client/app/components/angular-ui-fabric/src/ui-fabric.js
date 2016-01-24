@@ -28,8 +28,8 @@
     service.canvasDefaults = null;
     service.controlDefaults = null;
     service.rectDefaults = null;
-    service.triangleDefaults = null;
-    service.lineDefaults = null;
+    service.connectorDefaults = null;
+    service.arrowDefaults = null;
 
     service.verticalGridLinesGroup = {};
     service.horizontalGridLinesGroup = {};
@@ -37,15 +37,12 @@
     service.horizontalGridLines = [];
 
     service.connectorMode = false;
-
     service.activeObject = null;
     service.selectedObject = null;
-
     service.connectorLine = null;
     service.connectorLineFromPort = null;
     service.isMouseDown = false;
     service.fromObject = null;
-    // service.fromObjectPort = 'mr';  // 'mt', 'mr', 'mb', 'ml'
 
     $log.info('fabric');
 
@@ -56,8 +53,8 @@
       service.canvasDefaults = fabricService.getCanvasDefaults();
       service.controlDefaults = fabricService.getControlDefaults();
       service.rectDefaults = fabricService.getRectDefaults();
-      service.triangleDefaults = fabricService.getTriangleDefaults();
-      service.lineDefaults = fabricService.getLineDefaults();
+      service.connectorDefaults = fabricService.getConnectorDefaults();
+      service.arrowDefaults = fabricService.getArrowDefaults();
     };
 
     service.setConnectorMode = function (mode) {
@@ -275,7 +272,7 @@
       var x2 = points[2];
       var y2 = points[3];
 
-      options = options || service.triangleDefaults;
+      options = options || service.arrowDefaults;
 
       // $log.info('createArrowHead - points: ' + JSON.stringify(['e', points], null, '\t'));
 
@@ -290,7 +287,12 @@
       options.top = y2;
       options.left = x2;
 
-      return service.addTriangle(options);
+      // TODO - http://fabricjs.com/fabric-intro-part-3/#subclassing
+
+      var object = service.addTriangle(options);
+      object.set('type', 'arrow');
+
+      return object;
     };
 
     var moveFromArrows = function(object, portCenter, index) {
@@ -557,9 +559,7 @@
 
             // $log.info('mouse:down - points: ' + JSON.stringify(['e', points], null, '\t'));
 
-            var options = service.lineDefaults;
-            options.selectable = true;
-            options.strokeWidth = 2;
+            var options = service.connectorDefaults;
 
             service.connectorLine = service.addLine(points, options);
           }
@@ -596,7 +596,7 @@
             var fromArrow = null;
             var toArrow = null;
 
-            var options = service.triangleDefaults;
+            var options = service.arrowDefaults;
             // options.fill = 'RED';
 
             $log.info('mouse:up - toPort: ' + toPort);
@@ -649,6 +649,10 @@
 
         // $log.info('mouse:over');
 
+        //
+        // Connector Mode
+        //
+
         if (service.connectorMode) {
 
           if (element.target.type === 'node') {
@@ -673,13 +677,33 @@
             service.selectedObject.setControlsVisibility({ tl: false, tr: false, br: false, bl: false });
 
             service.canvas.renderAll();
+            return;
           }
+
+          return;
+
+        } // end if (service.connectorMode)
+
+        //
+        // Pointer Mode
+        //
+
+        if (element.target.type === 'arrow') {
+          element.target.hoverCursor = 'pointer';
+          element.target.setFill('BLUE');
+          service.canvas.renderAll();
+          // return;
         }
+
       });
 
       service.canvas.on('mouse:out', function(element) {
 
         // $log.info('mouse:out');
+
+        //
+        // Connector Mode
+        //
 
         if (service.connectorMode) {
 
@@ -704,11 +728,29 @@
               }
 
               service.canvas.renderAll();
+              return;
             }
-          }
-        }
-      });
 
+            return;
+
+          }
+
+          return;
+
+        } // end if (service.connectorMode)
+
+        //
+        // Pointer Mode
+        //
+
+        if (element.target.type === 'arrow') {
+
+          element.target.setFill('BLACK');
+          service.canvas.renderAll();
+          // return;
+        }
+
+      });
 
       service.canvas.on('object:selected', function(element) {
 

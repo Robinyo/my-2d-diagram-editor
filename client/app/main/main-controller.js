@@ -99,6 +99,9 @@
 
       $translate(name)
         .then(function (translatedValue) {
+
+          // TODO - http://fabricjs.com/fabric-intro-part-3/#subclassing
+
           var object = fabric.addRect(shapeRectDefaults);
           object.set('type', 'node');
           object.connectors = { fromPort: [], from: [], fromArrow: [], toPort: [], to: [], toArrow: [], otherObject: [] };
