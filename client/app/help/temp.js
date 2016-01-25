@@ -451,3 +451,164 @@
 // Note: "Best Practice: Directives should clean up after themselves. You can use element.on('$destroy', ...) or
 // scope.$on('$destroy', ...) to run a clean-up function when the directive is removed" ...
 
+
+/*
+
+
+ var objectCenter = service.selectedObject.getCenterPoint();
+
+ $log.info('mouse:up - service.selectedObject.__corner: ' + service.selectedObject.__corner);
+
+ service.connectorLine.set({ x2: objectCenter.x, y2: objectCenter.y });
+
+
+ // add a reference to the line to each object
+ service.fromObject.addChild = {
+ // this retains the existing arrays (if there were any)
+ from: (service.fromObject.addChild && service.fromObject.addChild.from),
+ to: (service.fromObject.addChild && service.fromObject.addChild.to)
+ };
+
+ // var pointer = service.canvas.getPointer(object.e);
+ // var points = [ pointer.x, pointer.y, pointer.x, pointer.y ];
+
+ // $log.info('mouse:down - points: ' + points.toLocaleString());
+
+ // canvas.item(canvas._objects.length-1).set('active',true);
+
+ // canvas.setActiveObject(canvas._objects[canvas._objects.length-1]);
+
+ var object = element.target;
+
+ object.set('hasRotatingPoint', true);
+ object.setControlsVisibility({
+ tl: true,
+ tr: true,
+ br: true,
+ bl: true
+ });
+
+ // service.selectedObject.lockUniScaling = true; you only get the corners
+
+
+ // var rectDefaults = angular.copy(fabricService.getRectDefaults());
+ // var objectControls = null;
+ // const LINE_WIDTH = 1;
+
+ service.objectControls = false;
+ service.controlDefaults = null;
+ service.controlsGroup = {};
+ service.controlLines = [];
+
+ // $log.info('element: ' + JSON.stringify(['e', element], null, '\t'));
+
+ // drawControls(element);
+
+ // eraseControls(element);
+
+ //
+ // Controls
+ //
+
+ var drawControls = function(element) {
+ drawObjectControls(element);
+ };
+
+ var eraseControls = function(element) {
+ eraseObjectControls(element);
+ };
+
+ var drawObjectControls = function(element) {
+
+ $log.info('fabric - drawObjectControls()');
+
+ $log.info('element: ' + JSON.stringify(['e', element], null, '\t'));
+
+ if (service.objectControls === false) {
+
+ $log.info('service.objectControls === false');
+
+ var topLeft = {x: element.target.left - 2, y: element.target.top - 2};
+ var topRight = {x: element.target.top + element.target.width, y: element.target.top - 2};
+ var bottomLeft = {x: element.target.left - 2, y: element.target.top + element.target.height};
+ var bottomRight = {x: element.target.top + element.target.width, y: element.target.top + element.target.height};
+
+ var i = 0;
+ service.controlLines[i++] = fabricShape.line([ topLeft.x, topLeft.y, topRight.x, topRight.y],
+ service.controlDefaults);
+ service.controlLines[i++] = fabricShape.line([ topRight.x, topRight.y, bottomRight.x, bottomRight.y],
+ service.controlDefaults);
+ service.controlLines[i++] = fabricShape.line([ bottomRight.x, bottomRight.y, bottomLeft.x, bottomLeft.y],
+ service.controlDefaults);
+ service.controlLines[i++] = fabricShape.line([ bottomLeft.x, bottomLeft.y, topLeft.x, topLeft.y],
+ service.controlDefaults);
+
+ service.controlsGroup = service.createGroup(service.controlLines, { selectable: false }, false);
+
+ service.objectControls = true;
+
+ // top-left
+ // top-right
+ // bottom-left
+ // bottom-right
+
+ }
+
+ };
+
+ var eraseObjectControls = function(element) {
+
+ $log.info('fabric - eraseObjectControls()');
+
+ if (service.objectControls === true) {
+
+ $log.info('service.objectControls === true');
+
+ service.removeGroup(service.controlsGroup, true)
+
+ service.objectControls = false;
+ }
+ };
+
+ // element.target.setFill('red');
+ // service.canvas.renderAll();
+
+
+ // element.target.setFill('green');
+ // service.canvas.renderAll();
+
+ rectDefaults.strokeWidth = 5;
+
+ rectDefaults.left = element.target.left - (rectDefaults.strokeWidth + 1);
+ rectDefaults.top = element.target.top - (rectDefaults.strokeWidth + 1);
+ rectDefaults.width = element.target.width + (2 * rectDefaults.strokeWidth);
+ rectDefaults.height = element.target.height + (2 * rectDefaults.strokeWidth);
+ rectDefaults.fill = 'none';
+ rectDefaults.stroke = 'rgba(100,200,200,0.5)';
+ rectDefaults.opacity = 0.5;
+
+ // $log.info('rectDefaults: ' + JSON.stringify(['e', rectDefaults], null, '\t'));
+
+ objectControls = service.addRect(rectDefaults, false);
+
+ if (object.left === canvasDefaults.grid.size || object.top === canvasDefaults.grid.size) {
+ $log.info('fabric - addObjectToCanvas() - centerObject()');
+ fabricWindow.centerObject();
+ }
+
+ // $log.info('mouse:over - element.target: ' + JSON.stringify(['e', element.target], null, '\t'));
+
+ rectDefaults.left = 50 - (rectDefaults.strokeWidth + 1);
+ rectDefaults.top = 50 - (rectDefaults.strokeWidth + 1);
+ rectDefaults.width = 300 + (2 * rectDefaults.strokeWidth);
+ rectDefaults.height = 300 + (2 * rectDefaults.strokeWidth);
+
+ var activeGroup = this.getActiveGroup();
+
+ if (activeGroup) {
+ drawGroupControls();
+ } else {
+ drawObjectControls();
+ }
+
+ */

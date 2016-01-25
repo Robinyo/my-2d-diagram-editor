@@ -7,7 +7,7 @@
    */
 
   angular.module('my-2d-diagram-editor.main')
-    .service('shapesService', shapesService);
+    .service('shapeConfig', shapeConfig);
 
   /*
    * Use $inject to manually identify your dependencies for Angular components.
@@ -15,9 +15,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  // shapesService.$inject = [''];
+  // shapesConfig.$inject = [''];
 
-  function shapesService() {
+  function shapeConfig() {
 
     var service = this;
 

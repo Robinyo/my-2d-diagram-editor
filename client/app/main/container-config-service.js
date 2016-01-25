@@ -7,7 +7,7 @@
    */
 
   angular.module('my-2d-diagram-editor.main')
-    .service('containersService', containersService);
+    .service('containerConfig', containerConfig);
 
   /*
    * Use $inject to manually identify your dependencies for Angular components.
@@ -15,9 +15,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  // containersService.$inject = [''];
+  // containerConfig.$inject = [''];
 
-  function containersService() {
+  function containerConfig() {
 
     var service = this;
 

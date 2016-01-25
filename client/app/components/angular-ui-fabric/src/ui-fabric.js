@@ -17,11 +17,14 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  fabric.$inject = ['$log', 'fabricCanvas', 'fabricService', 'fabricWindow', 'fabricShape', 'fabricText'];
+  fabric.$inject = ['$log', 'fabricCanvas', 'fabricConfig', 'fabricWindow', 'fabricShape', 'fabricText', 'fabricUtils'];
 
-  function fabric($log, fabricCanvas, fabricService, fabricWindow, fabricShape, fabricText) {
+  function fabric($log, fabricCanvas, fabricConfig, fabricWindow, fabricShape, fabricText, fabricUtils) {
 
     var service = this;
+
+    const FROM_ARROW_FILL = 'RED';
+    const TO_ARROW_FILL = 'GREEN';
 
     service.canvas = null;
 
@@ -50,11 +53,11 @@
 
       $log.info('fabric - init()');
 
-      service.canvasDefaults = fabricService.getCanvasDefaults();
-      service.controlDefaults = fabricService.getControlDefaults();
-      service.rectDefaults = fabricService.getRectDefaults();
-      service.connectorDefaults = fabricService.getConnectorDefaults();
-      service.arrowDefaults = fabricService.getArrowDefaults();
+      service.canvasDefaults = fabricConfig.getCanvasDefaults();
+      service.controlDefaults = fabricConfig.getControlDefaults();
+      service.rectDefaults = fabricConfig.getRectDefaults();
+      service.connectorDefaults = fabricConfig.getConnectorDefaults();
+      service.arrowDefaults = fabricConfig.getArrowDefaults();
     };
 
     service.setConnectorMode = function (mode) {
@@ -210,6 +213,118 @@
       return addObjectToCanvas(fabricShape.triangle(options), render);
     };
 
+    //
+    // Arrow
+    //
+
+    service.createArrow = function(points, options) {
+
+      var x1 = points[0];
+      var y1 = points[1];
+      var x2 = points[2];
+      var y2 = points[3];
+
+      options = options || service.arrowDefaults;
+
+      var dx = x2 - x1;
+      var dy = y2 - y1;
+
+      var angle = Math.atan2(dy, dx);
+      angle *= 180 / Math.PI;
+      angle += 90;
+
+      options.angle = angle;
+      options.top = y2;
+      options.left = x2;
+
+      // TODO - http://fabricjs.com/fabric-intro-part-3/#subclassing
+
+      var object = service.addTriangle(options);
+      object.set('type', 'arrow');
+      object.index = 0;
+      object.otherObject = {};
+      object.isFromArrow = true;
+      object.port = 'mt';
+      object.line = {};
+
+      return object;
+    };
+
+    service.moveFromArrows = function(object, portCenter, index) {
+
+      $log.info('moveFromArrows()');
+
+      removeObjectFromCanvas(object.connectors.fromArrow[index], false);
+      removeObjectFromCanvas(object.connectors.toArrow[index], false);
+
+      var x1 = portCenter.x1;
+      var y1 = portCenter.y1;
+      var x2 = object.connectors.fromLine[index].x2;
+      var y2 = object.connectors.fromLine[index].y2;
+
+      // object <-- toArrow -- connector -- fromArrow --> otherObject
+      // one arrow is adjacent to the object <--, the other faces away from --> the object
+
+      var otherObject = object.connectors.otherObject[index];
+
+      var fromArrow = service.createArrow([ x1, y1, x2, y2 ]);
+      fromArrow.index = index;
+      fromArrow.otherObject = otherObject;
+      fromArrow.isFromArrow = true;
+      // fromArrow.port = object.connectors.fromPort[index];
+      fromArrow.port = object.connectors.toPort[index];
+      fromArrow.line = object.connectors.fromLine[index];
+      var toArrow = service.createArrow([ x2, y2, x1, y1 ]);
+      toArrow.index = index;
+      toArrow.otherObject = object;
+      toArrow.isFromArrow = false;
+      // toArrow.port = object.connectors.toPort[index];
+      toArrow.port = object.connectors.fromPort[index];
+      toArrow.line = object.connectors.fromLine[index];
+
+      object.connectors.fromArrow[index] = fromArrow;
+      object.connectors.toArrow[index] = toArrow;
+      otherObject.connectors.fromArrow[index] = fromArrow;
+      otherObject.connectors.toArrow[index] = toArrow;
+    };
+
+    service.moveToArrows = function(object, portCenter, index) {
+
+      $log.info('moveToArrows()');
+
+      removeObjectFromCanvas(object.connectors.fromArrow[index], false);
+      removeObjectFromCanvas(object.connectors.toArrow[index], false);
+
+      var x1 = portCenter.x2;
+      var y1 = portCenter.y2;
+      var x2 = object.connectors.toLine[index].x1;
+      var y2 = object.connectors.toLine[index].y1;
+
+      // object <-- toArrow -- connector -- fromArrow --> otherObject
+      // one arrow is adjacent to the object <--, the other faces away from --> the object
+
+      var otherObject = object.connectors.otherObject[index];
+
+      var fromArrow = service.createArrow([ x2, y2, x1, y1 ]);
+      fromArrow.index = index;
+      fromArrow.otherObject = otherObject;
+      fromArrow.isFromArrow = true;
+      // fromArrow.port = object.connectors.fromPort[index];
+      fromArrow.port = object.connectors.toPort[index];
+      fromArrow.line = object.connectors.toLine[index];
+      var toArrow = service.createArrow([ x1, y1, x2, y2  ]);
+      toArrow.index = index;
+      toArrow.otherObject = object;
+      toArrow.isFromArrow = false;
+      // toArrow.port = object.connectors.toPort[index];
+      toArrow.port = object.connectors.fromPort[index];
+      toArrow.line = object.connectors.toLine[index];
+
+      object.connectors.fromArrow[index] = fromArrow;
+      object.connectors.toArrow[index] = toArrow;
+      otherObject.connectors.fromArrow[index] = fromArrow;
+      otherObject.connectors.toArrow[index] = toArrow;
+    };
 
     //
     // Line
@@ -261,109 +376,8 @@
       service.canvasDefaults.grid.snapTo = snapTo;
     };
 
-    //
-    // Create Arrow
-    //
 
-    var createArrow = function(points, options) {
 
-      var x1 = points[0];
-      var y1 = points[1];
-      var x2 = points[2];
-      var y2 = points[3];
-
-      options = options || service.arrowDefaults;
-
-      // $log.info('createArrowHead - points: ' + JSON.stringify(['e', points], null, '\t'));
-
-      var dx = x2 - x1;
-      var dy = y2 - y1;
-
-      var angle = Math.atan2(dy, dx);
-      angle *= 180 / Math.PI;
-      angle += 90;
-
-      options.angle = angle;
-      options.top = y2;
-      options.left = x2;
-
-      // TODO - http://fabricjs.com/fabric-intro-part-3/#subclassing
-
-      var object = service.addTriangle(options);
-      object.set('type', 'arrow');
-
-      return object;
-    };
-
-    var moveFromArrows = function(object, portCenter, index) {
-
-      $log.info('moveFromArrows()');
-
-      var x1 = null;
-      var y1 = null;
-      var x2 = null;
-      var y2 = null;
-
-      var fromArrow = null;
-      var toArrow = null;
-      var otherObject = null;
-
-      x1 = portCenter.x1;
-      y1 = portCenter.y1;
-      x2 = object.connectors.from[index].x2;
-      y2 = object.connectors.from[index].y2;
-
-      // $log.info('x1: ' + x1 + ' y1: ' + y1 + ' x2: ' + x2 + ' y2: ' + y2);
-
-      removeObjectFromCanvas(object.connectors.fromArrow[index], false);
-      removeObjectFromCanvas(object.connectors.toArrow[index], false);
-
-      fromArrow = createArrow([ x1, y1, x2, y2 ]);
-      toArrow = createArrow([ x2, y2, x1, y1 ]);
-
-      object.connectors.fromArrow[index] = fromArrow;
-      object.connectors.toArrow[index] = toArrow;
-
-      otherObject = object.connectors.otherObject[index];
-
-      otherObject.connectors.fromArrow[index] = fromArrow;
-      otherObject.connectors.toArrow[index] = toArrow;
-    };
-
-    var moveToArrows = function(object, portCenter, index) {
-
-      $log.info('moveToArrows()');
-
-      var x1 = null;
-      var y1 = null;
-      var x2 = null;
-      var y2 = null;
-
-      var fromArrow = null;
-      var toArrow = null;
-      var otherObject = null;
-
-      x1 = portCenter.x2;
-      y1 = portCenter.y2;
-      x2 = object.connectors.to[index].x1;
-      y2 = object.connectors.to[index].y1;
-
-      // $log.info('x1: ' + x1 + ' y1: ' + y1 + ' x2: ' + x2 + ' y2: ' + y2);
-
-      removeObjectFromCanvas(object.connectors.fromArrow[index], false);
-      removeObjectFromCanvas(object.connectors.toArrow[index], false);
-
-      fromArrow = createArrow([ x2, y2, x1, y1 ]);
-      toArrow = createArrow([ x1, y1, x2, y2  ]);
-
-      object.connectors.fromArrow[index] = fromArrow;
-      object.connectors.toArrow[index] = toArrow;
-
-      otherObject = object.connectors.otherObject[index];
-
-      otherObject.connectors.fromArrow[index] = fromArrow;
-      otherObject.connectors.toArrow[index] = toArrow;
-    };
 
     //
     // Listeners
@@ -389,30 +403,30 @@
           var portCenter = null;
           var i = null;
 
-          if (object.connectors.from.length) {
+          if (object.connectors.fromLine.length) {
 
-            $log.info('object:moving - object.connectors.from.length: ' + object.connectors.from.length);
+            $log.info('object:moving - object.connectors.fromLine.length: ' + object.connectors.fromLine.length);
 
             i = 0;
-            object.connectors.from.forEach(function(line) {
-              portCenter = getPortCenterPoint(object, object.connectors.fromPort[i]);
+            object.connectors.fromLine.forEach(function(line) {
+              portCenter = fabricUtils.getPortCenterPoint(object, object.connectors.fromPort[i]);
               line.set({'x1': portCenter.x1, 'y1': portCenter.y1});
 
-              moveFromArrows(object, portCenter, i);
+              service.moveFromArrows(object, portCenter, i);
               i++;
             });
           }
 
-          if (object.connectors.to.length) {
+          if (object.connectors.toLine.length) {
 
-            $log.info('object:moving - object.connectors.to.length: ' + object.connectors.to.length);
+            $log.info('object:moving - object.connectors.toLine.length: ' + object.connectors.toLine.length);
 
             i = 0;
-            object.connectors.to.forEach(function(line) {
-              portCenter = getPortCenterPoint(object, object.connectors.toPort[i]);
+            object.connectors.toLine.forEach(function(line) {
+              portCenter = fabricUtils.getPortCenterPoint(object, object.connectors.toPort[i]);
               line.set({'x2': portCenter.x2, 'y2': portCenter.y2});
 
-              moveToArrows(object, portCenter, i);
+              service.moveToArrows(object, portCenter, i);
               i++;
             });
           }
@@ -439,105 +453,27 @@
       // Mouse
       //
 
-      // See: _findTargetCorner()
-
-      var findTargetPort = function(object) {
-
-        var points = new Array(4);
-        var port = object.__corner;
-
-        $log.info('findTargetPort - port: ' + object.__corner);
-
-        switch (port) {
-
-          case 'mt':
-            points = [
-              object.left + (object.width / 2), object.top,
-              object.left + (object.width / 2), object.top
-            ];
-            break;
-          case 'mr':
-            points = [
-              object.left + object.width, object.top + (object.height / 2),
-              object.left + object.width, object.top + (object.height / 2)
-            ];
-            break;
-          case 'mb':
-            points = [
-              object.left + (object.width / 2), object.top + object.height,
-              object.left + (object.width / 2), object.top + object.height
-            ];
-            break;
-          case 'ml':
-            points = [
-              object.left, object.top + (object.height / 2),
-              object.left, object.top + (object.height / 2)
-            ];
-            break;
-
-          default:
-            $log.error('findTargetPort() - service.fromObject.__corner === undefined');
-            break;
-        }
-
-        return points
-
-      };
-
-      var getPortCenterPoint = function(object, port) {
-
-        var x1 = 0;
-        var y1 = 0;
-
-        switch (port) {
-
-          case 'mt':
-            x1 = object.left + (object.width / 2);
-            y1 = object.top;
-            break;
-
-          case 'mr':
-            x1 = object.left + object.width;
-            y1 = object.top + (object.height / 2);
-            break;
-
-          case 'mb':
-            x1 = object.left + (object.width / 2);
-            y1 = object.top + object.height;
-            break;
-          case 'ml':
-            x1 = object.left;
-            y1 = object.top + (object.height / 2);
-            break;
-
-          default:
-            $log.error('getPortCenterPoint() - port === undefined');
-            break;
-        }
-
-        return {
-          x1: x1, y1: y1,
-          x2: x1, y2: y1
-        }
-      };
-
-      service.canvas.on('mouse:move', function(object){
+      service.canvas.on('mouse:move', function(options){
 
         // $log.info('mouse:move');
 
         if (!service.isMouseDown) return;
 
         if (service.connectorMode) {
-          var pointer = service.canvas.getPointer(object.e);
+          var pointer = service.canvas.getPointer(options.e);
 
           service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
           service.canvas.renderAll();
         }
       });
 
-      service.canvas.on('mouse:down', function(object){
+      service.canvas.on('mouse:down', function(options){
 
         $log.info('mouse:down');
+
+        //
+        // Connector Mode
+        //
 
         if (service.connectorMode) {
 
@@ -554,22 +490,40 @@
 
             service.isMouseDown = true;
 
-            points = findTargetPort(service.fromObject);
+            points = fabricUtils.findTargetPort(service.fromObject);
             service.connectorLineFromPort = service.fromObject.__corner;
 
             // $log.info('mouse:down - points: ' + JSON.stringify(['e', points], null, '\t'));
 
-            var options = service.connectorDefaults;
+            var connectorOptions = service.connectorDefaults;
 
-            service.connectorLine = service.addLine(points, options);
+            service.connectorLine = service.addLine(points, connectorOptions);
+          }
+
+          return;
+        }
+
+        //
+        // Pointer Mode
+        //
+
+        if (options.target) {
+          if (options.target.type === 'arrow') {
+            $log.info('mouse:down - options.target.type === arrow');
           }
         }
 
       });
 
-      service.canvas.on('mouse:up', function(){
+      service.canvas.on('mouse:up', function(options){
 
         $log.info('mouse:up');
+
+        var portCenter = null;
+
+        //
+        // Connector Mode
+        //
 
         if (service.connectorMode) {
 
@@ -579,8 +533,6 @@
           // If we're over (mouse:over) a Shape that supports connections.
           //
           if (service.selectedObject) {
-
-            var portCenter = null;
 
             if (service.selectedObject.__corner === undefined) {
               if (service.connectorLine) {
@@ -592,40 +544,75 @@
               return;
             }
 
-            var toPort = service.selectedObject.__corner;
-            var fromArrow = null;
-            var toArrow = null;
+            //
+            // End of the line (from --> to)
+            //
 
-            var options = service.arrowDefaults;
-            // options.fill = 'RED';
+            var toPort = service.selectedObject.__corner;
+            var arrowOptions = service.arrowDefaults;
 
             $log.info('mouse:up - toPort: ' + toPort);
 
-            portCenter = getPortCenterPoint(service.selectedObject, toPort);
-
+            portCenter = fabricUtils.getPortCenterPoint(service.selectedObject, toPort);
             service.connectorLine.set({ x2: portCenter.x2, y2: portCenter.y2 });
 
-            fromArrow = createArrow([service.connectorLine.left,
-              service.connectorLine.top, portCenter.x2, portCenter.y2], options);
-            // options.fill = 'GREEN';
-            toArrow = createArrow([portCenter.x2, portCenter.y2,
-              service.connectorLine.left, service.connectorLine.top], options);
+            //
+            // Create the 'from' arrow
+            //
+
+            // service.fromObject <-- toArrow -- connector -- fromArrow --> service.selectedObject
+
+            arrowOptions.fill = FROM_ARROW_FILL;
+            var fromArrow = service.createArrow([service.connectorLine.left,
+              service.connectorLine.top, portCenter.x2, portCenter.y2], arrowOptions);
+            // fromArrow.otherObject = service.selectedObject;
+            fromArrow.otherObject = service.fromObject;
+            fromArrow.isFromArrow = true;
+            // fromArrow.port = service.connectorLineFromPort;
+            fromArrow.port = toPort;
+            fromArrow.line = service.connectorLine;
+
+            //
+            // Create the 'to' arrow
+            //
+
+            arrowOptions.fill = TO_ARROW_FILL;
+            var toArrow = service.createArrow([portCenter.x2, portCenter.y2,
+              service.connectorLine.left, service.connectorLine.top], arrowOptions);
+            // toArrow.otherObject = service.fromObject;
+            toArrow.otherObject = service.selectedObject;
+            toArrow.isFromArrow = false;
+            // toArrow.port = toPort;
+            toArrow.port = service.connectorLineFromPort;
+            toArrow.line = service.connectorLine;
+
+            var index = service.fromObject.connectors.fromPort.length;
+            fromArrow.index = index;
+            toArrow.index = index;
+
+            //
+            // The 'from' and 'to' objects need to know about each other so that if one of them
+            // is moved it can update the connectors line co-ordinates and arrows.
+            //
 
             service.fromObject.connectors.fromPort.push(service.connectorLineFromPort);
-            service.fromObject.connectors.from.push(service.connectorLine);
+            service.fromObject.connectors.fromLine.push(service.connectorLine);
             service.fromObject.connectors.fromArrow.push(fromArrow);
             service.fromObject.connectors.toPort.push(toPort);
             service.fromObject.connectors.toArrow.push(toArrow);
             service.fromObject.connectors.otherObject.push(service.selectedObject);
 
             service.selectedObject.connectors.toPort.push(toPort);
-            service.selectedObject.connectors.to.push(service.connectorLine);
+            service.selectedObject.connectors.toLine.push(service.connectorLine);
             service.selectedObject.connectors.toArrow.push(toArrow);
             service.selectedObject.connectors.fromPort.push(service.connectorLineFromPort);
             service.selectedObject.connectors.fromArrow.push(fromArrow);
             service.selectedObject.connectors.otherObject.push(service.fromObject);
 
-            // options.fill = 'BLUE';
+            // $log.info('service.fromObject.connectors: ' + JSON.stringify(['e', service.fromObject.connectors], null, '\t'));
+            // $log.info('service.selectedObject.connectors: ' + JSON.stringify(['e', service.selectedObject.connectors], null, '\t'));
+
+            arrowOptions.fill = 'BLACK';
 
             service.connectorLineFromPort = null;
             service.connectorLine = null;
@@ -641,6 +628,51 @@
           }
 
           service.canvas.renderAll();
+          return;
+        }
+
+        //
+        // Pointer Mode
+        //
+
+        if (options.target) {
+          if (options.target.type === 'arrow') {
+
+            var arrow = options.target;
+            var port = fabricUtils.getNextTargetPort(arrow.port);
+            portCenter =  fabricUtils.getPortCenterPoint(arrow.otherObject, port);
+
+            // $log.info('mouse:up - arrow - isFromArrow: ' + arrow.isFromArrow);
+            // $log.info('mouse:up - arrow: ' + JSON.stringify(['e', arrow], null, '\t'));
+            // $log.info('mouse:up - arrow.line: ' + JSON.stringify(['e', arrow.line], null, '\t'));
+
+            $log.info('mouse:up - port: ' + arrow.port);
+
+            arrow.port = port;
+
+            $log.info('mouse:up - new port: ' + arrow.port);
+
+            if (arrow.isFromArrow) {
+
+              // arrow.line.set({ x2: portCenter.x2, y2: portCenter.y2 });
+              arrow.otherObject.connectors.toPort[arrow.index] = arrow.port;
+              arrow.line.x2 = portCenter.x2;
+              arrow.line.y2 = portCenter.y2;
+
+              $log.info('mouse:up - fromArrow - arrow.line x2: ' + arrow.line.x2 + ' y2: ' + arrow.line.y2);
+
+            } else {
+
+              // arrow.line.set({ x1: portCenter.x1, y1: portCenter.y1 });
+              arrow.otherObject.connectors.fromPort[arrow.index] = arrow.port;
+              arrow.line.x1 = portCenter.x1;
+              arrow.line.y1 = portCenter.y1;
+
+              $log.info('mouse:up - toArrow - arrow.line x1: ' + arrow.line.x1 + ' y1: ' + arrow.line.y1);
+            }
+
+            // service.canvas.renderAll();
+          }
         }
 
       });
@@ -670,7 +702,6 @@
             service.selectedObject.set('active', true);
             service.selectedObject.set('selectable', false);
             service.selectedObject.set('hasRotatingPoint', false);
-            // service.selectedObject.set('cornerColor', 'green');
             service.selectedObject.set('hasBorders', false);
             service.selectedObject.set('cornerSize', service.rectDefaults.cornerSize * 2);
             service.selectedObject.set('transparentCorners', false);
@@ -714,7 +745,6 @@
               service.selectedObject.set('active', false);
               service.selectedObject.set('selectable', true);
               service.selectedObject.set('hasRotatingPoint', true);
-              // service.selectedObject.set('cornerColor', service.rectDefaults.cornerColor);
               service.selectedObject.set('hasBorders', service.rectDefaults.hasBorders);
               service.selectedObject.set('cornerSize', service.rectDefaults.cornerSize);
               service.selectedObject.set('transparentCorners', service.rectDefaults.transparentCorners);
@@ -745,7 +775,14 @@
 
         if (element.target.type === 'arrow') {
 
-          element.target.setFill('BLACK');
+          var arrow = element.target;
+          var fill = TO_ARROW_FILL;
+
+          if (arrow.isFromArrow) {
+            fill = FROM_ARROW_FILL;
+          }
+
+          arrow.setFill(fill);
           service.canvas.renderAll();
           // return;
         }
@@ -766,7 +803,6 @@
             service.activeObject = service.selectedObject;
             service.selectedObject.set('selectable', true);
             service.selectedObject.set('hasRotatingPoint', true);
-            // service.selectedObject.set('cornerColor', service.rectDefaults.cornerColor);
             service.selectedObject.set('hasBorders', service.rectDefaults.hasBorders);
             service.selectedObject.set('cornerSize', service.rectDefaults.cornerSize);
             service.selectedObject.set('transparentCorners', service.rectDefaults.transparentCorners);
@@ -792,163 +828,4 @@
 
 })();
 
-/*
-
-
- var objectCenter = service.selectedObject.getCenterPoint();
-
- $log.info('mouse:up - service.selectedObject.__corner: ' + service.selectedObject.__corner);
-
- service.connectorLine.set({ x2: objectCenter.x, y2: objectCenter.y });
-
-
- // add a reference to the line to each object
- service.fromObject.addChild = {
- // this retains the existing arrays (if there were any)
- from: (service.fromObject.addChild && service.fromObject.addChild.from),
- to: (service.fromObject.addChild && service.fromObject.addChild.to)
- };
-
- // var pointer = service.canvas.getPointer(object.e);
- // var points = [ pointer.x, pointer.y, pointer.x, pointer.y ];
-
- // $log.info('mouse:down - points: ' + points.toLocaleString());
-
- // canvas.item(canvas._objects.length-1).set('active',true);
-
- // canvas.setActiveObject(canvas._objects[canvas._objects.length-1]);
-
- var object = element.target;
-
- object.set('hasRotatingPoint', true);
- object.setControlsVisibility({
- tl: true,
- tr: true,
- br: true,
- bl: true
- });
-
- // service.selectedObject.lockUniScaling = true; you only get the corners
-
-
- // var rectDefaults = angular.copy(fabricService.getRectDefaults());
- // var objectControls = null;
- // const LINE_WIDTH = 1;
-
- service.objectControls = false;
- service.controlDefaults = null;
- service.controlsGroup = {};
- service.controlLines = [];
-
- // $log.info('element: ' + JSON.stringify(['e', element], null, '\t'));
-
- // drawControls(element);
-
- // eraseControls(element);
-
-//
-// Controls
-//
-
-var drawControls = function(element) {
-  drawObjectControls(element);
-};
-
-var eraseControls = function(element) {
-  eraseObjectControls(element);
-};
-
-var drawObjectControls = function(element) {
-
-  $log.info('fabric - drawObjectControls()');
-
-  $log.info('element: ' + JSON.stringify(['e', element], null, '\t'));
-
-  if (service.objectControls === false) {
-
-    $log.info('service.objectControls === false');
-
-    var topLeft = {x: element.target.left - 2, y: element.target.top - 2};
-    var topRight = {x: element.target.top + element.target.width, y: element.target.top - 2};
-    var bottomLeft = {x: element.target.left - 2, y: element.target.top + element.target.height};
-    var bottomRight = {x: element.target.top + element.target.width, y: element.target.top + element.target.height};
-
-    var i = 0;
-    service.controlLines[i++] = fabricShape.line([ topLeft.x, topLeft.y, topRight.x, topRight.y],
-      service.controlDefaults);
-    service.controlLines[i++] = fabricShape.line([ topRight.x, topRight.y, bottomRight.x, bottomRight.y],
-      service.controlDefaults);
-    service.controlLines[i++] = fabricShape.line([ bottomRight.x, bottomRight.y, bottomLeft.x, bottomLeft.y],
-      service.controlDefaults);
-    service.controlLines[i++] = fabricShape.line([ bottomLeft.x, bottomLeft.y, topLeft.x, topLeft.y],
-      service.controlDefaults);
-
-    service.controlsGroup = service.createGroup(service.controlLines, { selectable: false }, false);
-
-    service.objectControls = true;
-
-    // top-left
-    // top-right
-    // bottom-left
-    // bottom-right
-
-  }
-
-};
-
-var eraseObjectControls = function(element) {
-
-  $log.info('fabric - eraseObjectControls()');
-
-  if (service.objectControls === true) {
-
-    $log.info('service.objectControls === true');
-
-    service.removeGroup(service.controlsGroup, true)
-
-    service.objectControls = false;
-  }
-};
-
- // element.target.setFill('red');
- // service.canvas.renderAll();
-
-
- // element.target.setFill('green');
- // service.canvas.renderAll();
-
- rectDefaults.strokeWidth = 5;
-
- rectDefaults.left = element.target.left - (rectDefaults.strokeWidth + 1);
- rectDefaults.top = element.target.top - (rectDefaults.strokeWidth + 1);
- rectDefaults.width = element.target.width + (2 * rectDefaults.strokeWidth);
- rectDefaults.height = element.target.height + (2 * rectDefaults.strokeWidth);
- rectDefaults.fill = 'none';
- rectDefaults.stroke = 'rgba(100,200,200,0.5)';
- rectDefaults.opacity = 0.5;
-
- // $log.info('rectDefaults: ' + JSON.stringify(['e', rectDefaults], null, '\t'));
-
- objectControls = service.addRect(rectDefaults, false);
-
-if (object.left === canvasDefaults.grid.size || object.top === canvasDefaults.grid.size) {
-  $log.info('fabric - addObjectToCanvas() - centerObject()');
-  fabricWindow.centerObject();
-}
-
-// $log.info('mouse:over - element.target: ' + JSON.stringify(['e', element.target], null, '\t'));
-
- rectDefaults.left = 50 - (rectDefaults.strokeWidth + 1);
- rectDefaults.top = 50 - (rectDefaults.strokeWidth + 1);
- rectDefaults.width = 300 + (2 * rectDefaults.strokeWidth);
- rectDefaults.height = 300 + (2 * rectDefaults.strokeWidth);
-
- var activeGroup = this.getActiveGroup();
-
- if (activeGroup) {
- drawGroupControls();
- } else {
- drawObjectControls();
- }
-
- */
+// service.selectedObject.set('cornerColor', service.rectDefaults.cornerColor);

@@ -11,9 +11,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  fabricText.$inject = ['$log', 'fabricService', 'fabricWindow'];
+  fabricText.$inject = ['$log', 'fabricConfig', 'fabricWindow'];
 
-  function fabricText($log, fabricService, fabricWindow) {
+  function fabricText($log, fabricConfig, fabricWindow) {
 
     var service = this;
 
@@ -25,7 +25,7 @@
 
       $log.info('fabricText - init()');
 
-      service.textDefaults = fabricService.getTextDefaults();
+      service.textDefaults = fabricConfig.getTextDefaults();
     };
 
     //

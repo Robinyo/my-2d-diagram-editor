@@ -11,9 +11,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  fabricCanvas.$inject = ['$log', '$rootScope', 'fabricService', 'fabricWindow'];
+  fabricCanvas.$inject = ['$log', '$rootScope', 'fabricConfig', 'fabricWindow'];
 
-  function fabricCanvas($log, $rootScope, fabricService, fabricWindow) {
+  function fabricCanvas($log, $rootScope, fabricConfig, fabricWindow) {
 
     var service = this;
 
@@ -27,8 +27,8 @@
 
       $log.info('fabricCanvas - init()');
 
-      service.canvasDefaults = fabricService.getCanvasDefaults();
-      // service.canvasDefaults = angular.copy(fabricService.getCanvasDefaults());
+      service.canvasDefaults = fabricConfig.getCanvasDefaults();
+      // service.canvasDefaults = angular.copy(fabricConfig.getCanvasDefaults());
     };
 
     function createId() {
@@ -51,8 +51,6 @@
       service.canvas = new fabricWindow.Canvas(service.canvasId, options);
       $rootScope.$broadcast('canvas:created');
 
-      $log.info('service.element: ' + JSON.stringify(['e', service.element], null, '\t'));
-
       return service.canvas;
     };
 
@@ -70,3 +68,5 @@
 
 // { selection: false, width: 600, height: 600 }
 // { width: 600, height: 600, backgroundColor: '#DCDCDC' }
+
+// $log.info('service.element: ' + JSON.stringify(['e', service.element], null, '\t'));

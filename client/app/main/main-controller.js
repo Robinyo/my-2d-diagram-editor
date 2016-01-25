@@ -31,9 +31,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  MainController.$inject = ['$log', '$translate', '$scope', 'shapesService', 'containersService', 'fabric', 'fabricService'];
+  MainController.$inject = ['$log', '$translate', '$scope', 'shapeConfig', 'containerConfig', 'fabric', 'fabricConfig'];
 
-  function MainController($log, $translate, $scope, shapesService, containersService, fabric, fabricService) {
+  function MainController($log, $translate, $scope, shapeConfig, containerConfig, fabric, fabricConfig) {
 
     $log.info('MainController');
 
@@ -46,8 +46,8 @@
 
     var main = this;
 
-    main.shapes = shapesService.getShapes();
-    main.containers = containersService.getContainers();
+    main.shapes = shapeConfig.getShapes();
+    main.containers = containerConfig.getContainers();
 
     main.canvas = null;
     main.grid = { show: true, snapTo: false};
@@ -59,17 +59,17 @@
     const SHAPE_RECT_WIDTH = 100;
     const SHAPE_RECT_HEIGHT = 100;
 
-    var shapeRectDefaults = angular.copy(fabricService.getRectDefaults());
+    var shapeRectDefaults = angular.copy(fabricConfig.getRectDefaults());
     shapeRectDefaults.width = SHAPE_RECT_WIDTH;
     shapeRectDefaults.height = SHAPE_RECT_HEIGHT;
 
-    var shapeTextDefaults = angular.copy(fabricService.getTextDefaults());
+    var shapeTextDefaults = angular.copy(fabricConfig.getTextDefaults());
     shapeTextDefaults.fontSize = shapeTextDefaults.fontSize + 4;
     shapeTextDefaults.fontWeight = SHAPE_TEXT_FONT_WEIGHT;
 
-    var containerRectDefaults = angular.copy(fabricService.getRectDefaults());
+    var containerRectDefaults = angular.copy(fabricConfig.getRectDefaults());
 
-    var containerTextDefaults = angular.copy(fabricService.getTextDefaults());
+    var containerTextDefaults = angular.copy(fabricConfig.getTextDefaults());
     containerTextDefaults.fontSize = containerTextDefaults.fontSize + 8;
     containerTextDefaults.fontWeight = CONTAINER_TEXT_FONT_WEIGHT;
 
@@ -104,7 +104,7 @@
 
           var object = fabric.addRect(shapeRectDefaults);
           object.set('type', 'node');
-          object.connectors = { fromPort: [], from: [], fromArrow: [], toPort: [], to: [], toArrow: [], otherObject: [] };
+          object.connectors = { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] };
           fabric.addText(translatedValue + ' ' + main.nodeId++, shapeTextDefaults);
         });
     };

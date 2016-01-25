@@ -3,7 +3,7 @@
   'use strict';
 
   angular.module('ui.fabric')
-    .service('fabricService', fabricService);
+    .service('fabricConfig', fabricConfig);
 
   /*
    * Use $inject to manually identify your dependencies for Angular components.
@@ -11,9 +11,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  // fabricService.$inject = [''];
+  // fabricConfig.$inject = [''];
 
-  function fabricService() {
+  function fabricConfig() {
 
     var service = this;
 

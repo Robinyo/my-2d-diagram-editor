@@ -11,9 +11,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  fabricShape.$inject = ['$log', 'fabricService', 'fabricWindow'];
+  fabricShape.$inject = ['$log', 'fabricConfig', 'fabricWindow'];
 
-  function fabricShape($log, fabricService, fabricWindow) {
+  function fabricShape($log, fabricConfig, fabricWindow) {
 
     var service = this;
 
@@ -28,10 +28,10 @@
 
       $log.info('fabricShape - init()');
 
-      service.gridLineDefaults = fabricService.getGridLineDefaults();
-      service.controlDefaults = fabricService.getLineDefaults();
-      service.rectDefaults = fabricService.getRectDefaults();
-      service.triangleDefaults = fabricService.getTriangleDefaults();
+      service.gridLineDefaults = fabricConfig.getGridLineDefaults();
+      service.controlDefaults = fabricConfig.getLineDefaults();
+      service.rectDefaults = fabricConfig.getRectDefaults();
+      service.triangleDefaults = fabricConfig.getTriangleDefaults();
     };
 
     //
