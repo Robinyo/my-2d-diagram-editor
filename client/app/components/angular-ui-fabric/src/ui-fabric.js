@@ -242,6 +242,7 @@
       var object = service.addTriangle(options);
       object.set('type', 'arrow');
       object.index = 0;
+      object.object = {};
       object.otherObject = {};
       object.isFromArrow = true;
       object.port = 'mt';
@@ -269,21 +270,23 @@
 
       var fromArrow = service.createArrow([ x1, y1, x2, y2 ]);
       fromArrow.index = index;
+      fromArrow.object = object;
       fromArrow.otherObject = otherObject;
       fromArrow.isFromArrow = true;
-      // fromArrow.port = object.connectors.fromPort[index];
       fromArrow.port = object.connectors.toPort[index];
       fromArrow.line = object.connectors.fromLine[index];
+
       var toArrow = service.createArrow([ x2, y2, x1, y1 ]);
-      toArrow.index = index;
-      toArrow.otherObject = object;
+      toArrow.index = fromArrow.index;
+      toArrow.object = fromArrow.object;
+      toArrow.otherObject = fromArrow.otherObject;
       toArrow.isFromArrow = false;
-      // toArrow.port = object.connectors.toPort[index];
       toArrow.port = object.connectors.fromPort[index];
-      toArrow.line = object.connectors.fromLine[index];
+      toArrow.line = fromArrow.line;
 
       object.connectors.fromArrow[index] = fromArrow;
       object.connectors.toArrow[index] = toArrow;
+
       otherObject.connectors.fromArrow[index] = fromArrow;
       otherObject.connectors.toArrow[index] = toArrow;
     };
@@ -307,21 +310,23 @@
 
       var fromArrow = service.createArrow([ x2, y2, x1, y1 ]);
       fromArrow.index = index;
+      fromArrow.object = object;
       fromArrow.otherObject = otherObject;
       fromArrow.isFromArrow = true;
-      // fromArrow.port = object.connectors.fromPort[index];
       fromArrow.port = object.connectors.toPort[index];
       fromArrow.line = object.connectors.toLine[index];
+
       var toArrow = service.createArrow([ x1, y1, x2, y2  ]);
-      toArrow.index = index;
-      toArrow.otherObject = object;
+      toArrow.index = fromArrow.index;
+      toArrow.object = fromArrow.object;
+      toArrow.otherObject = fromArrow.otherObject;
       toArrow.isFromArrow = false;
-      // toArrow.port = object.connectors.toPort[index];
       toArrow.port = object.connectors.fromPort[index];
-      toArrow.line = object.connectors.toLine[index];
+      toArrow.line = fromArrow.line;
 
       object.connectors.fromArrow[index] = fromArrow;
       object.connectors.toArrow[index] = toArrow;
+
       otherObject.connectors.fromArrow[index] = fromArrow;
       otherObject.connectors.toArrow[index] = toArrow;
     };
@@ -396,7 +401,7 @@
         var object = options.target;
 
         //
-        // If the Object being moved has Connectors, we need to update there position.
+        // If the Object being moved has Connectors, we need to update their position.
         //
         if (object.connectors) {
 
@@ -565,10 +570,9 @@
             arrowOptions.fill = FROM_ARROW_FILL;
             var fromArrow = service.createArrow([service.connectorLine.left,
               service.connectorLine.top, portCenter.x2, portCenter.y2], arrowOptions);
-            // fromArrow.otherObject = service.selectedObject;
-            fromArrow.otherObject = service.fromObject;
+            fromArrow.object = service.fromObject;
+            fromArrow.otherObject = service.selectedObject;
             fromArrow.isFromArrow = true;
-            // fromArrow.port = service.connectorLineFromPort;
             fromArrow.port = toPort;
             fromArrow.line = service.connectorLine;
 
@@ -579,10 +583,9 @@
             arrowOptions.fill = TO_ARROW_FILL;
             var toArrow = service.createArrow([portCenter.x2, portCenter.y2,
               service.connectorLine.left, service.connectorLine.top], arrowOptions);
-            // toArrow.otherObject = service.fromObject;
+            toArrow.object = service.fromObject;
             toArrow.otherObject = service.selectedObject;
             toArrow.isFromArrow = false;
-            // toArrow.port = toPort;
             toArrow.port = service.connectorLineFromPort;
             toArrow.line = service.connectorLine;
 
@@ -596,17 +599,18 @@
             //
 
             service.fromObject.connectors.fromPort.push(service.connectorLineFromPort);
-            service.fromObject.connectors.fromLine.push(service.connectorLine);
             service.fromObject.connectors.fromArrow.push(fromArrow);
             service.fromObject.connectors.toPort.push(toPort);
             service.fromObject.connectors.toArrow.push(toArrow);
             service.fromObject.connectors.otherObject.push(service.selectedObject);
 
-            service.selectedObject.connectors.toPort.push(toPort);
+            service.fromObject.connectors.fromLine.push(service.connectorLine);
             service.selectedObject.connectors.toLine.push(service.connectorLine);
-            service.selectedObject.connectors.toArrow.push(toArrow);
+
             service.selectedObject.connectors.fromPort.push(service.connectorLineFromPort);
             service.selectedObject.connectors.fromArrow.push(fromArrow);
+            service.selectedObject.connectors.toPort.push(toPort);
+            service.selectedObject.connectors.toArrow.push(toArrow);
             service.selectedObject.connectors.otherObject.push(service.fromObject);
 
             // $log.info('service.fromObject.connectors: ' + JSON.stringify(['e', service.fromObject.connectors], null, '\t'));
@@ -636,26 +640,23 @@
         //
 
         if (options.target) {
+
           if (options.target.type === 'arrow') {
 
             var arrow = options.target;
-            var port = fabricUtils.getNextTargetPort(arrow.port);
-            portCenter =  fabricUtils.getPortCenterPoint(arrow.otherObject, port);
+            var nextPort = fabricUtils.getNextTargetPort(arrow.port);
 
-            // $log.info('mouse:up - arrow - isFromArrow: ' + arrow.isFromArrow);
-            // $log.info('mouse:up - arrow: ' + JSON.stringify(['e', arrow], null, '\t'));
-            // $log.info('mouse:up - arrow.line: ' + JSON.stringify(['e', arrow.line], null, '\t'));
+            $log.info('mouse:up - arrow.otherObject.name: ' + arrow.otherObject.name);
+            $log.info('mouse:up - arrow.port: ' + arrow.port + ' nextPort: ' + nextPort);
 
-            $log.info('mouse:up - port: ' + arrow.port);
-
-            arrow.port = port;
-
-            $log.info('mouse:up - new port: ' + arrow.port);
+            arrow.port = nextPort;
 
             if (arrow.isFromArrow) {
 
-              // arrow.line.set({ x2: portCenter.x2, y2: portCenter.y2 });
-              arrow.otherObject.connectors.toPort[arrow.index] = arrow.port;
+              portCenter =  fabricUtils.getPortCenterPoint(arrow.otherObject, nextPort);
+
+              arrow.object.connectors.toPort[arrow.index] = arrow.port;
+              arrow.otherObject.connectors.fromPort[arrow.index] = arrow.port;
               arrow.line.x2 = portCenter.x2;
               arrow.line.y2 = portCenter.y2;
 
@@ -663,7 +664,9 @@
 
             } else {
 
-              // arrow.line.set({ x1: portCenter.x1, y1: portCenter.y1 });
+              portCenter =  fabricUtils.getPortCenterPoint(arrow.object, nextPort);
+
+              arrow.object.connectors.toPort[arrow.index] = arrow.port;
               arrow.otherObject.connectors.fromPort[arrow.index] = arrow.port;
               arrow.line.x1 = portCenter.x1;
               arrow.line.y1 = portCenter.y1;
@@ -672,8 +675,10 @@
             }
 
             // service.canvas.renderAll();
-          }
-        }
+
+          } // end if (options.target.type === 'arrow')
+
+        } // end if (options.target)
 
       });
 
@@ -829,3 +834,9 @@
 })();
 
 // service.selectedObject.set('cornerColor', service.rectDefaults.cornerColor);
+
+// arrow.line.set({ x2: portCenter.x2, y2: portCenter.y2 });
+
+// $log.info('mouse:up - arrow - isFromArrow: ' + arrow.isFromArrow);
+// $log.info('mouse:up - arrow: ' + JSON.stringify(['e', arrow], null, '\t'));
+// $log.info('mouse:up - arrow.line: ' + JSON.stringify(['e', arrow.line], null, '\t'));

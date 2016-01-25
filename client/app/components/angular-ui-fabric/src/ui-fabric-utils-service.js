@@ -70,7 +70,7 @@
 
     service.getNextTargetPort = function(port) {
 
-      $log.info('getNextTargetPort - port: ' + port);
+      // $log.info('getNextTargetPort - port: ' + port);
 
       var nextPort = 'mt';
 
