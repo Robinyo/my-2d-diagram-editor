@@ -92,6 +92,8 @@
           break;
       }
 
+      $log.info('getNextTargetPort - port: ' + port + ' nextPort: ' + nextPort);
+
       return nextPort;
 
     };
