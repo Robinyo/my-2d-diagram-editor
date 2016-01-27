@@ -273,15 +273,15 @@
       fromArrow.object = object;
       fromArrow.otherObject = otherObject;
       fromArrow.isFromArrow = true;
-      fromArrow.port = object.connectors.toPort[index];
-      fromArrow.line = object.connectors.fromLine[index];
+      fromArrow.port = fromArrow.object.connectors.toPort[index];
+      fromArrow.line = fromArrow.object.connectors.fromLine[index];
 
       var toArrow = service.createArrow([ x2, y2, x1, y1 ]);
       toArrow.index = fromArrow.index;
       toArrow.object = fromArrow.object;
       toArrow.otherObject = fromArrow.otherObject;
       toArrow.isFromArrow = false;
-      toArrow.port = object.connectors.fromPort[index];
+      toArrow.port = fromArrow.object.connectors.fromPort[index];
       toArrow.line = fromArrow.line;
 
       object.connectors.fromArrow[index] = fromArrow;
@@ -308,14 +308,14 @@
 
       var otherObject = object.connectors.otherObject[index];
 
+      //
+      // object and otherObject are reversed for the toLine
+      //
+
       var fromArrow = service.createArrow([ x2, y2, x1, y1 ]);
       fromArrow.index = index;
-
-      // fromArrow.object = object;
-      // fromArrow.otherObject = otherObject;
       fromArrow.object = otherObject;
       fromArrow.otherObject = object;
-      
       fromArrow.isFromArrow = true;
       fromArrow.port = object.connectors.toPort[index];
       fromArrow.line = object.connectors.toLine[index];

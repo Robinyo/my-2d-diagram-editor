@@ -33,14 +33,11 @@
 
         scope.style = function () {
 
-          var sidebarWidth = document.getElementById('sidebar-container').clientWidth;
-
-          // $log.info('sidebarWidth: ' + (sidebarWidth) + 'px');
-          // $log.info('width: ' + (newValue.width) + 'px');
-          // $log.info('height: ' + (newValue.height - HEADER_HEIGHT) + 'px');
+          var sidebarWidth = document.getElementById('sidebar-left-container').clientWidth;
 
           return {
-            'width': (newValue.width - sidebarWidth - 10) + 'px',
+            // 'width': (newValue.width - sidebarWidth - 10) + 'px',
+            'width': (newValue.width - (sidebarWidth * 2) - 10) + 'px',
             'height': (newValue.height - HEADER_HEIGHT) + 'px'
           };
         };
@@ -61,3 +58,7 @@
 // scope.$on('$destroy', ...) to run a clean-up function when the directive is removed" ...
 
 // $log.info('width: ' + $window.innerWidth + ' height: ' + $window.innerHeight);
+
+// $log.info('sidebarWidth: ' + (sidebarWidth) + 'px');
+// $log.info('width: ' + (newValue.width) + 'px');
+// $log.info('height: ' + (newValue.height - HEADER_HEIGHT) + 'px');

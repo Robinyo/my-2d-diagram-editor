@@ -1,3 +1,9 @@
+<!--
+  Bootstrap requires a containing element to wrap site contents and house our grid system.
+  You may choose one of two containers, container or container-fluid to use in your projects.
+  Note that, due to padding and more, neither container is nestable.
+-->
+
 <div class="container-fluid">
 
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -487,3 +493,90 @@
   </ul>
 
 </nav>
+
+
+
+
+
+
+
+<!--
+  Note: Where possible you should prefer the translateDirective (e.g., translate="{{ 'BRAND_NAME' }}") to
+  the translateFilter (e.g., {{ 'BRAND_NAME' | translate }}).
+
+  <div id="sidebar-container" class="col-xs-4 col-sm-4 col-md-3 sidebar">
+-->
+
+<div id="sidebar-container" class="sidebar-nav-fixed affix">
+
+  <uib-accordion close-others="false">
+
+    <!-- Shapes Group -->
+
+    <uib-accordion-group ng-init="shapeGroup.open = true" is-open="shapeGroup.open">
+
+      <uib-accordion-heading>
+        {{ 'SHAPES' | translate }}
+        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': shapeGroup.open,
+          'glyphicon-chevron-right': !shapeGroup.open}">
+        </i>
+      </uib-accordion-heading>
+
+      <div ng-repeat="shape in main.shapes track by shape.id">
+        <div class="media" style="margin-top: 15px">
+          <a class="pull-left" href="" ng-click="main.newShape(shape.name, shape.backgroundColor)">
+            <img class="media-object" ng-src="{{shape.src}}">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">
+              <a href="" ng-click="main.newShape(shape.name, shape.backgroundColor)">
+                {{ shape.name | translate }}
+              </a>
+            </h4>
+          </div>
+        </div>
+      </div> <!-- <div ng-repeat="shape in shapes track by shape.id"> -->
+
+
+    </uib-accordion-group>
+
+    <!-- Containers Group -->
+
+    <uib-accordion-group ng-init="containerGroup.open = true" is-open="containerGroup.open">
+
+      <uib-accordion-heading>
+        {{ 'CONTAINERS' | translate }}
+        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': containerGroup.open,
+          'glyphicon-chevron-right': !containerGroup.open}">
+        </i>
+      </uib-accordion-heading>
+
+      <div ng-repeat="container in main.containers track by container.id">
+        <div class="media" style="margin-top: 15px">
+          <a class="pull-left" href="" ng-click="main.newContainer(container.name, container.backgroundColor)">
+            <img class="media-object" ng-src="{{container.src}}">
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">
+              <a href="" ng-click="main.newContainer(container.name, container.backgroundColor)">
+                {{ container.name | translate }}
+              </a>
+            </h4>
+          </div>
+        </div>
+      </div> <!-- <div ng-repeat="container in containers track by container.id"> -->
+
+    </uib-accordion-group>
+
+  </uib-accordion>
+
+</div>
+
+<!--
+
+ng-style="{color: car.color}"
+
+ -->
+
+
+
