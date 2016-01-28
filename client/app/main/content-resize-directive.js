@@ -36,8 +36,9 @@
           var sidebarWidth = document.getElementById('sidebar-left-container').clientWidth;
 
           return {
+            'width': (newValue.width - sidebarWidth) + 'px',
             // 'width': (newValue.width - sidebarWidth - 10) + 'px',
-            'width': (newValue.width - (sidebarWidth * 2) - 10) + 'px',
+            // 'width': (newValue.width - (sidebarWidth * 2) - 10) + 'px',
             'height': (newValue.height - HEADER_HEIGHT) + 'px'
           };
         };

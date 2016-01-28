@@ -2,29 +2,37 @@
 
 <div ng-include="'app/main/header.html'"></div>
 
-<div class="row">
+<div class="container-fluid">
 
-  <!--
-  <div id="sidebar-left-container" class="col-md-3 sidebar-left">
-  -->
-  <div id="sidebar-left-container" class="col-xs-4 col-sm-4 col-md-3 sidebar-left">
-    <div ng-include="'app/main/sidebar.html'"></div>
-  </div>
+  <div class="row">
 
-  <!--
-  <div id="content-container" class="col-md-6">
-  -->
-  <div id="content-container" class="col-xs-8 col-xs-offset-4 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3">
-    <div ng-include="'app/main/content.html'"></div>
-  </div>
+    <div id="sidebar-left-container" class="col-md-3 sidebar-left">
+      <div ng-include="'app/main/sidebar-left.html'"></div>
+    </div>
 
-  <!--
-  <div id="sidebar-right-container" class="col-md-3 sidebar-right">
-    <div ng-include="'app/main/sidebar-right.html'"></div>
+    <div id="content-container" class="col-md-9 col-md-offset-3 content-container">
+      <div ng-include="'app/main/content.html'"></div>
+    </div>
+
+    <!--
+    <div id="sidebar-right-container" class="col-md-3 sidebar-right">
+      <div ng-include="'app/main/sidebar-right.html'"></div>
+    </div>
+    -->
+
   </div>
-  -->
 
 </div>
+
+<!--
+
+http://getbootstrap.com/css/
+http://www.helloerik.com/the-subtle-magic-behind-why-the-bootstrap-3-grid-works
+
+<div id="sidebar-left-container" class="col-xs-4 col-sm-4 col-md-3 sidebar-left">
+<div id="content-container" class="col-xs-8 col-xs-offset-4 col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3">
+
+-->
 
 
 
