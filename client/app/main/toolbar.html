@@ -13,10 +13,12 @@
 
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'ZOOM_IN' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-zoom-in"></span>
+              uib-tooltip="{{ 'ZOOM_IN' | translate }}" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-zoom-in"></span>
       </button>
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'ZOOM_OUT' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-zoom-out"></span>
+              uib-tooltip="{{ 'ZOOM_OUT' | translate }}" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-zoom-out"></span>
       </button>
     </div>
 
@@ -43,83 +45,109 @@
     </div>
     -->
 
-
     <button type="button" class="btn btn-default" ng-click="main.editDelete()"
             uib-tooltip="{{ 'DELETE' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-trash"></span>
     </button>
 
-    <button type="button" class="btn btn-default" ng-click="main.setPointerMode()"
-            uib-tooltip="{{ 'POINTER' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-ok"></span>
-    </button>
-    <button type="button" class="btn btn-default" ng-click="main.setConnectorMode()"
-            uib-tooltip="{{ 'CONNECTOR' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-pencil"></span>
-    </button>
+    <!--
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default" ng-click="main.bringForward()"
+              uib-tooltip="{{ 'BRING_FORWARD' | translate }}" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="btn btn-default" ng-click="main.sendBackward()"
+              uib-tooltip="{{ 'SEND_BACKWARD' | translate }}" tooltip-placement="bottom">
+        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+      </button>
+    </div>
+    -->
 
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default" ng-click="main.bringForward()">
+        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="btn btn-default" ng-click="main.bringToFront()">
+        <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="btn btn-default" ng-click="main.sendToBack()">
+        <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
+      </button>
+      <button type="button" class="btn btn-default" ng-click="main.sendBackward()">
+        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+      </button>
+    </div>
 
-    <button type="button" class="btn btn-default" disabled="disabled"
-            uib-tooltip="{{ 'LOCK' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-lock"></span>
-    </button>
+   <button type="button" class="btn btn-default" ng-click="main.setPointerMode()"
+           uib-tooltip="{{ 'POINTER' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-ok"></span>
+   </button>
+   <button type="button" class="btn btn-default" ng-click="main.setConnectorMode()"
+           uib-tooltip="{{ 'CONNECTOR' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-pencil"></span>
+   </button>
 
-    <button type="button" class="btn btn-default" disabled="disabled"
-            uib-tooltip="{{ 'COMMENT' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-comment"></span>
-    </button>
+   <button type="button" class="btn btn-default" disabled="disabled"
+           uib-tooltip="{{ 'LOCK' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-lock"></span>
+   </button>
 
-  </form>
+   <button type="button" class="btn btn-default" disabled="disabled"
+           uib-tooltip="{{ 'COMMENT' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-comment"></span>
+   </button>
+
+ </form>
 </nav>
 
-  <!--
+ <!--
 
 glyphicon-pushpin
 
 
-    <form class="navbar-form navbar-left">
-    <div class="btn-toolbar" role="toolbar">
+   <form class="navbar-form navbar-left">
+   <div class="btn-toolbar" role="toolbar">
 
-      <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
-        <span class="glyphicon glyphicon-th"></span>
-      </button>
+     <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
+       <span class="glyphicon glyphicon-th"></span>
+     </button>
 
-      <div class="btn-group btn-group-sm" role="group">
-        <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
-          <span class="glyphicon glyphicon-zoom-in"></span>
-        </button>
-        <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
-          <span class="glyphicon glyphicon-zoom-in"></span>
-        </button>
-      </div>
+     <div class="btn-group btn-group-sm" role="group">
+       <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
+         <span class="glyphicon glyphicon-zoom-in"></span>
+       </button>
+       <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
+         <span class="glyphicon glyphicon-zoom-in"></span>
+       </button>
+     </div>
 
-    </div>
-  </form>
+   </div>
+ </form>
 
-  <form class="navbar-form navbar-left">
-    <div class="btn-toolbar" role="toolbar">
+ <form class="navbar-form navbar-left">
+   <div class="btn-toolbar" role="toolbar">
 
-      <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom"><span class="glyphicon glyphicon-th"></span></button>
+     <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom"><span class="glyphicon glyphicon-th"></span></button>
 
-      <div class="btn-group btn-group-sm" role="group">
-        <button type="button" class="btn btn-default">Left</button>
-        <button type="button" class="btn btn-default">Middle</button>
-        <button type="button" class="btn btn-default">Right</button>
-        <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
-      </div>
-    </div>
-  </form>
+     <div class="btn-group btn-group-sm" role="group">
+       <button type="button" class="btn btn-default">Left</button>
+       <button type="button" class="btn btn-default">Middle</button>
+       <button type="button" class="btn btn-default">Right</button>
+       <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
+     </div>
+   </div>
+ </form>
 
-  <form class="navbar-form navbar-left">
-    <button type="button" class="btn btn-primary" disabled="disabled">Default button</button>
-    <button type="button" class="btn btn-primary btn-sm">Small button</button>
-    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
-      <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-    </button>
+ <form class="navbar-form navbar-left">
+   <button type="button" class="btn btn-primary" disabled="disabled">Default button</button>
+   <button type="button" class="btn btn-primary btn-sm">Small button</button>
+   <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+     <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+   </button>
 
-    <div class="btn-group btn-group-sm" role="group" aria-label="...">
-      <button type="button" class="btn btn-default">Left</button>
-      <button type="button" class="btn btn-default">Middle</button>
-      <button type="button" class="btn btn-default">Right</button>
-    </div>
+   <div class="btn-group btn-group-sm" role="group" aria-label="...">
+     <button type="button" class="btn btn-default">Left</button>
+     <button type="button" class="btn btn-default">Middle</button>
+     <button type="button" class="btn btn-default">Right</button>
+   </div>
 
-  </form>
-  -->
+ </form>
+ -->
 
 <!--
 

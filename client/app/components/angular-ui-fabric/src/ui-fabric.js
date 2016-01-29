@@ -180,8 +180,54 @@
       $log.info('fabric - removeActiveObjectFromCanvas()');
 
       var object = service.canvas.getActiveObject();
-      service.canvas.remove(object);
-      service.canvas.renderAll();
+      if (object) {
+        service.canvas.remove(object);
+        service.canvas.renderAll();
+      }
+    };
+
+    service.bringForward = function() {
+
+      $log.info('fabric - bringForward()');
+
+      var object = service.canvas.getActiveObject();
+      if (object) {
+        service.canvas.bringForward(object);
+        service.canvas.renderAll();
+      }
+    };
+
+    service.bringToFront = function() {
+
+      $log.info('fabric - bringToFront()');
+
+      var object = service.canvas.getActiveObject();
+      if (object) {
+        service.canvas.bringToFront(object);
+        service.canvas.renderAll();
+      }
+    };
+
+    service.sendBackward = function() {
+
+      $log.info('fabric - sendBackward()');
+
+      var object = service.canvas.getActiveObject();
+      if (object) {
+        service.canvas.sendBackwards(object);
+        service.canvas.renderAll();
+      }
+    };
+
+    service.sendToBack = function() {
+
+      $log.info('fabric - sendToBack()');
+
+      var object = service.canvas.getActiveObject();
+      if (object) {
+        service.canvas.sendToBack(object);
+        service.canvas.renderAll();
+      }
     };
 
     //

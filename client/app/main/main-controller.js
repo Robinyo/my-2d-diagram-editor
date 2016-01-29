@@ -174,6 +174,28 @@
       fabric.snapToGrid(false);
     };
 
+    // Arrange Menu Items
+
+    main.bringForward = function() {
+      fabric.bringForward();
+    };
+
+    main.bringToFront = function() {
+      fabric.bringToFront();
+    };
+
+    main.sendBackward = function() {
+      fabric.sendBackward();
+    };
+
+    main.sendToBack = function() {
+      fabric.sendToBack();
+    };
+
+    //
+    // Language Menu Items
+    //
+
     main.switchLanguage = function(key) {
       $log.info('MainController.switchLanguage() - ' + key.toLocaleString());
       $translate.use(key);

@@ -24,6 +24,12 @@
   "GRID":                        "Grid",
   "SNAP_TO_GRID":                "Snap to Grid",
 
+  "ARRANGE":                     "Arrange",
+  "BRING_FORWARD":               "Bring Forward",
+  "BRING_TO_FRONT":              "Bring to Front",
+  "SEND_BACKWARD":               "Send Backward",
+  "SEND_TO_BACK":                "Send to Back",
+
   "OPTIONS":                     "Options",
   "LANGUAGE":                    "Language",
   "HELP":                        "Help",
