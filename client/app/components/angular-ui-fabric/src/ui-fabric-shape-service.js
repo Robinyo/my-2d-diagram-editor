@@ -35,7 +35,7 @@
     };
 
     //
-    // Shapes
+    // Shapes: Circle, Ellipse, Line, Polygon, Polyline, Rect and Triangle.
     //
 
     /**
@@ -92,6 +92,12 @@
       // return object;
     };
 
+    /**
+     * @name triangle
+     * @desc Creates a new Triangle object
+     * @param {Object} [options] A configuration object, defaults to rectDefaults
+     * @return {Object} Returns the new Triangle object
+     */
     service.triangle = function(options) {
 
       $log.info('fabricShape - triangle()');
@@ -102,6 +108,85 @@
 
       return new fabricWindow.Triangle(options);
     };
+
+    /**
+     * @name triangle
+     * @desc Creates a new Triangle object
+     * @param {Object} [options] A configuration object, defaults to rectDefaults
+     * @return {Object} Returns the new Triangle object
+     */
+    service.triangle = function(options) {
+
+      $log.info('fabricShape - triangle()');
+
+      options = options || service.triangleDefaults;
+
+      // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+
+      return new fabricWindow.Triangle(options);
+    };
+
+    service.rectWithText = function(text, options) {
+
+      $log.info('fabricShape - rectWithText()');
+
+      text = text || 'New Text';
+      options = options || service.rectDefaults;
+
+      return new RectWithText(text, options);
+    };
+
+    const FONT_SIZE = 12;
+    const FONT_WEIGHT = 'normal';
+    const FONT_FAMILY = 'Walter Turncoat';
+
+    var RectWithText = fabricWindow.util.createClass(fabricWindow.Rect, {
+
+      type: 'rectWithText',
+      text: '',
+      fontSize:   FONT_SIZE,
+      fontWeight: FONT_WEIGHT,
+      fontFamily: FONT_FAMILY,
+      textDecoration: '',
+      textAlign: 'left',
+      fontStyle: '',
+      lineHeight: 1.16,
+
+      initialize: function(text, options) {
+
+        this.callSuper('initialize', options);
+
+        this.set('text', text);
+        for (var prop in options) {
+          this.set(prop, options[prop]);
+        }
+      },
+
+      fromObject: function(object) {
+        return new RectWithText(object);
+      },
+
+      toObject: function() {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+          text: this.get('text')
+        });
+      },
+
+      _render: function(ctx) {
+
+        this.callSuper('_render', ctx);
+
+        ctx.font = '20px Walter Turncoat';
+        ctx.fillStyle = '#333';
+        ctx.fillText(this.text, -this.width/2, -this.height/2 + 20);
+      },
+
+      toString: function() {
+        return '#<ui-fabric.rectWithText (' + this.complexity() +
+          '): { "text": "' + this.text + '" }>';
+      }
+
+    });
 
     service.init();
 

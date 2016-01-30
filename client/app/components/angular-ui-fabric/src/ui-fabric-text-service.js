@@ -34,8 +34,8 @@
 
     /**
      * @name text
-     * @desc Adds a text object to the canvas
-     * @param {String} text - The text to render on the canvas
+     * @desc Adds a Text object to the canvas
+     * @param {String} [text] - The text to render on the canvas
      * @param {Object} [options] A configuration object, defaults to textDefaults
      */
     service.text = function(text, options) {

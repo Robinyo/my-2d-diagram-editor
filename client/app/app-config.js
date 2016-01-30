@@ -11,11 +11,17 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  configApp.$inject = ['$translateProvider', '$stateProvider', '$urlRouterProvider'];
+  configApp.$inject = ['$tooltipProvider', '$translateProvider', '$stateProvider', '$urlRouterProvider'];
 
-  function configApp($translateProvider, $stateProvider, $urlRouterProvider) {
+  function configApp($tooltipProvider, $translateProvider, $stateProvider, $urlRouterProvider) {
+
+    configUI($tooltipProvider);
     configTranslations($translateProvider);
     configRoutes($stateProvider, $urlRouterProvider);
+  }
+
+  function configUI($tooltipProvider) {
+    $tooltipProvider.options({ placement: 'bottom' });
   }
 
   function configTranslations($translateProvider) {
@@ -25,13 +31,13 @@
         prefix: 'app/locales/',
         suffix: '.json'
       })
-      .registerAvailableLanguageKeys(['en', 'de'], {
+      .registerAvailableLanguageKeys(['en', 'pl', 'de'], {
         'en' : 'en', 'en_GB': 'en', 'en_US': 'en',
         'pl' : 'pl', 'pl_PL': 'pl',
         'de' : 'de', 'de_DE': 'de', 'de_CH': 'de'
       })
-      .preferredLanguage('de')
-      .fallbackLanguage('de')
+      .preferredLanguage('en')
+      .fallbackLanguage('en')
       .determinePreferredLanguage()
       .useSanitizeValueStrategy('escapeParameters');
   }

@@ -100,7 +100,7 @@
       $translate(name)
         .then(function (translatedValue) {
 
-          // TODO - http://fabricjs.com/fabric-intro-part-3/#subclassing
+          /*
 
           var object = fabric.addRect(shapeRectDefaults);
           object.set('type', 'node');
@@ -108,6 +108,15 @@
           object.name = translatedValue + ' ' + object.id;
           object.connectors = { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] };
           // fabric.addText(object.name, shapeTextDefaults);
+
+          */
+
+          var object = fabric.addRectWithText('Node 1', shapeRectDefaults);
+          object.set('type', 'node');
+          object.id = main.nodeId++;
+          object.name = translatedValue + ' ' + object.id;
+          object.connectors = { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] };
+
         });
     };
 

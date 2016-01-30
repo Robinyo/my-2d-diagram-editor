@@ -27,7 +27,9 @@
         </a>
         <ul class="dropdown-menu" role="menu">
           <li class="disabled">
-            <a href="" ng-click="main.fileNew()" translate="{{ 'FILE_NEW' }}"></a>
+            <a href="" ng-click="main.fileNew()">
+              {{ 'FILE_NEW' | translate }}
+            </a>
           </li>
           <li class="divider"></li>
           <li class="disabled">
@@ -42,14 +44,20 @@
         </a>
         <ul class="dropdown-menu" role="menu">
           <li class="disabled">
-            <a href="" translate="{{ 'UNDO' }}"></a>
+            <a href="">
+              <span class="fa fa-undo fa-fw"></span>&nbsp;{{ 'UNDO' | translate }}
+            </a>
           </li>
           <li class="disabled">
-            <a href="" translate="{{ 'REDO' }}"></a>
+            <a href="">
+              <span class="fa fa-repeat fa-fw"></span>&nbsp;{{ 'REDO' | translate }}
+            </a>
           </li>
           <li class="divider"></li>
           <li>
-            <a href="" ng-click="main.editDelete()" translate="{{ 'DELETE' }}"></a>
+            <a href="" ng-click="main.editDelete()">
+              <span class="fa fa-trash fa-fw"></span>&nbsp;{{ 'DELETE' | translate }}
+            </a>
           </li>
         </ul>
       </li>
@@ -59,10 +67,14 @@
           {{ 'VIEW' | translate }} <b class="caret"></b></a>
         <ul class="dropdown-menu" role="menu">
           <li>
-            <a href="" ng-click="main.toggleGrid()" translate="{{ 'GRID' }}"></a>
+            <a href="" ng-click="main.toggleGrid()">
+              <span class="glyphicon glyphicon-th"></span>&nbsp;{{ 'GRID' | translate }}
+            </a>
           </li>
           <li>
-            <a href="" ng-click="main.toggleSnapToGrid()" translate="{{ 'SNAP_TO_GRID' }}"></a>
+            <a href="" ng-click="main.toggleSnapToGrid()">
+              <span class="fa fa-magnet"></span>&nbsp;{{ 'SNAP_TO_GRID' | translate }}
+            </a>
           </li>
         </ul>
       </li>

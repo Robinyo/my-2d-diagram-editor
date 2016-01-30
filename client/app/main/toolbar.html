@@ -2,169 +2,102 @@
   <form class="navbar-form navbar-left">
 
     <button type="button" class="btn btn-default" ng-click="main.toggleGrid()"
-            uib-tooltip="{{ 'GRID' | translate }}" tooltip-placement="bottom">
+            uib-tooltip="{{ 'GRID' | translate }}">
       <span class="glyphicon glyphicon-th"></span>
     </button>
 
     <button type="button" class="btn btn-default" ng-click="main.toggleSnapToGrid()"
-            uib-tooltip="{{ 'SNAP_TO_GRID' | translate }}" tooltip-placement="bottom">
-      <span class="glyphicon glyphicon-magnet"></span>
+            uib-tooltip="{{ 'SNAP_TO_GRID' | translate }}">
+      <span class="fa fa-magnet fa-lg"></span>
     </button>
 
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'ZOOM_IN' | translate }}" tooltip-placement="bottom">
+              uib-tooltip="{{ 'ZOOM_IN' | translate }}">
         <span class="glyphicon glyphicon-zoom-in"></span>
       </button>
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'ZOOM_OUT' | translate }}" tooltip-placement="bottom">
+              uib-tooltip="{{ 'ZOOM_OUT' | translate }}">
         <span class="glyphicon glyphicon-zoom-out"></span>
       </button>
     </div>
 
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'UNDO' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-chevron-left"></span>
+              uib-tooltip="{{ 'UNDO' | translate }}"> <span class="fa fa-undo fa-lg"></span>
       </button>
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'REDO' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-chevron-right"></span>
+              uib-tooltip="{{ 'REDO' | translate }}"> <span class="fa fa-repeat fa-lg"></span>
       </button>
     </div>
 
     <!--
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'CUT' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-asterisk"></span>
+              uib-tooltip="{{ 'CUT' | translate }}"> <span class="glyphicon glyphicon-asterisk"></span>
       </button>
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'COPY' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-asterisk"></span>
+              uib-tooltip="{{ 'COPY' | translate }}"> <span class="glyphicon glyphicon-asterisk"></span>
       </button>
       <button type="button" class="btn btn-default" disabled="disabled"
-              uib-tooltip="{{ 'PASTE' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-asterisk"></span>
+              uib-tooltip="{{ 'PASTE' | translate }}"> <span class="glyphicon glyphicon-asterisk"></span>
       </button>
     </div>
     -->
 
     <button type="button" class="btn btn-default" ng-click="main.editDelete()"
-            uib-tooltip="{{ 'DELETE' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-trash"></span>
+            uib-tooltip="{{ 'DELETE' | translate }}"> <span class="fa fa-trash fa-lg"></span>
     </button>
 
-    <!--
-    <div class="btn-group" role="group">
+    <div class="btn-group">
       <button type="button" class="btn btn-default" ng-click="main.bringForward()"
-              uib-tooltip="{{ 'BRING_FORWARD' | translate }}" tooltip-placement="bottom">
-        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+              uib-tooltip="{{ 'BRING_FORWARD' | translate }}">
+        <span class="fa fa-toggle-right fa-lg"></span>
       </button>
       <button type="button" class="btn btn-default" ng-click="main.sendBackward()"
-              uib-tooltip="{{ 'SEND_BACKWARD' | translate }}" tooltip-placement="bottom">
-        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
-      </button>
-    </div>
-    -->
-
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-default" ng-click="main.bringForward()">
-        <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-      </button>
-      <button type="button" class="btn btn-default" ng-click="main.bringToFront()">
-        <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
-      </button>
-      <button type="button" class="btn btn-default" ng-click="main.sendToBack()">
-        <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
-      </button>
-      <button type="button" class="btn btn-default" ng-click="main.sendBackward()">
-        <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+              uib-tooltip="{{ 'SEND_BACKWARD' | translate }}">
+        <span class="fa fa-toggle-left fa-lg"></span>
       </button>
     </div>
 
-   <button type="button" class="btn btn-default" ng-click="main.setPointerMode()"
-           uib-tooltip="{{ 'POINTER' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-ok"></span>
-   </button>
-   <button type="button" class="btn btn-default" ng-click="main.setConnectorMode()"
-           uib-tooltip="{{ 'CONNECTOR' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-pencil"></span>
-   </button>
+    <button type="button" class="btn btn-default" ng-click="main.setPointerMode()"
+            uib-tooltip="{{ 'POINTER' | translate }}">
+      <span class="fa fa-mouse-pointer fa-lg"></span>
+    </button>
+    <button type="button" class="btn btn-default" ng-click="main.setConnectorMode()"
+            uib-tooltip="{{ 'CONNECTOR' | translate }}"> <span class="glyphicon glyphicon-pencil"></span>
+    </button>
 
-   <button type="button" class="btn btn-default" disabled="disabled"
-           uib-tooltip="{{ 'LOCK' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-lock"></span>
-   </button>
+    <button type="button" class="btn btn-default" disabled="disabled"
+            uib-tooltip="{{ 'LOCK' | translate }}"> <span class="glyphicon glyphicon-lock"></span>
+    </button>
 
-   <button type="button" class="btn btn-default" disabled="disabled"
-           uib-tooltip="{{ 'COMMENT' | translate }}" tooltip-placement="bottom"> <span class="glyphicon glyphicon-comment"></span>
-   </button>
+    <button type="button" class="btn btn-default" disabled="disabled"
+            uib-tooltip="{{ 'COMMENT' | translate }}"> <span class="glyphicon glyphicon-comment"></span>
+    </button>
 
- </form>
+  </form>
 </nav>
 
- <!--
-
-glyphicon-pushpin
-
-
-   <form class="navbar-form navbar-left">
-   <div class="btn-toolbar" role="toolbar">
-
-     <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
-       <span class="glyphicon glyphicon-th"></span>
-     </button>
-
-     <div class="btn-group btn-group-sm" role="group">
-       <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
-         <span class="glyphicon glyphicon-zoom-in"></span>
-       </button>
-       <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom">
-         <span class="glyphicon glyphicon-zoom-in"></span>
-       </button>
-     </div>
-
-   </div>
- </form>
-
- <form class="navbar-form navbar-left">
-   <div class="btn-toolbar" role="toolbar">
-
-     <button type="button" class="btn btn-default" tooltip="Grid" tooltip-placement="bottom"><span class="glyphicon glyphicon-th"></span></button>
-
-     <div class="btn-group btn-group-sm" role="group">
-       <button type="button" class="btn btn-default">Left</button>
-       <button type="button" class="btn btn-default">Middle</button>
-       <button type="button" class="btn btn-default">Right</button>
-       <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-cog"></span></button>
-     </div>
-   </div>
- </form>
-
- <form class="navbar-form navbar-left">
-   <button type="button" class="btn btn-primary" disabled="disabled">Default button</button>
-   <button type="button" class="btn btn-primary btn-sm">Small button</button>
-   <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
-     <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-   </button>
-
-   <div class="btn-group btn-group-sm" role="group" aria-label="...">
-     <button type="button" class="btn btn-default">Left</button>
-     <button type="button" class="btn btn-default">Middle</button>
-     <button type="button" class="btn btn-default">Right</button>
-   </div>
-
- </form>
- -->
 
 <!--
 
-  tooltip="{{item.name + (isDisabled(item.name)?' is not available' : '')}}"
+<div class="btn-group" role="group">
+  <button type="button" class="btn btn-default" ng-click="main.bringForward()"
+          uib-tooltip="{{ 'BRING_FORWARD' | translate }}" tooltip-placement="bottom">
+    <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+  </button>
+  <button type="button" class="btn btn-default" ng-click="main.sendBackward()"
+          uib-tooltip="{{ 'SEND_BACKWARD' | translate }}" tooltip-placement="bottom">
+    <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+  </button>
+</div>
 
-  <div class="dropdown">
-    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      Dropdown
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">Separated link</a></li>
-    </ul>
-  </div>
+<button type="button" class="btn btn-default" ng-click="main.bringToFront()">
+  <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
+</button>
+<button type="button" class="btn btn-default" ng-click="main.sendToBack()">
+  <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
+</button>
 
- -->
+-->

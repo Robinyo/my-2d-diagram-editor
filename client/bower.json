@@ -25,6 +25,7 @@
     "angular-ui-router": "~0.2.15",
     "fabric.js": "fabric#~1.5.0",
     "angular-translate": "~2.8.1",
-    "angular-translate-loader-static-files": "~2.8.1"
+    "angular-translate-loader-static-files": "~2.8.1",
+    "font-awesome": "fontawesome#~4.5.0"
   }
 }

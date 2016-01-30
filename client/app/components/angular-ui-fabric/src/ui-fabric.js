@@ -237,8 +237,8 @@
     /**
      * @name addRect
      * @desc Creates a new Rect and adds it to the canvas
-     * @param {Object} [options] A configuration object, defaults to FabricConstants.rectDefaults
-     * @param {Object} [render] Render flag
+     * @param {Object} [options] A configuration object, defaults to service.rectDefaults
+     * @param {Boolean} [render] When true, service.canvas.renderAll() is invoked
      * @return {Object} Returns the new Rect object
      */
     service.addRect = function(options, render) {
@@ -248,10 +248,24 @@
       return addObjectToCanvas(fabricShape.rect(options), render);
     };
 
+    service.addRectWithText = function(text, options, render) {
+
+      $log.info('fabric - addRectWithText()');
+
+      return addObjectToCanvas(fabricShape.rectWithText(text, options), render);
+    };
+
     //
     // Triangle
     //
 
+    /**
+     * @name addTriangle
+     * @desc Creates a new Triangle and adds it to the canvas
+     * @param {Object} [options] A configuration object, defaults to service.triangleDefaults
+     * @param {Boolean} [render] When true, service.canvas.renderAll() is invoked
+     * @return {Object} Returns the new Triangle object
+     */
     service.addTriangle = function(options, render) {
 
       $log.info('fabric - addTriangle()');
@@ -261,6 +275,8 @@
 
     //
     // Arrow
+    // See: https://en.wikipedia.org/wiki/Atan2 and
+    //      http://gamedev.stackexchange.com/questions/14602/what-are-atan-and-atan2-used-for-in-games
     //
 
     service.createArrow = function(points, options) {
@@ -385,6 +401,14 @@
     // Line
     //
 
+    /**
+     * @name addLine
+     * @desc Creates a new Line and adds it to the canvas
+     * @param {Array} [points] Array of points, e.g., [0, 0, 0, 0]
+     * @param {Object} [options] A configuration object, defaults to service.lineDefaults
+     * @param {Boolean} [render] When true, service.canvas.renderAll() is invoked
+     * @return {Object} Returns the new Line object
+     */
     service.addLine = function(points, options, render) {
 
       $log.info('fabric - addLine()');
@@ -396,6 +420,13 @@
     // Text
     //
 
+    /**
+     * @name addText
+     * @desc Creates a new Line and adds it to the canvas
+     * @param {Object} [options] A configuration object, defaults to service.textDefaults
+     * @param {Boolean} [render] When true, service.canvas.renderAll() is invoked
+     * @return {Object} Returns the new Text object
+     */
     service.addText = function(text, options, render) {
 
       $log.info('fabric - addText()');
@@ -430,9 +461,6 @@
     service.snapToGrid = function(snapTo) {
       service.canvasDefaults.grid.snapTo = snapTo;
     };
-
-
-
 
     //
     // Listeners
