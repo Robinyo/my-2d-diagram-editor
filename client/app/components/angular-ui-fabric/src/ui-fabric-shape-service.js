@@ -22,11 +22,11 @@
     service.rectDefaults = null;
     service.triangleDefaults = null;
 
-    $log.info('fabricShape');
+    $log.debug('fabricShape');
 
     service.init = function () {
 
-      $log.info('fabricShape - init()');
+      $log.debug('fabricShape - init()');
 
       service.gridLineDefaults = fabricConfig.getGridLineDefaults();
       service.controlDefaults = fabricConfig.getLineDefaults();
@@ -47,11 +47,11 @@
      */
     service.gridLine = function(points, options) {
 
-      // $log.info('fabricShape - gridLine()');
+      $log.debug('fabricShape - gridLine()');
 
       options = options || service.gridLineDefaults;
 
-      // $log.info('points: ' + JSON.stringify(['e', points], null, '\t'));
+      // $log.debug('points: ' + JSON.stringify(['e', points], null, '\t'));
 
       return new fabricWindow.Line(points, options);
     };
@@ -65,11 +65,11 @@
      */
     service.line = function(points, options) {
 
-      // $log.info('fabricShape - line()');
+      $log.debug('fabricShape - line()');
 
       options = options || service.controlDefaults;
 
-      // $log.info('points: ' + JSON.stringify(['e', points], null, '\t'));
+      // $log.debug('points: ' + JSON.stringify(['e', points], null, '\t'));
 
       return new fabricWindow.Line(points, options);
     };
@@ -82,7 +82,7 @@
      */
     service.rect = function(options) {
 
-      // $log.info('fabricShape - rect()');
+      $log.debug('fabricShape - rect()');
 
       options = options || service.rectDefaults;
 
@@ -100,11 +100,11 @@
      */
     service.triangle = function(options) {
 
-      $log.info('fabricShape - triangle()');
+      $log.debug('fabricShape - triangle()');
 
       options = options || service.triangleDefaults;
 
-      // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+      // $log.debug('options: ' + JSON.stringify(['e', options], null, '\t'));
 
       return new fabricWindow.Triangle(options);
     };
@@ -117,18 +117,18 @@
      */
     service.triangle = function(options) {
 
-      $log.info('fabricShape - triangle()');
+      $log.debug('fabricShape - triangle()');
 
       options = options || service.triangleDefaults;
 
-      // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+      // $log.debug('options: ' + JSON.stringify(['e', options], null, '\t'));
 
       return new fabricWindow.Triangle(options);
     };
 
     service.rectWithText = function(text, options) {
 
-      $log.info('fabricShape - rectWithText()');
+      $log.debug('fabricShape - rectWithText()');
 
       text = text || 'New Text';
       options = options || service.rectDefaults;
@@ -196,6 +196,6 @@
 
 })();
 
-// $log.info('service.canvas: ' + JSON.stringify(['e', service.canvas], null, '\t'));
+// $log.debug('service.canvas: ' + JSON.stringify(['e', service.canvas], null, '\t'));
 
 // service.rectDefaults = angular.copy(fabricService.getRectDefaults());

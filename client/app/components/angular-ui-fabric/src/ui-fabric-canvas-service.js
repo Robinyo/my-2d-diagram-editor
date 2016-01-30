@@ -25,7 +25,7 @@
 
     service.init = function () {
 
-      $log.info('fabricCanvas - init()');
+      $log.debug('fabricCanvas - init()');
 
       service.canvasDefaults = fabricConfig.getCanvasDefaults();
       // service.canvasDefaults = angular.copy(fabricConfig.getCanvasDefaults());
@@ -44,7 +44,7 @@
 
       options = options || service.canvasDefaults;
 
-      // $log.info('options: ' + JSON.stringify(['e', options], null, '\t'));
+      // $log.debug('options: ' + JSON.stringify(['e', options], null, '\t'));
 
       service.canvasId = 'fabric-canvas-' + createId();
       service.element.attr('id', service.canvasId);
@@ -69,4 +69,4 @@
 // { selection: false, width: 600, height: 600 }
 // { width: 600, height: 600, backgroundColor: '#DCDCDC' }
 
-// $log.info('service.element: ' + JSON.stringify(['e', service.element], null, '\t'));
+// $log.debug('service.element: ' + JSON.stringify(['e', service.element], null, '\t'));

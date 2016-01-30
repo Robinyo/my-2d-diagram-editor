@@ -22,7 +22,7 @@
       },
       link: function link(scope, element) {
 
-        $log.info('fabric - link()');
+        $log.debug('fabric - link()');
 
         var options = scope.options;
 

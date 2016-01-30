@@ -10,8 +10,8 @@
   <title>my-2d-diagram-editor</title>
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-css/css/bootstrap.css" />
   <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css">
-  <link rel="stylesheet" type="text/css" href="content/css/styles.css" />
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Walter+Turncoat" />
+  <link rel="stylesheet" type="text/css" href="content/css/styles.css" />
 </head>
 
 <body ng-app="my-2d-diagram-editor" ng-strict-di>
@@ -39,8 +39,11 @@
   <script src="app/components/angular-ui-fabric/src/ui-fabric-utils-service.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-window-factory.js"></script>
 
+  <script src="bower_components/stacktrace-js/dist/stacktrace.js"></script>
+
   <script src="app/app.js"></script>
   <script src="app/app-module-config.js"></script>
+  <script src="app/stacktrace-factory.js"></script>
 
   <script src="app/main/main-module.js"></script>
   <script src="app/main/main-controller.js"></script>
@@ -59,19 +62,3 @@ wrapping elements within your directives.
 
 See: https://docs.angularjs.org/misc/faq
 -->
-
-<!-- angular-fabric requires jQuery
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
--->
-
-<!--
- <script src="bower_components/fabric.js/dist/fabric.js"></script>
-
- <script src="app/components/angular-fabric/fabric-module.js"></script>
- <script src="app/components/angular-fabric/fabric-canvas.js"></script>
- <script src="app/components/angular-fabric/fabric-constants.js"></script>
- <script src="app/components/angular-fabric/fabric-directive.js"></script>
- <script src="app/components/angular-fabric/fabric-dirty-status.js"></script>
- <script src="app/components/angular-fabric/fabric-utilities.js"></script>
- <script src="app/components/angular-fabric/fabric-window.js"></script>
-  -->

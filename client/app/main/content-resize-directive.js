@@ -16,7 +16,7 @@
   function resize($log, $window) {
     return function(scope, element) {
 
-      $log.info('resize - link()');
+      $log.debug('resize - link()');
 
       const HEADER_HEIGHT = 101;
 
@@ -58,8 +58,8 @@
 // Note: "Best Practice: Directives should clean up after themselves. You can use element.on('$destroy', ...) or
 // scope.$on('$destroy', ...) to run a clean-up function when the directive is removed" ...
 
-// $log.info('width: ' + $window.innerWidth + ' height: ' + $window.innerHeight);
+// $log.debug('width: ' + $window.innerWidth + ' height: ' + $window.innerHeight);
 
-// $log.info('sidebarWidth: ' + (sidebarWidth) + 'px');
-// $log.info('width: ' + (newValue.width) + 'px');
-// $log.info('height: ' + (newValue.height - HEADER_HEIGHT) + 'px');
+// $log.debug('sidebarWidth: ' + (sidebarWidth) + 'px');
+// $log.debug('width: ' + (newValue.width) + 'px');
+// $log.debug('height: ' + (newValue.height - HEADER_HEIGHT) + 'px');

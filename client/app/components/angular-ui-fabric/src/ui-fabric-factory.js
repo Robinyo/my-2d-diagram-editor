@@ -47,11 +47,11 @@
     service.isMouseDown = false;
     service.fromObject = null;
 
-    $log.info('ui-fabric');
+    $log.debug('ui-fabric');
 
     service.init = function () {
 
-      $log.info('fabric - init()');
+      $log.debug('fabric - init()');
 
       service.canvasDefaults = fabricConfig.getCanvasDefaults();
       service.controlDefaults = fabricConfig.getControlDefaults();
@@ -62,7 +62,7 @@
 
     service.setConnectorMode = function (mode) {
 
-      $log.info('fabric - setConnectorMode(): ' + mode);
+      $log.debug('fabric - setConnectorMode(): ' + mode);
 
       service.connectorMode = mode;
       service.canvas.selection = !mode;
@@ -74,7 +74,7 @@
 
     service.getCanvas = function () {
 
-      $log.info('fabric - getCanvas()');
+      $log.debug('fabric - getCanvas()');
 
       service.canvas = fabricCanvas.getCanvas();
       service.configCanvasListeners();
@@ -92,12 +92,12 @@
       var width = service.canvasDefaults.width;
       var height = service.canvasDefaults.height;
 
-      // $log.info('width: ' + service.canvasDefaults.width);
-      // $log.info('height: ' + service.canvasDefaults.height);
+      // $log.debug('width: ' + service.canvasDefaults.width);
+      // $log.debug('height: ' + service.canvasDefaults.height);
 
       if (show) {
 
-        $log.info('fabric - showGrid(true)');
+        $log.debug('fabric - showGrid(true)');
 
         // draw the Vertical lines
         var i = 0;
@@ -123,12 +123,12 @@
         // Why did we start x and y at 0.5? Why not 0?
         // See: http://diveintohtml5.info/canvas.html
 
-        $log.info('fabric - showGrid() - deactivateAll().renderAll()');
+        $log.debug('fabric - showGrid() - deactivateAll().renderAll()');
         service.canvas.deactivateAll().renderAll();
 
       } else {
 
-        $log.info('fabric - showGrid(false)');
+        $log.debug('fabric - showGrid(false)');
 
         service.removeGroup(service.verticalGridLinesGroup, false);
         service.removeGroup(service.horizontalGridLinesGroup, true);
@@ -153,10 +153,10 @@
       // service.canvas.setActiveObject(object);
       object.bringToFront();
 
-      // $log.info('fabric - addObjectToCanvas() - render: ' + render.toLocaleString());
+      // $log.debug('fabric - addObjectToCanvas() - render: ' + render.toLocaleString());
 
       if (render !== false) {
-        $log.info('fabric - addObjectToCanvas() - renderAll');
+        $log.debug('fabric - addObjectToCanvas() - renderAll');
         service.canvas.renderAll();
       }
 
@@ -167,17 +167,17 @@
 
       service.canvas.remove(object);
 
-      $log.info('fabric - removeObjectFromCanvas() - render: ' + render.toLocaleString());
+      $log.debug('fabric - removeObjectFromCanvas() - render: ' + render.toLocaleString());
 
       if (render) {
-        $log.info('fabric - removeObjectFromCanvas() - renderAll');
+        $log.debug('fabric - removeObjectFromCanvas() - renderAll');
         service.canvas.renderAll();
       }
     };
 
     service.removeActiveObjectFromCanvas = function() {
 
-      $log.info('fabric - removeActiveObjectFromCanvas()');
+      $log.debug('fabric - removeActiveObjectFromCanvas()');
 
       var object = service.canvas.getActiveObject();
       if (object) {
@@ -188,7 +188,7 @@
 
     service.bringForward = function() {
 
-      $log.info('fabric - bringForward()');
+      $log.debug('fabric - bringForward()');
 
       var object = service.canvas.getActiveObject();
       if (object) {
@@ -199,7 +199,7 @@
 
     service.bringToFront = function() {
 
-      $log.info('fabric - bringToFront()');
+      $log.debug('fabric - bringToFront()');
 
       var object = service.canvas.getActiveObject();
       if (object) {
@@ -210,7 +210,7 @@
 
     service.sendBackward = function() {
 
-      $log.info('fabric - sendBackward()');
+      $log.debug('fabric - sendBackward()');
 
       var object = service.canvas.getActiveObject();
       if (object) {
@@ -221,7 +221,7 @@
 
     service.sendToBack = function() {
 
-      $log.info('fabric - sendToBack()');
+      $log.debug('fabric - sendToBack()');
 
       var object = service.canvas.getActiveObject();
       if (object) {
@@ -243,14 +243,14 @@
      */
     service.addRect = function(options, render) {
 
-      $log.info('fabric - addRect()');
+      $log.debug('fabric - addRect()');
 
       return addObjectToCanvas(fabricShape.rect(options), render);
     };
 
     service.addRectWithText = function(text, options, render) {
 
-      $log.info('fabric - addRectWithText()');
+      $log.debug('fabric - addRectWithText()');
 
       return addObjectToCanvas(fabricShape.rectWithText(text, options), render);
     };
@@ -268,7 +268,7 @@
      */
     service.addTriangle = function(options, render) {
 
-      $log.info('fabric - addTriangle()');
+      $log.debug('fabric - addTriangle()');
 
       return addObjectToCanvas(fabricShape.triangle(options), render);
     };
@@ -315,7 +315,7 @@
 
     service.moveFromArrows = function(object, portCenter, index) {
 
-      $log.info('moveFromArrows()');
+      $log.debug('moveFromArrows()');
 
       removeObjectFromCanvas(object.connectors.fromArrow[index], false);
       removeObjectFromCanvas(object.connectors.toArrow[index], false);
@@ -355,7 +355,7 @@
 
     service.moveToArrows = function(object, portCenter, index) {
 
-      $log.info('moveToArrows()');
+      $log.debug('moveToArrows()');
 
       removeObjectFromCanvas(object.connectors.fromArrow[index], false);
       removeObjectFromCanvas(object.connectors.toArrow[index], false);
@@ -411,7 +411,7 @@
      */
     service.addLine = function(points, options, render) {
 
-      $log.info('fabric - addLine()');
+      $log.debug('fabric - addLine()');
 
       return addObjectToCanvas(fabricShape.line(points, options), render);
     };
@@ -429,7 +429,7 @@
      */
     service.addText = function(text, options, render) {
 
-      $log.info('fabric - addText()');
+      $log.debug('fabric - addText()');
 
       return addObjectToCanvas(fabricText.text(text, options), render);
     };
@@ -440,17 +440,17 @@
 
     service.createGroup = function(objects, options, render) {
 
-      $log.info('fabric - createGroup()');
+      $log.debug('fabric - createGroup()');
 
       var object = new fabricWindow.Group(objects, options);
 
-      $log.info('fabric - createGroup() - render: ' + render.toLocaleString());
+      $log.debug('fabric - createGroup() - render: ' + render.toLocaleString());
 
       return addObjectToCanvas(object, render);
     };
 
     service.removeGroup = function(object, render) {
-      $log.info('fabric - removeGroup()');
+      $log.debug('fabric - removeGroup()');
       removeObjectFromCanvas(object, render);
     };
 
@@ -474,7 +474,7 @@
 
       service.canvas.on('object:moving', function(options) {
 
-        $log.info('object:moving');
+        $log.debug('object:moving');
 
         var object = options.target;
 
@@ -488,7 +488,7 @@
 
           if (object.connectors.fromLine.length) {
 
-            $log.info('object:moving - object.connectors.fromLine.length: ' + object.connectors.fromLine.length);
+            $log.debug('object:moving - object.connectors.fromLine.length: ' + object.connectors.fromLine.length);
 
             i = 0;
             object.connectors.fromLine.forEach(function(line) {
@@ -502,7 +502,7 @@
 
           if (object.connectors.toLine.length) {
 
-            $log.info('object:moving - object.connectors.toLine.length: ' + object.connectors.toLine.length);
+            $log.debug('object:moving - object.connectors.toLine.length: ' + object.connectors.toLine.length);
 
             i = 0;
             object.connectors.toLine.forEach(function(line) {
@@ -539,7 +539,7 @@
 
       service.canvas.on('mouse:move', function(options){
 
-        // $log.info('mouse:move');
+        // $log.debug('mouse:move');
 
         if (!service.isMouseDown) return;
 
@@ -553,7 +553,7 @@
 
       service.canvas.on('mouse:down', function(options){
 
-        $log.info('mouse:down');
+        $log.debug('mouse:down');
 
         //
         // Connector Mode
@@ -568,7 +568,7 @@
             var points = null;
 
             if (service.fromObject.__corner === undefined) {
-              $log.info('mouse:down - service.fromObject.__corner === undefined');
+              $log.debug('mouse:down - service.fromObject.__corner === undefined');
               return;
             }
 
@@ -577,7 +577,7 @@
             points = fabricUtils.findTargetPort(service.fromObject);
             service.connectorLineFromPort = service.fromObject.__corner;
 
-            // $log.info('mouse:down - points: ' + JSON.stringify(['e', points], null, '\t'));
+            // $log.debug('mouse:down - points: ' + JSON.stringify(['e', points], null, '\t'));
 
             var connectorOptions = service.connectorDefaults;
 
@@ -593,7 +593,7 @@
 
         if (options.target) {
           if (options.target.type === 'arrow') {
-            $log.info('mouse:down - options.target.type === arrow');
+            $log.debug('mouse:down - options.target.type === arrow');
           }
         }
 
@@ -601,7 +601,7 @@
 
       service.canvas.on('mouse:up', function(options){
 
-        $log.info('mouse:up');
+        $log.debug('mouse:up');
 
         var portCenter = null;
 
@@ -620,7 +620,7 @@
 
             if (service.selectedObject.__corner === undefined) {
               if (service.connectorLine) {
-                $log.info('mouse:up - removeObjectFromCanvas()');
+                $log.debug('mouse:up - removeObjectFromCanvas()');
                 removeObjectFromCanvas(service.connectorLine, false);
               }
 
@@ -635,7 +635,7 @@
             var toPort = service.selectedObject.__corner;
             var arrowOptions = service.arrowDefaults;
 
-            $log.info('mouse:up - toPort: ' + toPort);
+            $log.debug('mouse:up - toPort: ' + toPort);
 
             portCenter = fabricUtils.getPortCenterPoint(service.selectedObject, toPort);
             service.connectorLine.set({ x2: portCenter.x2, y2: portCenter.y2 });
@@ -692,8 +692,8 @@
             service.selectedObject.connectors.toArrow.push(toArrow);
             service.selectedObject.connectors.otherObject.push(service.fromObject);
 
-            // $log.info('service.fromObject.connectors: ' + JSON.stringify(['e', service.fromObject.connectors], null, '\t'));
-            // $log.info('service.selectedObject.connectors: ' + JSON.stringify(['e', service.selectedObject.connectors], null, '\t'));
+            // $log.debug('service.fromObject.connectors: ' + JSON.stringify(['e', service.fromObject.connectors], null, '\t'));
+            // $log.debug('service.selectedObject.connectors: ' + JSON.stringify(['e', service.selectedObject.connectors], null, '\t'));
 
             arrowOptions.fill = 'BLACK';
 
@@ -704,7 +704,7 @@
 
             if (service.connectorLine) {
 
-              $log.info('mouse:up - removeObjectFromCanvas()');
+              $log.debug('mouse:up - removeObjectFromCanvas()');
 
               removeObjectFromCanvas(service.connectorLine, false);
             }
@@ -736,8 +736,8 @@
               arrow.line.x2 = portCenter.x2;
               arrow.line.y2 = portCenter.y2;
 
-              $log.info('mouse:up - arrow.otherObject.name: ' + arrow.otherObject.name);
-              $log.info('mouse:up - fromArrow - arrow.line x2: ' + arrow.line.x2 + ' y2: ' + arrow.line.y2);
+              $log.debug('mouse:up - arrow.otherObject.name: ' + arrow.otherObject.name);
+              $log.debug('mouse:up - fromArrow - arrow.line x2: ' + arrow.line.x2 + ' y2: ' + arrow.line.y2);
 
             } else {
 
@@ -748,8 +748,8 @@
               arrow.line.x1 = portCenter.x1;
               arrow.line.y1 = portCenter.y1;
 
-              $log.info('mouse:up - arrow.object.name: ' + arrow.object.name);
-              $log.info('mouse:up - toArrow - arrow.line x1: ' + arrow.line.x1 + ' y1: ' + arrow.line.y1);
+              $log.debug('mouse:up - arrow.object.name: ' + arrow.object.name);
+              $log.debug('mouse:up - toArrow - arrow.line x1: ' + arrow.line.x1 + ' y1: ' + arrow.line.y1);
             }
 
             service.canvas.renderAll();
@@ -762,7 +762,7 @@
 
       service.canvas.on('mouse:over', function(element) {
 
-        // $log.info('mouse:over');
+        // $log.debug('mouse:over');
 
         //
         // Connector Mode
@@ -813,7 +813,7 @@
 
       service.canvas.on('mouse:out', function(element) {
 
-        // $log.info('mouse:out');
+        // $log.debug('mouse:out');
 
         //
         // Connector Mode
@@ -874,13 +874,13 @@
 
       service.canvas.on('object:selected', function(element) {
 
-        $log.info('object:selected');
+        $log.debug('object:selected');
 
         if (service.connectorMode) {
 
           if (element.target.type === 'node') {
 
-            $log.info('object:selected - element.target.type === node');
+            $log.debug('object:selected - element.target.type === node');
 
             service.selectedObject = element.target;
             service.activeObject = service.selectedObject;
@@ -897,7 +897,7 @@
       });
 
       service.canvas.on('selection:cleared', function(element) {
-        $log.info('selection:cleared');
+        $log.debug('selection:cleared');
         service.activeObject = null;
       });
 
@@ -915,6 +915,6 @@
 
 // arrow.line.set({ x2: portCenter.x2, y2: portCenter.y2 });
 
-// $log.info('mouse:up - arrow - isFromArrow: ' + arrow.isFromArrow);
-// $log.info('mouse:up - arrow: ' + JSON.stringify(['e', arrow], null, '\t'));
-// $log.info('mouse:up - arrow.line: ' + JSON.stringify(['e', arrow.line], null, '\t'));
+// $log.debug('mouse:up - arrow - isFromArrow: ' + arrow.isFromArrow);
+// $log.debug('mouse:up - arrow: ' + JSON.stringify(['e', arrow], null, '\t'));
+// $log.debug('mouse:up - arrow.line: ' + JSON.stringify(['e', arrow.line], null, '\t'));

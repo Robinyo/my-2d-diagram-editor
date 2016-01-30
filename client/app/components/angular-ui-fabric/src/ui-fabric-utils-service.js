@@ -17,10 +17,10 @@
 
     var service = this;
 
-    $log.info('fabricUtils');
+    $log.debug('fabricUtils');
 
     service.init = function () {
-      $log.info('fabricUtils - init()');
+      $log.debug('fabricUtils - init()');
     };
 
     // See: _findTargetCorner()
@@ -30,7 +30,7 @@
       var points = new Array(4);
       var port = object.__corner;
 
-      $log.info('findTargetPort - port: ' + object.__corner);
+      $log.debug('findTargetPort - port: ' + object.__corner);
 
       switch (port) {
 
@@ -70,7 +70,7 @@
 
     service.getNextTargetPort = function(port) {
 
-      // $log.info('getNextTargetPort - port: ' + port);
+      // $log.debug('getNextTargetPort - port: ' + port);
 
       var nextPort = 'mt';
 
@@ -92,7 +92,7 @@
           break;
       }
 
-      $log.info('getNextTargetPort - port: ' + port + ' nextPort: ' + nextPort);
+      $log.debug('getNextTargetPort - port: ' + port + ' nextPort: ' + nextPort);
 
       return nextPort;
 
@@ -143,4 +143,4 @@
 
 })();
 
-// $log.info('x1: ' + x1 + ' y1: ' + y1 + ' x2: ' + x2 + ' y2: ' + y2);
+// $log.debug('x1: ' + x1 + ' y1: ' + y1 + ' x2: ' + x2 + ' y2: ' + y2);

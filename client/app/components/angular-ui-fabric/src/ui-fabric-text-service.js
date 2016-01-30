@@ -19,11 +19,11 @@
 
     service.textDefaults = null;
 
-    $log.info('fabricText');
+    $log.debug('fabricText');
 
     service.init = function () {
 
-      $log.info('fabricText - init()');
+      $log.debug('fabricText - init()');
 
       service.textDefaults = fabricConfig.getTextDefaults();
     };
@@ -40,7 +40,7 @@
      */
     service.text = function(text, options) {
 
-      $log.info('fabricText - text()');
+      $log.debug('fabricText - text()');
 
       text = text || 'New Text';
       options = options || service.textDefaults;
@@ -56,5 +56,5 @@
 
 })();
 
-// $log.info('service.canvas: ' + JSON.stringify(['e', service.canvas], null, '\t'));
+// $log.debug('service.canvas: ' + JSON.stringify(['e', service.canvas], null, '\t'));
 

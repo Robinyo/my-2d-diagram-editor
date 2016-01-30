@@ -35,7 +35,7 @@
 
   function MainController($log, $translate, $scope, shapeConfig, containerConfig, fabric, fabricConfig) {
 
-    $log.info('MainController');
+    $log.debug('MainController');
 
     /*
      * Per common convention, I like to store a reference to the top-level this object (this has a habit
@@ -75,7 +75,7 @@
 
     main.init = function () {
 
-      $log.info('MainController - init()');
+      $log.debug('MainController - init()');
 
       main.canvas = fabric.getCanvas();
 
@@ -90,7 +90,7 @@
 
     main.newShape = function(name, fill) {
 
-      $log.info('MainController.newShape()');
+      $log.debug('MainController.newShape()');
 
       fill = fill || 'GRAY';
       shapeRectDefaults.fill = fill;
@@ -122,7 +122,7 @@
 
     main.newContainer = function(name, fill) {
 
-      $log.info('MainController.newContainer()');
+      $log.debug('MainController.newContainer()');
 
       fill = fill || 'GRAY';
       containerRectDefaults.fill = fill;
@@ -138,17 +138,17 @@
     };
 
     main.fileNew = function() {
-      $log.info('MainController.fileNew()');
+      $log.debug('MainController.fileNew()');
     };
 
     main.editDelete = function() {
-      $log.info('MainController.editDelete()');
+      $log.debug('MainController.editDelete()');
       fabric.removeActiveObjectFromCanvas();
     };
 
     main.toggleGrid = function() {
 
-      $log.info('MainController.toggleGrid()');
+      $log.debug('MainController.toggleGrid()');
 
       main.grid.show = !main.grid.show;
 
@@ -161,7 +161,7 @@
 
     main.toggleSnapToGrid = function() {
 
-      $log.info('MainController.toggleSnapToGrid()');
+      $log.debug('MainController.toggleSnapToGrid()');
 
       main.grid.snapTo = !main.grid.snapTo;
 
@@ -173,12 +173,12 @@
     };
 
     main.setPointerMode = function() {
-      $log.info('MainController.setPointerMode()');
+      $log.debug('MainController.setPointerMode()');
       fabric.setConnectorMode(false);
     };
 
     main.setConnectorMode = function() {
-      $log.info('MainController.setConnectorMode()');
+      $log.debug('MainController.setConnectorMode()');
       fabric.setConnectorMode(true);
       fabric.snapToGrid(false);
     };
@@ -206,7 +206,7 @@
     //
 
     main.switchLanguage = function(key) {
-      $log.info('MainController.switchLanguage() - ' + key.toLocaleString());
+      $log.debug('MainController.switchLanguage() - ' + key.toLocaleString());
       $translate.use(key);
     };
 
