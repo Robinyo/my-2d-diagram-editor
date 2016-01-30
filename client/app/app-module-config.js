@@ -40,6 +40,12 @@
       $logProvider.debugEnabled(false);
 
       // error is always enabled
+
+    } else {
+
+      console.log('my-2d-diagram-editor - environment = ' + environment);
+      console.log('my-2d-diagram-editor - log, info, warn, debug and error messages are enabled');
+
     }
 
     configBootstrapUI($tooltipProvider);
