@@ -47,7 +47,7 @@
     service.isMouseDown = false;
     service.fromObject = null;
 
-    $log.info('fabric');
+    $log.info('ui-fabric');
 
     service.init = function () {
 
@@ -525,9 +525,9 @@
         if (service.canvasDefaults.grid.snapTo) {
           object.set({
             left: Math.round(options.target.left /
-              service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size,
+            service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size,
             top: Math.round(options.target.top /
-              service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size
+            service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size
           });
         }
 

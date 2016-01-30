@@ -3,7 +3,7 @@
   'use strict';
 
   angular.module('my-2d-diagram-editor')
-    .config(configApp);
+    .config(configModule);
 
   /*
    * Use $inject to manually identify your dependencies for Angular components.
@@ -11,16 +11,43 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  configApp.$inject = ['$tooltipProvider', '$translateProvider', '$stateProvider', '$urlRouterProvider'];
+  configModule.$inject = ['$provide', '$logProvider', '$tooltipProvider', '$translateProvider', '$stateProvider', '$urlRouterProvider'];
 
-  function configApp($tooltipProvider, $translateProvider, $stateProvider, $urlRouterProvider) {
+  function configModule($provide, $logProvider, $tooltipProvider, $translateProvider, $stateProvider, $urlRouterProvider) {
 
-    configUI($tooltipProvider);
+    var environment = 'development';
+    // var environment = 'production';
+
+    if (environment === 'production') {
+
+      // Disable log, info, warn and debug messages
+
+      $provide.decorator('$log', ['$delegate', function ($delegate) {
+        $delegate.log = angular.noop;
+        return $delegate;
+      }]);
+
+      $provide.decorator('$log', ['$delegate', function ($delegate) {
+        $delegate.info = angular.noop;
+        return $delegate;
+      }]);
+
+      $provide.decorator('$log', ['$delegate', function ($delegate) {
+        $delegate.warn = angular.noop;
+        return $delegate;
+      }]);
+
+      $logProvider.debugEnabled(false);
+
+      // error is always enabled
+    }
+
+    configBootstrapUI($tooltipProvider);
     configTranslations($translateProvider);
     configRoutes($stateProvider, $urlRouterProvider);
   }
 
-  function configUI($tooltipProvider) {
+  function configBootstrapUI($tooltipProvider) {
     $tooltipProvider.options({ placement: 'bottom' });
   }
 
