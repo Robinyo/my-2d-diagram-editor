@@ -21,10 +21,21 @@
 
     var service = this;
 
-    const SQUARE_ID = 0;
-    const RECTANGLE_ID = 1;
+    const NODE_ID = 0;
+    const SQUARE_ID = 1;
+    const RECTANGLE_ID = 2;
 
     var shapes = [
+
+      {
+        "id"              : NODE_ID,
+        "name"            : "NODE",
+        "value"           : "Node",
+        "src"             : "content/images/icons/32x32/light-gray.png",
+        "backgroundColor" : "GRAY"
+      }
+
+      /* ,
       {
         "id"              : SQUARE_ID,
         "name"            : "SQUARE",
@@ -32,6 +43,7 @@
         "src"             : "content/images/icons/32x32/light-gray.png",
         "backgroundColor" : "GRAY"
       }
+      */
 
       /* ,
        {

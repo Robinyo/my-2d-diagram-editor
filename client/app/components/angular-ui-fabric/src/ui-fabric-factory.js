@@ -248,6 +248,14 @@
       return addObjectToCanvas(fabricShape.rect(options), render);
     };
 
+    /**
+     * @name addRectWithText
+     * @desc Creates a new Rect and adds it to the canvas
+     * @param {String} [text] A string of text
+     * @param {Object} [options] A configuration object, defaults to service.rectDefaults
+     * @param {Boolean} [render] When true, service.canvas.renderAll() is invoked
+     * @return {Object} Returns the new Rect object
+     */
     service.addRectWithText = function(text, options, render) {
 
       $log.debug('fabric - addRectWithText()');
@@ -423,6 +431,7 @@
     /**
      * @name addText
      * @desc Creates a new Line and adds it to the canvas
+     * @param {String} [text] A string of text
      * @param {Object} [options] A configuration object, defaults to service.textDefaults
      * @param {Boolean} [render] When true, service.canvas.renderAll() is invoked
      * @return {Object} Returns the new Text object

@@ -37,6 +37,7 @@
 
     const FONT_SIZE = 12;
     const FONT_WEIGHT = 'normal';
+    const FONT_FAMILY = 'Tahoma';
 
     const ARROW_HEAD_LENGTH = 15;
 
@@ -94,7 +95,7 @@
 
     var textDefaults = angular.extend({
       fill: 'BLACK',
-      fontFamily: 'Tahoma',
+      fontFamily: FONT_FAMILY,
       fontSize: FONT_SIZE,
       fontWeight: FONT_WEIGHT,
       left: GRID_SIZE,
@@ -145,6 +146,31 @@
     arrowDefaults.hasRotatingPoint = false;
     arrowDefaults.selectable = false;
 
+    //
+    // RectWithText (a Node or a Container)
+    //
+
+    const RECT_WITH_TEXT_FONT_SIZE = 18;
+    const RECT_WITH_TEXT_FONT_WEIGHT = 'normal';
+    const RECT_WITH_TEXT_WIDTH = 100;
+    const RECT_WITH_TEXT_HEIGHT = 100;
+
+    var rectWithTextDefaults = angular.extend({
+      fillStyle: 'BLACK',
+      fontFamily: FONT_FAMILY,
+      fontSize: RECT_WITH_TEXT_FONT_SIZE,
+      fontWeight: RECT_WITH_TEXT_FONT_WEIGHT,
+      originX: 'left',
+      originY: 'top',
+      scaleX: 1,
+      scaleY: 1,
+      textAlign: 'center',
+      textBaseline: 'middle'  // top, bottom, middle, alphabetic, hanging
+    }, rectDefaults);
+
+    rectWithTextDefaults.width = RECT_WITH_TEXT_WIDTH;
+    rectWithTextDefaults.height = RECT_WITH_TEXT_HEIGHT;
+
     service.getCanvasDefaults = function() {
       return canvasDefaults;
     };
@@ -179,6 +205,10 @@
 
     service.getArrowDefaults = function() {
       return arrowDefaults;
+    };
+
+    service.getRectWithTextDefaults = function() {
+      return rectWithTextDefaults;
     };
 
     return service;

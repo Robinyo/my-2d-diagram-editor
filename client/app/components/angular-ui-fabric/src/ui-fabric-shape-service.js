@@ -17,11 +17,6 @@
 
     var service = this;
 
-    service.gridLineDefaults = null;
-    service.controlDefaults = null;
-    service.rectDefaults = null;
-    service.triangleDefaults = null;
-
     $log.debug('fabricShape');
 
     service.init = function () {
@@ -29,9 +24,11 @@
       $log.debug('fabricShape - init()');
 
       service.gridLineDefaults = fabricConfig.getGridLineDefaults();
-      service.controlDefaults = fabricConfig.getLineDefaults();
+      service.lineDefaults = fabricConfig.getLineDefaults();
       service.rectDefaults = fabricConfig.getRectDefaults();
+      service.rectWithTextDefaults = fabricConfig.getRectWithTextDefaults();
       service.triangleDefaults = fabricConfig.getTriangleDefaults();
+
     };
 
     //
@@ -67,7 +64,7 @@
 
       $log.debug('fabricShape - line()');
 
-      options = options || service.controlDefaults;
+      options = options || service.lineDefaults;
 
       // $log.debug('points: ' + JSON.stringify(['e', points], null, '\t'));
 
@@ -95,7 +92,7 @@
     /**
      * @name triangle
      * @desc Creates a new Triangle object
-     * @param {Object} [options] A configuration object, defaults to rectDefaults
+     * @param {Object} [options] A configuration object, defaults to triangleDefaults
      * @return {Object} Returns the new Triangle object
      */
     service.triangle = function(options) {
@@ -110,47 +107,36 @@
     };
 
     /**
-     * @name triangle
-     * @desc Creates a new Triangle object
-     * @param {Object} [options] A configuration object, defaults to rectDefaults
+     * @name rectWithText
+     * @desc Creates a new RectWithText object
+     * @param {String} [text] A configuration object, defaults to rectWithTextDefaults
      * @return {Object} Returns the new Triangle object
      */
-    service.triangle = function(options) {
-
-      $log.debug('fabricShape - triangle()');
-
-      options = options || service.triangleDefaults;
-
-      // $log.debug('options: ' + JSON.stringify(['e', options], null, '\t'));
-
-      return new fabricWindow.Triangle(options);
-    };
-
     service.rectWithText = function(text, options) {
 
       $log.debug('fabricShape - rectWithText()');
 
       text = text || 'New Text';
-      options = options || service.rectDefaults;
+      options = options || service.rectWithTextDefaults;
 
       return new RectWithText(text, options);
     };
 
-    const FONT_SIZE = 12;
-    const FONT_WEIGHT = 'normal';
-    const FONT_FAMILY = 'Walter Turncoat';
-
     var RectWithText = fabricWindow.util.createClass(fabricWindow.Rect, {
 
       type: 'rectWithText',
+
       text: '',
-      fontSize:   FONT_SIZE,
-      fontWeight: FONT_WEIGHT,
-      fontFamily: FONT_FAMILY,
-      textDecoration: '',
-      textAlign: 'left',
-      fontStyle: '',
-      lineHeight: 1.16,
+
+      fillStyle: '',
+      fontFamily: '',
+      fontSize: 20,
+      fontWeight: '',
+      // lineHeight: 1.16,
+      textAlign: '',
+      textBaseline: '',
+      // textDecoration: '',
+      // fontStyle: '',
 
       initialize: function(text, options) {
 
@@ -176,9 +162,19 @@
 
         this.callSuper('_render', ctx);
 
-        ctx.font = '20px Walter Turncoat';
-        ctx.fillStyle = '#333';
-        ctx.fillText(this.text, -this.width/2, -this.height/2 + 20);
+        var x = 0;
+        var y = 0;
+
+        if (this.textBaseline === 'top') {
+          y = -(this.height / 2 ) + this.fontSize;
+        }
+
+        ctx.fillStyle = this.fillStyle;
+        ctx.font = this.fontWeight + ' ' + this.fontSize + 'px ' + this.fontFamily;  // 'bold 20px Tahoma';
+        ctx.textAlign = this.textAlign;
+        ctx.textBaseline = this.textBaseline;
+
+        ctx.fillText(this.text, x, y);
       },
 
       toString: function() {
@@ -196,6 +192,3 @@
 
 })();
 
-// $log.debug('service.canvas: ' + JSON.stringify(['e', service.canvas], null, '\t'));
-
-// service.rectDefaults = angular.copy(fabricService.getRectDefaults());

@@ -54,24 +54,8 @@
 
     main.nodeId = 1;
 
-    const CONTAINER_TEXT_FONT_WEIGHT = 'bold';
-    const SHAPE_TEXT_FONT_WEIGHT = 'bold';
-    const SHAPE_RECT_WIDTH = 100;
-    const SHAPE_RECT_HEIGHT = 100;
-
-    var shapeRectDefaults = angular.copy(fabricConfig.getRectDefaults());
-    shapeRectDefaults.width = SHAPE_RECT_WIDTH;
-    shapeRectDefaults.height = SHAPE_RECT_HEIGHT;
-
-    var shapeTextDefaults = angular.copy(fabricConfig.getTextDefaults());
-    shapeTextDefaults.fontSize = shapeTextDefaults.fontSize + 4;
-    shapeTextDefaults.fontWeight = SHAPE_TEXT_FONT_WEIGHT;
-
-    var containerRectDefaults = angular.copy(fabricConfig.getRectDefaults());
-
-    var containerTextDefaults = angular.copy(fabricConfig.getTextDefaults());
-    containerTextDefaults.fontSize = containerTextDefaults.fontSize + 8;
-    containerTextDefaults.fontWeight = CONTAINER_TEXT_FONT_WEIGHT;
+    var nodeDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
+    var containerDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
 
     main.init = function () {
 
@@ -92,48 +76,54 @@
 
       $log.debug('MainController.newShape()');
 
-      fill = fill || 'GRAY';
-      shapeRectDefaults.fill = fill;
+      main.newNode(name, fill);
+    };
 
-      name = 'NODE';
+    main.newNode = function(name, fill) {
+
+      $log.debug('MainController.newNode()');
+
+      name = name || 'NODE';
+      fill = fill || 'GRAY';
+      nodeDefaults.fill = fill;
 
       $translate(name)
         .then(function (translatedValue) {
 
-          /*
+          var id = main.nodeId++;
+          var text = translatedValue + ' ' + id;
 
-          var object = fabric.addRect(shapeRectDefaults);
+          var object = fabric.addRectWithText(text, nodeDefaults);
           object.set('type', 'node');
-          object.id = main.nodeId++;
-          object.name = translatedValue + ' ' + object.id;
-          object.connectors = { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] };
-          // fabric.addText(object.name, shapeTextDefaults);
-
-          */
-
-          var object = fabric.addRectWithText('Node 1', shapeRectDefaults);
-          object.set('type', 'node');
-          object.id = main.nodeId++;
-          object.name = translatedValue + ' ' + object.id;
+          object.id = id;
+          // object.name = text;
           object.connectors = { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] };
 
         });
     };
 
+    const RECT_WIDTH = 300;
+    const RECT_HEIGHT = 300;
+    const FONT_SIZE = 22;
+    const FONT_WEIGHT = 'bold';
+
     main.newContainer = function(name, fill) {
 
       $log.debug('MainController.newContainer()');
 
-      fill = fill || 'GRAY';
-      containerRectDefaults.fill = fill;
-
       name = name || 'CONTROLLED_ZONE';
+      fill = fill || 'GRAY';
+      containerDefaults.fill = fill;
+      containerDefaults.fontSize = FONT_SIZE;
+      containerDefaults.fontWeight = FONT_WEIGHT;
+      containerDefaults.width = RECT_WIDTH;
+      containerDefaults.height = RECT_HEIGHT;
+      containerDefaults.textBaseline = 'top';
 
       $translate(name)
         .then(function (translatedValue) {
-          var object = fabric.addRect(containerRectDefaults);
-          // object.set('type', 'container');
-          fabric.addText(translatedValue, containerTextDefaults);
+          var object = fabric.addRectWithText(translatedValue, containerDefaults);
+          object.set('type', 'container');
         });
     };
 
