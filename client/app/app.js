@@ -9,20 +9,18 @@
   'use strict';
 
   /*
-   * Declare a new module called 'my-2d-diagram-editor', and list its dependencies.
+   * Declare a new module called 'app', and list its dependencies.
    * Modules serve as containers to help you organise code within your AngularJS application.
    * Modules can contain sub-modules, making it easy to compose functionality as needed.
    */
 
-  angular.module('my-2d-diagram-editor', [
-    'ngAnimate',
-    'ui.bootstrap',
-    'ui.router',
-    'pascalprecht.translate',
+  angular.module('app', [
 
-    'ui.fabric',
+    'app.main'
 
-    'my-2d-diagram-editor.main'
+    // app.components
+    // app.feature1
+    // app.feature2
   ]);
 
 })();

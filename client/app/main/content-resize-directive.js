@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('my-2d-diagram-editor.main')
+  angular.module('app.main')
     .directive('resize', resize);
 
   /*

@@ -6,7 +6,7 @@
    * Use camelCase when naming services and factories.
    */
 
-  angular.module('my-2d-diagram-editor.main')
+  angular.module('app.main')
     .service('containerConfig', containerConfig);
 
   /*

@@ -2,7 +2,7 @@
 
   'use strict';
 
-  angular.module('my-2d-diagram-editor')
+  angular.module('app')
     .config(configModule);
 
   /*
@@ -15,12 +15,14 @@
 
   function configModule($provide, $logProvider, $tooltipProvider, $translateProvider, $stateProvider, $urlRouterProvider) {
 
-    configExceptionHandler($provide);
+    // configExceptionHandler($provide);
     configLogging($provide, $logProvider);
     configBootstrapUI($tooltipProvider);
     configTranslations($translateProvider);
     configRoutes($stateProvider, $urlRouterProvider);
   }
+
+  /*
 
   function configExceptionHandler($provide) {
     $provide.decorator('$exceptionHandler', extendExceptionHandler);
@@ -55,6 +57,8 @@
     };
 
   }
+
+  */
 
   function configLogging($provide, $logProvider) {
 

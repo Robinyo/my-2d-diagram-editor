@@ -22,7 +22,7 @@
    * Use UpperCamelCase when naming controllers, as they are constructors.
    */
 
-  angular.module('my-2d-diagram-editor.main')
+  angular.module('app.main')
     .controller('MainController', MainController);
 
   /*
@@ -107,7 +107,7 @@
 
     const RECT_WIDTH = 300;
     const RECT_HEIGHT = 300;
-    const FONT_SIZE = 22;
+    const FONT_SIZE = 20;
     const FONT_WEIGHT = 'bold';
 
     main.newContainer = function(name, fill) {
@@ -129,7 +129,7 @@
         .then(function (translatedValue) {
           var object = fabric.addRectWithText(translatedValue, containerDefaults);
           object.set('type', 'container');
-          
+
           fabric.setActiveObject(object);
         });
     };

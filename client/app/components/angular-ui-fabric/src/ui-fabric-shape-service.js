@@ -175,6 +175,8 @@
         ctx.textBaseline = this.textBaseline;
 
         ctx.fillText(this.text, x, y);
+
+        $log.debug('fabricShape - ctx.font: ' + ctx.font.toLocaleString());
       },
 
       toString: function() {

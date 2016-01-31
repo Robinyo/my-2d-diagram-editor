@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<!-- <html ng-app="my-2d-diagram-editor" ng-strict-di> -->
 
 <head>
   <meta charset="utf-8" />
@@ -8,27 +7,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1,
                 user-scalable=no" />
   <title>my-2d-diagram-editor</title>
+  <style>
+    /* This helps the ng-show/ng-hide animations start at the right place. */
+    /* Since Angular has this but needs to load, this gives us the class early. */
+    .ng-hide {
+      display: none!important;
+    }
+  </style>
   <link rel="stylesheet" type="text/css" href="bower_components/bootstrap-css/css/bootstrap.css" />
   <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Walter+Turncoat" />
   <link rel="stylesheet" type="text/css" href="content/css/styles.css" />
 </head>
 
-<body ng-app="my-2d-diagram-editor" ng-strict-di>
+<body ng-app="app" ng-strict-di>
 
   <!-- $stateProvider maps Controller to View -->
   <div ui-view></div>
 
+  <!-- inject-vendor:js -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-
   <script src="bower_components/angular-translate/angular-translate.js"></script>
   <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
-
   <script src="bower_components/fabric.js/dist/fabric.js"></script>
+  <script src="bower_components/stacktrace-js/dist/stacktrace.js"></script>
+  <!-- endinject -->
+
+  <!-- inject:js -->
+  <!-- Bootstrapping -->
+  <script src="app/app.js"></script>
+  <script src="app/app-module-config.js"></script>
+
+  <!-- Main Module -->
+  <script src="app/main/main-module.js"></script>
+  <script src="app/main/main-controller.js"></script>
+  <script src="app/main/shape-config-service.js"></script>
+  <script src="app/main/container-config-service.js"></script>
+  <script src="app/main/content-resize-directive.js"></script>
+
+  <!-- Reusable Blocks/Modules -->
+  <script src="app/blocks/exception/exception-module.js"></script>
+  <script src="app/blocks/exception/exception-module-config.js"></script>
+  <script src="app/blocks/exception/stacktrace-factory.js"></script>
+
+  <!-- Components -->
   <script src="app/components/angular-ui-fabric/src/ui-fabric-module.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-factory.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-canvas-service.js"></script>
@@ -38,18 +64,7 @@
   <script src="app/components/angular-ui-fabric/src/ui-fabric-text-service.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-utils-service.js"></script>
   <script src="app/components/angular-ui-fabric/src/ui-fabric-window-factory.js"></script>
-
-  <script src="bower_components/stacktrace-js/dist/stacktrace.js"></script>
-
-  <script src="app/app.js"></script>
-  <script src="app/app-module-config.js"></script>
-  <script src="app/stacktrace-factory.js"></script>
-
-  <script src="app/main/main-module.js"></script>
-  <script src="app/main/main-controller.js"></script>
-  <script src="app/main/shape-config-service.js"></script>
-  <script src="app/main/container-config-service.js"></script>
-  <script src="app/main/content-resize-directive.js"></script>
+  <!-- endinject -->
 
 </body>
 
