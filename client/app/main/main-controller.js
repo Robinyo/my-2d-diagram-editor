@@ -83,6 +83,8 @@
 
       $log.debug('MainController.newNode()');
 
+      fabric.setConnectorMode(false);
+
       name = name || 'NODE';
       fill = fill || 'GRAY';
       nodeDefaults.fill = fill;
@@ -99,6 +101,7 @@
           // object.name = text;
           object.connectors = { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] };
 
+          fabric.setActiveObject(object);
         });
     };
 
@@ -110,6 +113,8 @@
     main.newContainer = function(name, fill) {
 
       $log.debug('MainController.newContainer()');
+
+      fabric.setConnectorMode(false);
 
       name = name || 'CONTROLLED_ZONE';
       fill = fill || 'GRAY';
@@ -124,6 +129,8 @@
         .then(function (translatedValue) {
           var object = fabric.addRectWithText(translatedValue, containerDefaults);
           object.set('type', 'container');
+          
+          fabric.setActiveObject(object);
         });
     };
 

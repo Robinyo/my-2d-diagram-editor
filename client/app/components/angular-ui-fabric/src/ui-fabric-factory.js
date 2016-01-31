@@ -175,6 +175,16 @@
       }
     };
 
+    service.setActiveObject = function(object) {
+
+      $log.debug('fabric - setActiveObject()');
+
+      if (object) {
+        service.canvas.setActiveObject(object);
+        // service.canvas.renderAll();
+      }
+    };
+
     service.removeActiveObjectFromCanvas = function() {
 
       $log.debug('fabric - removeActiveObjectFromCanvas()');
