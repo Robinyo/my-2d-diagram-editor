@@ -11,11 +11,11 @@ How to highlight ports:
 
 How to draw connections:
 
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports-2.png)
+![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-draw-connector-with-arrow.png)
 
 And, how to update connections:
 
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports-3.png)
+![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports-4.png)
 
 In English:
 
