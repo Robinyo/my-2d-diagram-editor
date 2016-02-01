@@ -30,6 +30,9 @@
 
     const GRID_SIZE = 50;
 
+    const CORNER_SIZE = 10;
+    const ROTATING_POINT_OFFSET = 40;
+
     const STROKE_WIDTH = 1;
 
     const RECT_WIDTH = 300;
@@ -59,11 +62,11 @@
       borderColor: 'rgba(102,153,255,0.75)',
       centerTransform: true,
       cornerColor: 'rgba(102,153,255,0.5)',
-      cornerSize: 10,
+      cornerSize: CORNER_SIZE,
       hasBorders: true,
       hasRotatingPoint: true,
       padding: 0,
-      rotatingPointOffset: 40,
+      rotatingPointOffset: ROTATING_POINT_OFFSET,
       selectable: true,
       transparentCorners: true
     };

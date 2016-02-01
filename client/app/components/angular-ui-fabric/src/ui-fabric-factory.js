@@ -44,6 +44,7 @@
     service.selectedObject = null;
     service.connectorLine = null;
     service.connectorLineFromPort = null;
+    service.connectorLineFromArrow = null;
     service.isMouseDown = false;
     service.fromObject = null;
 
@@ -556,6 +557,8 @@
       // Mouse
       //
 
+      const CORNER_SIZE = 10;
+
       service.canvas.on('mouse:move', function(options){
 
         // $log.debug('mouse:move');
@@ -563,9 +566,18 @@
         if (!service.isMouseDown) return;
 
         if (service.connectorMode) {
+
           var pointer = service.canvas.getPointer(options.e);
 
-          service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
+          service.connectorLine.set({ x2: (pointer.x - CORNER_SIZE), y2: (pointer.y) });
+
+          if (service.connectorLineFromArrow) {
+            removeObjectFromCanvas(service.connectorLineFromArrow, false);
+          }
+
+          service.connectorLineFromArrow = service.createArrow([service.connectorLine.left,
+            service.connectorLine.top, (pointer.x - CORNER_SIZE), (pointer.y)], service.arrowDefaults);
+
           service.canvas.renderAll();
         }
       });
@@ -637,10 +649,17 @@
           //
           if (service.selectedObject) {
 
+            //
+            // If we're not over a connection port, return.
+            //
             if (service.selectedObject.__corner === undefined) {
               if (service.connectorLine) {
-                $log.debug('mouse:up - removeObjectFromCanvas()');
+                $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLine)');
                 removeObjectFromCanvas(service.connectorLine, false);
+                if (service.connectorLineFromArrow) {
+                  $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLineFromArrow)');
+                  removeObjectFromCanvas(service.connectorLineFromArrow, false);
+                }
               }
 
               // service.canvas.renderAll();
@@ -716,16 +735,24 @@
 
             arrowOptions.fill = 'BLACK';
 
+            if (service.connectorLineFromArrow) {
+              $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLineFromArrow)');
+              removeObjectFromCanvas(service.connectorLineFromArrow, false);
+            }
+
+            service.connectorLineFromArrow = null;
             service.connectorLineFromPort = null;
             service.connectorLine = null;
 
           } else {
 
             if (service.connectorLine) {
-
-              $log.debug('mouse:up - removeObjectFromCanvas()');
-
+              $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLine)');
               removeObjectFromCanvas(service.connectorLine, false);
+              if (service.connectorLineFromArrow) {
+                $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLineFromArrow)');
+                removeObjectFromCanvas(service.connectorLineFromArrow, false);
+              }
             }
           }
 
