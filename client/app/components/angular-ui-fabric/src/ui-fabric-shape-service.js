@@ -110,7 +110,7 @@
      * @name rectWithText
      * @desc Creates a new RectWithText object
      * @param {String} [text] A configuration object, defaults to rectWithTextDefaults
-     * @return {Object} Returns the new Triangle object
+     * @return {Object} Returns the new RectWithText object
      */
     service.rectWithText = function(text, options) {
 
@@ -166,7 +166,7 @@
         var y = 0;
 
         if (this.textBaseline === 'top') {
-          y = -(this.height / 2 ) + this.fontSize;
+          y = -(this.height / 2) + this.fontSize;
         }
 
         ctx.fillStyle = this.fillStyle;
@@ -182,6 +182,54 @@
       toString: function() {
         return '#<ui-fabric.rectWithText (' + this.complexity() +
           '): { "text": "' + this.text + '" }>';
+      }
+
+    });
+
+    /**
+     * @name connector
+     * @desc Creates a new Connector object
+     * @param {Array} [points] Array of points, e.g., [0, 0, 0, 0]
+     * @param {Object} [options] A configuration object, defaults to lineDefaults
+     * @return {Object} Returns the new Connector object
+     */
+    service.connector = function(points, options) {
+
+      $log.debug('fabricShape - connector()');
+
+      options = options || service.lineDefaults;
+
+      return new Connector(points, options);
+    };
+
+    var Connector = fabricWindow.util.createClass(fabricWindow.Line, {
+
+      type: 'connector',
+
+      initialize: function(points, options) {
+        this.callSuper('initialize', points, options);
+
+      },
+
+      fromObject: function(object) {
+        return new Connector(object);
+
+      },
+
+      toObject: function() {
+        return fabric.util.object.extend(this.callSuper('toObject'), {
+
+        });
+      },
+
+      _render: function(ctx) {
+        this.callSuper('_render', ctx);
+
+      },
+
+      toString: function() {
+        return '#<ui-fabric.connector (' + this.complexity() + '" }>';
+
       }
 
     });

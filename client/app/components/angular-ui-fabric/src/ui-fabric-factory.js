@@ -436,6 +436,25 @@
     };
 
     //
+    // Connector
+    //
+
+    /**
+     * @name addConnector
+     * @desc Creates a new Connector and adds it to the canvas
+     * @param {Array} [points] Array of points, e.g., [0, 0, 0, 0]
+     * @param {Object} [options] A configuration object, defaults to service.lineDefaults
+     * @param {Boolean} [render] When true, service.canvas.renderAll() is invoked
+     * @return {Object} Returns the new Connector object
+     */
+    service.addConnector = function(points, options, render) {
+
+      $log.debug('fabric - addConnector()');
+
+      return addObjectToCanvas(fabricShape.connector(points, options), render);
+    };
+
+    //
     // Text
     //
 
@@ -557,7 +576,12 @@
       // Mouse
       //
 
-      const CORNER_SIZE = 10;
+      const CORNER_SIZE = 10;  // as per ui-fabric-config-service.js
+
+      //
+      // If we draw an arrow on the end of the line as we are dragging it then we need to offset it from the
+      // actual position of the mouse pointer otherwise fabric.js thinks it is over ('mouse:over') the arrow.
+      // TODO: Offset the x coordinate if the line is horizontal, the y coordinate if the line is vertical
 
       service.canvas.on('mouse:move', function(options){
 
@@ -612,7 +636,8 @@
 
             var connectorOptions = service.connectorDefaults;
 
-            service.connectorLine = service.addLine(points, connectorOptions);
+            // service.connectorLine = service.addLine(points, connectorOptions);
+            service.connectorLine = service.addConnector(points, connectorOptions);
           }
 
           return;
