@@ -75,6 +75,11 @@ body {
   padding: 5px;
 }
 
+.form-content {
+  font-family: 'Tahoma', serif;
+  font-size: 14px;
+}
+
 .sign-in {
   padding-right: 35px;
 }
