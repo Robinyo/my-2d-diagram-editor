@@ -1,11 +1,31 @@
 <!--
   Note: Where possible you should prefer the translateDirective (e.g., translate="{{ 'BRAND_NAME' }}") to
   the translateFilter (e.g., {{ 'BRAND_NAME' | translate }}).
-
-  <div id="sidebar-right-container" class="sidebar-nav-fixed pull-right affix">
 -->
 
 <div>
 
+  <uib-tabset justified="true">
+
+    <uib-tab heading="Text">
+      <div class="tab-content">
+        <form name="outerForm" class="tab-form-demo">
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text"/>
+          </div>
+        </form>
+      </div>
+    </uib-tab>
+
+    <uib-tab heading="Style">Stuff goes here ...</uib-tab>
+    <uib-tab heading="Arrange">Stuff goes here ...</uib-tab>
+
+  </uib-tabset>
+
 </div>
 
+<!--
+ active="true" disable="false"
+ required ng-model="model.name"
+-->

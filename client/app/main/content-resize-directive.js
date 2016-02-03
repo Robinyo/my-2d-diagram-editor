@@ -36,9 +36,8 @@
           var sidebarWidth = document.getElementById('sidebar-left-container').clientWidth;
 
           return {
-            'width': (newValue.width - sidebarWidth) + 'px',
-            // 'width': (newValue.width - sidebarWidth - 10) + 'px',
-            // 'width': (newValue.width - (sidebarWidth * 2) - 10) + 'px',
+            // 'width': (newValue.width - sidebarWidth) + 'px',
+            'width': (newValue.width - (sidebarWidth * 2)) + 'px',
             'height': (newValue.height - HEADER_HEIGHT) + 'px'
           };
         };
@@ -63,3 +62,6 @@
 // $log.debug('sidebarWidth: ' + (sidebarWidth) + 'px');
 // $log.debug('width: ' + (newValue.width) + 'px');
 // $log.debug('height: ' + (newValue.height - HEADER_HEIGHT) + 'px');
+
+// 'width': (newValue.width - sidebarWidth - 10) + 'px',
+// 'width': (newValue.width - (sidebarWidth * 2) - 10) + 'px',
