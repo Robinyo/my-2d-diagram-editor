@@ -11,17 +11,20 @@
 
   <div ng-hide="main.formatShape">
 
-    <uib-tabset justified="true">
+    <uib-accordion close-others="false">
+      <uib-accordion-group class="accordion-panel" ng-init="formatDiagram.open = true" is-open="formatDiagram.open">
 
-      <uib-tab heading="Format Diagram">
-        <div class="tab-content">
+        <uib-accordion-heading>
+          Format Diagram
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': formatDiagram.open,
+          'glyphicon-chevron-right': !formatDiagram.open}">
+          </i>
+        </uib-accordion-heading>
 
-        </div>
-      </uib-tab>
+      </uib-accordion-group>
+    </uib-accordion>
 
-    </uib-tabset>
-
-  </div>
+  </div> <!-- end <div ng-hide="main.formatShape"> -->
 
   <!--
   Format Shape
@@ -29,37 +32,50 @@
 
   <div ng-show="main.formatShape">
 
-    <uib-tabset justified="true">
+    <uib-accordion close-others="false">
+      <uib-accordion-group class="accordion-panel" ng-init="formatShape.open = true" is-open="formatShape.open">
 
-      <uib-tab heading="Text">
-        <div class="tab-content">
-          <form name="shapeForm">
-            <div class="form-group">
+        <uib-accordion-heading>
+          Format Shape
+          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': formatShape.open,
+          'glyphicon-chevron-right': !formatShape.open}">
+          </i>
+        </uib-accordion-heading>
 
-              <label>Name</label>
-              <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)" autofocus class="form-control form-content"/>
+        <uib-tabset justified="true">
 
+          <uib-tab heading="Text">
+            <div class="tab-content">
+              <form name="shapeForm">
+                <div class="form-group">
+
+                  <label>Name</label>
+                  <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)" autofocus class="form-control form-content"/>
+
+                </div>
+                <div class="form-group">
+
+                  <label>Font</label>
+                  <select class="form-control form-content">
+                    <option>Helvetica</option>
+                    <option>Tahoma</option>
+                    <option>Verdana</option>
+                  </select>
+
+                </div>
+              </form>
             </div>
-            <div class="form-group">
+          </uib-tab>
 
-              <label>Font</label>
-              <select class="form-control form-content">
-                <option>Helvetica</option>
-                <option>Tahoma</option>
-                <option>Verdana</option>
-              </select>
+          <uib-tab heading="Style">Style stuff goes here ...</uib-tab>
+          <uib-tab heading="Arrange">Arrange stuff goes here ...</uib-tab>
 
-            </div>
-          </form>
-        </div>
-      </uib-tab>
+        </uib-tabset>
 
-      <uib-tab heading="Style">Stuff goes here ...</uib-tab>
-      <uib-tab heading="Arrange">Stuff goes here ...</uib-tab>
+      </uib-accordion-group>
+    </uib-accordion>
 
-    </uib-tabset>
-
-  </div>
+  </div> <!-- end <div ng-show="main.formatShape"> -->
 
 </div>
 

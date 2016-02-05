@@ -579,4 +579,85 @@ ng-style="{color: car.color}"
  -->
 
 
+<!--
+  Note: Where possible you should prefer the translateDirective (e.g., translate="{{ 'BRAND_NAME' }}") to
+  the translateFilter (e.g., {{ 'BRAND_NAME' | translate }}).
+-->
+
+<!--
+Format Diagram
+-->
+
+<div ng-hide="main.formatShape">
+
+  <uib-tabset justified="true">
+
+    <uib-tab heading="Format Diagram">
+      <div class="tab-content">
+
+      </div>
+    </uib-tab>
+
+  </uib-tabset>
+
+</div>
+
+<!--
+Format Shape
+-->
+
+<div ng-show="main.formatShape">
+
+  <uib-tabset justified="true">
+
+    <uib-tab heading="Text">
+      <div class="tab-content">
+        <form name="shapeForm">
+          <div class="form-group">
+
+            <label>Name</label>
+            <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)" autofocus class="form-control form-content"/>
+
+          </div>
+          <div class="form-group">
+
+            <label>Font</label>
+            <select class="form-control form-content">
+              <option>Helvetica</option>
+              <option>Tahoma</option>
+              <option>Verdana</option>
+            </select>
+
+          </div>
+        </form>
+      </div>
+    </uib-tab>
+
+    <uib-tab heading="Style">Stuff goes here ...</uib-tab>
+    <uib-tab heading="Arrange">Stuff goes here ...</uib-tab>
+
+  </uib-tabset>
+
+</div>
+
+</div>
+
+<!--
+    <hr class="separator">
+              <div class="clearfix"></div>
+
+  ng-blur="main.setShapeName(main.shape.text)"
+
+  ng-pattern="example.word"
+
+  <div ng-show="!main.formatShape" class="ng-hide">
+  <div ng-show="main.formatShape" class="ng-hide">
+
+  <div ng-show="!main.formatShape">
+  <div ng-show="main.formatShape">
+
+  active="true" disable="false"
+  required ng-model="model.name"
+
+-->
 
