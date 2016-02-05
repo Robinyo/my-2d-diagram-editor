@@ -15,6 +15,7 @@
 
       <uib-tab heading="Format Diagram">
         <div class="tab-content">
+
         </div>
       </uib-tab>
 
@@ -32,10 +33,22 @@
 
       <uib-tab heading="Text">
         <div class="tab-content">
-          <form>
+          <form name="shapeForm">
             <div class="form-group">
+
               <label>Name</label>
-              <input type="text" class="form-control form-content" id="text" placeholder="Node 1"/>
+              <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)" autofocus class="form-control form-content"/>
+
+            </div>
+            <div class="form-group">
+
+              <label>Font</label>
+              <select class="form-control form-content">
+                <option>Helvetica</option>
+                <option>Tahoma</option>
+                <option>Verdana</option>
+              </select>
+
             </div>
           </form>
         </div>
@@ -51,6 +64,12 @@
 </div>
 
 <!--
+    <hr class="separator">
+              <div class="clearfix"></div>
+
+  ng-blur="main.setShapeName(main.shape.text)"
+
+  ng-pattern="example.word"
 
   <div ng-show="!main.formatShape" class="ng-hide">
   <div ng-show="main.formatShape" class="ng-hide">

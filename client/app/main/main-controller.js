@@ -58,10 +58,7 @@
     var containerDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
 
     main.formatShape = false;
-
-    main.isFormatShape = function () {
-      return main.formatShape;
-    };
+    main.shape = {};
 
     main.init = function () {
 
@@ -72,17 +69,30 @@
       main.toggleGrid();
 
       main.canvas.on('object:selected', function(element) {
+
         $log.debug('MainController - object:selected');
+
         fabric.objectSelectedListener(element);
+
+        main.shape = fabric.getActiveObject();
         main.formatShape = true;
       });
 
       main.canvas.on('selection:cleared', function(element) {
+
         $log.debug('MainController - selection:cleared');
+
         fabric.selectionClearedListener(element);
+
+        main.shape = null;
         main.formatShape = false;
       });
 
+    };
+
+    main.setShapeName = function(name) {
+      $log.debug('MainController.setShapeName()');
+      fabric.setActiveObject(main.shape);
     };
 
     /*
