@@ -26,7 +26,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 
-  z-index: 1000;
+  /* z-index: 1000;  */
 }
 
 .content-container {
@@ -35,7 +35,7 @@ body {
   display: block;
   padding: 0px;
 
-  z-index: 1001;
+  /* z-index: 1001;  */
 }
 
 .content {
@@ -55,13 +55,15 @@ body {
 .sidebar-right {
   top: 101px;  /* menubar 50 + toolbar 51 */
 
+  border-left: 1px solid #eee;
+  bottom: 0;
   display: block;
   padding: 0px;  /* padding: 5px; */
   position: fixed;
   overflow-x: hidden;  /* hide the scrollbar */
-  overflow-y: hidden;  /* hide the scrollbar */
+  overflow-y: auto;
 
-  z-index: 1002;
+  /* z-index: 1002;  */
 }
 
 .nav-tabs > li.active > a,

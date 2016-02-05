@@ -13,6 +13,18 @@
 
   fabricCanvas.$inject = ['$log', '$rootScope', 'fabricConfig', 'fabricWindow'];
 
+  /**
+   * @name fabricCanvas
+   * @desc Creates a Canvas
+   * @param {Object} [$log]
+   * @param {Object} [$rootScope]
+   * @param {Object} [fabricConfig]
+   * @param {Object} [fabricWindow]
+   * @return {Object} Returns the new fabricCanvas object
+   *
+   * @fires canvas:created
+   *
+   */
   function fabricCanvas($log, $rootScope, fabricConfig, fabricWindow) {
 
     var service = this;
@@ -31,13 +43,13 @@
       // service.canvasDefaults = angular.copy(fabricConfig.getCanvasDefaults());
     };
 
-    function createId() {
+    var createId = function() {
       return Math.floor(Math.random() * 10000);
-    }
+    };
 
     service.setElement = function(element) {
       service.element = element;
-      $rootScope.$broadcast('canvas:element:selected');
+      // $rootScope.$broadcast('canvas:element:selected');
     };
 
     service.createCanvas = function(options) {

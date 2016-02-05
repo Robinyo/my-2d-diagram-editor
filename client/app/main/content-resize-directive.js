@@ -29,7 +29,7 @@
         };
       };
 
-      scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+      scope.$watch(scope.getWindowDimensions, function (newValue) {
 
         scope.style = function () {
 

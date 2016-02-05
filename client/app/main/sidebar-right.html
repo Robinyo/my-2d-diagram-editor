@@ -5,27 +5,60 @@
 
 <div>
 
-  <uib-tabset justified="true">
+  <!--
+  Format Diagram
+  -->
 
-    <uib-tab heading="Text">
-      <div class="tab-content">
-        <form>
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" class="form-control form-content" id="text" placeholder="Node 1"/>
-          </div>
-        </form>
-      </div>
-    </uib-tab>
+  <div ng-hide="main.formatShape">
 
-    <uib-tab heading="Style">Stuff goes here ...</uib-tab>
-    <uib-tab heading="Arrange">Stuff goes here ...</uib-tab>
+    <uib-tabset justified="true">
 
-  </uib-tabset>
+      <uib-tab heading="Format Diagram">
+        <div class="tab-content">
+        </div>
+      </uib-tab>
+
+    </uib-tabset>
+
+  </div>
+
+  <!--
+  Format Shape
+  -->
+
+  <div ng-show="main.formatShape">
+
+    <uib-tabset justified="true">
+
+      <uib-tab heading="Text">
+        <div class="tab-content">
+          <form>
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" class="form-control form-content" id="text" placeholder="Node 1"/>
+            </div>
+          </form>
+        </div>
+      </uib-tab>
+
+      <uib-tab heading="Style">Stuff goes here ...</uib-tab>
+      <uib-tab heading="Arrange">Stuff goes here ...</uib-tab>
+
+    </uib-tabset>
+
+  </div>
 
 </div>
 
 <!--
- active="true" disable="false"
- required ng-model="model.name"
+
+  <div ng-show="!main.formatShape" class="ng-hide">
+  <div ng-show="main.formatShape" class="ng-hide">
+
+  <div ng-show="!main.formatShape">
+  <div ng-show="main.formatShape">
+
+  active="true" disable="false"
+  required ng-model="model.name"
+
 -->

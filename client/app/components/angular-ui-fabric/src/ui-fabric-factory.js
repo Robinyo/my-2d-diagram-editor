@@ -17,9 +17,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  fabric.$inject = ['$log', 'fabricCanvas', 'fabricConfig', 'fabricWindow', 'fabricShape', 'fabricText', 'fabricUtils'];
+  fabric.$inject = ['$log', '$rootScope', 'fabricCanvas', 'fabricConfig', 'fabricWindow', 'fabricShape', 'fabricText', 'fabricUtils'];
 
-  function fabric($log, fabricCanvas, fabricConfig, fabricWindow, fabricShape, fabricText, fabricUtils) {
+  function fabric($log, $rootScope, fabricCanvas, fabricConfig, fabricWindow, fabricShape, fabricText, fabricUtils) {
 
     var service = this;
 
@@ -47,6 +47,12 @@
     service.connectorLineFromArrow = null;
     service.isMouseDown = false;
     service.fromObject = null;
+
+
+
+    service.formatShape = { show: false};
+
+
 
     $log.debug('ui-fabric');
 
@@ -174,6 +180,14 @@
         $log.debug('fabric - removeObjectFromCanvas() - renderAll');
         service.canvas.renderAll();
       }
+    };
+
+    service.getActiveObject = function() {
+
+      $log.debug('fabric - getActiveObject()');
+
+      return service.canvas.getActiveObject();
+
     };
 
     service.setActiveObject = function(object) {
@@ -943,34 +957,57 @@
 
       });
 
+      /*
+
       service.canvas.on('object:selected', function(element) {
-
-        $log.debug('object:selected');
-
-        if (service.connectorMode) {
-
-          if (element.target.type === 'node') {
-
-            $log.debug('object:selected - element.target.type === node');
-
-            service.selectedObject = element.target;
-            service.activeObject = service.selectedObject;
-            service.selectedObject.set('selectable', true);
-            service.selectedObject.set('hasRotatingPoint', true);
-            service.selectedObject.set('hasBorders', service.rectDefaults.hasBorders);
-            service.selectedObject.set('cornerSize', service.rectDefaults.cornerSize);
-            service.selectedObject.set('transparentCorners', service.rectDefaults.transparentCorners);
-            service.selectedObject.setControlsVisibility({ tl: true, tr: true, br: true, bl: true });
-
-            service.canvas.renderAll();
-          }
-        }
+        service.objectSelectedListener(element);
       });
 
       service.canvas.on('selection:cleared', function(element) {
-        $log.debug('selection:cleared');
-        service.activeObject = null;
+        service.selectionClearedListener(element);
       });
+
+      */
+
+    };
+
+    service.objectSelectedListener = function(element) {
+
+      $log.debug('objectSelectedListener');
+
+      if (service.connectorMode) {
+
+        if (element.target.type === 'node') {
+
+          $log.debug('objectSelectedListener - element.target.type === node');
+
+          service.selectedObject = element.target;
+          service.activeObject = service.selectedObject;
+          service.selectedObject.set('selectable', true);
+          service.selectedObject.set('hasRotatingPoint', true);
+          service.selectedObject.set('hasBorders', service.rectDefaults.hasBorders);
+          service.selectedObject.set('cornerSize', service.rectDefaults.cornerSize);
+          service.selectedObject.set('transparentCorners', service.rectDefaults.transparentCorners);
+          service.selectedObject.setControlsVisibility({ tl: true, tr: true, br: true, bl: true });
+
+          service.canvas.renderAll();
+        }
+      }
+
+      // $rootScope.$broadcast('shape:selected');
+      service.formatShape.show = true;
+      $log.debug('objectSelectedListener - service.formatShape.show: ' + service.formatShape.show);
+
+    };
+
+    service.selectionClearedListener = function(element) {
+
+      $log.debug('selectionClearedListener');
+      service.activeObject = null;
+
+      // $rootScope.$broadcast('diagram:selected');
+      service.formatShape.show = false;
+      $log.debug('selectionClearedListener - service.formatShape.show: ' + service.formatShape.show);
 
     };
 
