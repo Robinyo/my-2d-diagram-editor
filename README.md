@@ -1,7 +1,9 @@
 # my-2d-diagram-editor
-A browser-based 2D diagram editor, built using AngularJS, AngularUI and Fabric.js
+A browser-based 2D diagram editor, built using AngularJS, AngularUI and Fabric.js.
 
-Currently working on, interactivity:
+![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-6.png)
+
+Interactivity:
 
 ![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-interactivity.png)
 
@@ -13,21 +15,9 @@ How to draw connections:
 
 ![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-draw-connector-with-arrow.png)
 
-And, how to update connections:
+How to update connections:
 
 ![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-with-ports-4.png)
-
-In English:
-
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-5-english.png)
-
-In Polish:
-
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-4-polish.png)
-
-In German:
-
-![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/my-2d-diagram-editor-4-german.png)
 
 A sample Logical Security Zone Model diagram:
 
@@ -35,5 +25,5 @@ A sample Logical Security Zone Model diagram:
 
 ####Copyright & License
 
-Copyright (c) 2015 Rob Ferguson - Released under the MIT license.
+Copyright (c) 2015-2016 Rob Ferguson - Released under the MIT license.
 
