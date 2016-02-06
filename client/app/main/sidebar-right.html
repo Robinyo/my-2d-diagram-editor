@@ -47,34 +47,47 @@
           <uib-tab heading="Text">
             <div class="tab-content">
               <form name="shapeForm">
-                <div class="form-group">
 
+                <div class="form-group">
                   <label>Name</label>
                   <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)" autofocus class="form-control form-content"/>
-
                 </div>
-                <div class="form-group">
 
+                <div class="form-group">
                   <label>Font</label>
                   <select class="form-control form-content">
                     <option>Helvetica</option>
-                    <option>Tahoma</option>
+                    <option selected="selected">Tahoma</option>
                     <option>Verdana</option>
                   </select>
-
                 </div>
 
                 <div class="form-group">
-                  <br><br><br><br>
-                  <br><br><br><br>
-                  <br><br><br><br>
+                  <label>Font Size</label>
+                  <select class="form-control form-content">
+                    <option>8pt</option>
+                    <option>10pt</option>
+                    <option selected="selected">12pt</option>
+                    <option>14pt</option>
+                    <option>16pt</option>
+                    <option>18pt</option>
+                    <option>20pt</option>
+                  </select>
                 </div>
 
                 <div class="form-group">
-                  <br><br><br><br>
-                  <br><br><br><br>
-                  <br><br><br><br>
+                  <button type="button" class="btn btn-default">
+                    <span class="fa fa-bold fa-lg"></span>
+                  </button>
+                  <button type="button" class="btn btn-default">
+                    <span class="fa fa-italic fa-lg"></span>
+                  </button>
+                  <button type="button" class="btn btn-default">
+                    <span class="fa fa-underline fa-lg"></span>
+                  </button>
                 </div>
+
+
 
               </form>
             </div>
@@ -108,5 +121,23 @@
 
   active="true" disable="false"
   required ng-model="model.name"
+
+
+
+<div class="input-group">
+  <input type="text" class="form-control">
+  <div class="input-group-btn">
+    <button tabindex="-1" data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu pull-right">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li class="divider"></li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
+  </div>
+</div>
 
 -->
