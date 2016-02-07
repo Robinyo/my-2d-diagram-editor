@@ -15,11 +15,15 @@
       <uib-accordion-group class="accordion-panel" ng-init="formatDiagram.open = true" is-open="formatDiagram.open">
 
         <uib-accordion-heading>
-          Format Diagram
+          {{ 'FORMAT_DIAGRAM' | translate }}
           <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': formatDiagram.open,
           'glyphicon-chevron-right': !formatDiagram.open}">
           </i>
         </uib-accordion-heading>
+
+        <div class="form-group">
+          Diagram stuff goes here ...
+        </div>
 
       </uib-accordion-group>
     </uib-accordion>
@@ -36,7 +40,7 @@
       <uib-accordion-group class="accordion-panel" ng-init="formatShape.open = true" is-open="formatShape.open">
 
         <uib-accordion-heading>
-          Format Shape
+          {{ 'FORMAT_SHAPE' | translate }}
           <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': formatShape.open,
           'glyphicon-chevron-right': !formatShape.open}">
           </i>
@@ -49,12 +53,12 @@
               <form name="shapeForm">
 
                 <div class="form-group">
-                  <label>Name</label>
+                  <label translate="{{ 'NAME' }}"></label>
                   <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)" autofocus class="form-control form-content"/>
                 </div>
 
                 <div class="form-group">
-                  <label>Font</label>
+                  <label translate="{{ 'FONT' }}"></label>
                   <select class="form-control form-content">
                     <option>Helvetica</option>
                     <option selected="selected">Tahoma</option>
@@ -63,7 +67,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Font Size</label>
+                  <label translate="{{ 'FONT_SIZE' }}"></label>
                   <select class="form-control form-content">
                     <option>8pt</option>
                     <option>10pt</option>
@@ -75,17 +79,80 @@
                   </select>
                 </div>
 
+                <label translate="{{ 'FONT_STYLE' }}"></label>
                 <div class="form-group">
-                  <button type="button" class="btn btn-default">
-                    <span class="fa fa-bold fa-lg"></span>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'BOLD' | translate }}">
+                    <span class="fa fa-bold fa-fw"></span>
                   </button>
-                  <button type="button" class="btn btn-default">
-                    <span class="fa fa-italic fa-lg"></span>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'ITALIC' | translate }}">
+                    <span class="fa fa-italic fa-fw"></span>
                   </button>
-                  <button type="button" class="btn btn-default">
-                    <span class="fa fa-underline fa-lg"></span>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'UNDERLINE' | translate }}">
+                    <span class="fa fa-underline fa-fw"></span>
+                  </button>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'STRIKETHROUGH' | translate }}">
+                    <span class="fa fa-strikethrough fa-fw"></span>
                   </button>
                 </div>
+
+                <!-- <hr> -->
+
+                <label translate="{{ 'ALIGNMENT' }}"></label>
+                <div class="form-group">
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'ALIGN_LEFT' | translate }}">
+                    <span class="fa  fa-align-left fa-fw"></span>
+                  </button>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'ALIGN_CENTER' | translate }}">
+                    <span class="fa fa-align-center fa-fw"></span>
+                  </button>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'ALIGN_RIGHT' | translate }}">
+                    <span class="fa fa-align-right fa-fw"></span>
+                  </button>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'ALIGN_TOP' | translate }}">
+                    <span class="fa fa-arrow-up fa-fw"></span>
+                  </button>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'ALIGN_BOTTOM' | translate }}">
+                    <span class="fa fa-arrow-down fa-fw"></span>
+                  </button>
+                </div>
+
+              </form>
+            </div>
+          </uib-tab>
+
+          <uib-tab heading="Style">
+            <div class="tab-content">
+              <form name="styleForm">
+
+                <div class="form-group">
+                  <button type="button" class="btn btn-default btn-lg"></button>
+                  <button type="button" class="btn btn-default btn-lg btn-primary"></button>
+                  <button type="button" class="btn btn-default btn-lg btn-success"></button>
+                  <button type="button" class="btn btn-default btn-lg btn-info"></button>
+                  <button type="button" class="btn btn-default btn-lg btn-warning"></button>
+                  <button type="button" class="btn btn-default btn-lg btn-danger"></button>
+                </div>
+
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-1">
+                      <a href="#" class="thumbnail">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+
+
 
 
 
@@ -93,8 +160,13 @@
             </div>
           </uib-tab>
 
-          <uib-tab heading="Style">Style stuff goes here ...</uib-tab>
-          <uib-tab heading="Arrange">Arrange stuff goes here ...</uib-tab>
+          <uib-tab heading="Arrange">
+            <div class="tab-content">
+              <form name="arrangeForm">
+
+              </form>
+            </div>
+          </uib-tab>
 
         </uib-tabset>
 

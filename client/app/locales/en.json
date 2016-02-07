@@ -55,6 +55,30 @@
   "PARTNER_ZONE":                "Partner Zone",
   "MANAGEMENT_ZONE":             "Management Zone",
 
+  "FORMAT_DIAGRAM":              "Format Diagram",
+
+  "FORMAT_SHAPE":                "Format Shape",
+
+  "TEXT":                        "Text",
+  "NAME":                        "Name",
+  "FONT":                        "Font",
+  "FONT_SIZE":                   "Font Size",
+  "FONT_STYLE":                  "Font Style",
+  "BOLD":                        "Bold",
+  "ITALIC":                      "Italic",
+  "UNDERLINE":                   "Underline",
+  "STRIKETHROUGH":               "Strikethrough",
+  "ALIGNMENT":                   "Alignment",
+  "ALIGN_LEFT":                  "Align Left",
+  "ALIGN_CENTER":                "Align Center",
+  "ALIGN_RIGHT":                 "Align Right",
+  "ALIGN_TOP":                   "Align Top",
+  "ALIGN_BOTTOM":                "Align Bottom",
+
+  "STYLE":                       "Style",
+
+  "ARRANGE":                     "Arrange",
+
 
   "COMING_SOON":                 "Coming Soon :)"
 }
