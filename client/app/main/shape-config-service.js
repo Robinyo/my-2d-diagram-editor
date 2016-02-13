@@ -21,8 +21,8 @@
 
     var service = this;
 
-    const NODE_ID = 0;
-    const SQUARE_ID = 1;
+    const NODE_ID      = 0;
+    const SQUARE_ID    = 1;
     const RECTANGLE_ID = 2;
 
     var shapes = [
@@ -63,6 +63,91 @@
 
     service.getShape = function(id) {
       return shapes[id];
+    };
+
+    const HELVETICA_ID = 0;
+    const TAHOMA_ID    = 1;
+    const VERDANA_ID   = 2;
+
+    var fontFamilies = [
+      {
+        "id"              : HELVETICA_ID,
+        "name"            : "HELVETICA",
+        "value"           : "Helvetica"
+      },
+      {
+        "id"              : TAHOMA_ID,
+        "name"            : "TAHOMA",
+        "value"           : "Tahoma"
+      },
+      {
+        "id"              : VERDANA_ID,
+        "name"            : "VERDANA",
+        "value"           : "Verdana"
+      }
+    ];
+
+    service.getFontFamilies = function() {
+      return fontFamilies;
+    };
+
+    service.getFontFamily = function(id) {
+      return fontFamilies[id];
+    };
+
+    const EIGHT_ID    = 0;
+    const TEN_ID      = 1;
+    const TWELVE_ID   = 2;
+    const FOURTEEN_ID = 3;
+    const SIXTEEN_ID  = 4;
+    const EIGHTEEN_ID = 5;
+    const TWENTY_ID   = 6;
+
+    var fontSizes = [
+      {
+        "id"              : EIGHT_ID,
+        "name"            : "EIGHT",
+        "value"           : "8"
+      },
+      {
+        "id"              : TEN_ID,
+        "name"            : "TEN",
+        "value"           : "10"
+      },
+      {
+        "id"              : TWELVE_ID,
+        "name"            : "TWELVE",
+        "value"           : "12"
+      },
+      {
+        "id"              : FOURTEEN_ID,
+        "name"            : "FOURTEEN",
+        "value"           : "14"
+      },
+      {
+        "id"              : SIXTEEN_ID,
+        "name"            : "SIXTEEN",
+        "value"           : "16"
+      },
+      {
+        "id"              : EIGHTEEN_ID,
+        "name"            : "EIGHTEEN",
+        "value"           : "18"
+      },
+      {
+        "id"              : TWENTY_ID,
+        "name"            : "TWENTY",
+        "value"           : "20"
+      }
+
+    ];
+
+    service.getFontSizes = function() {
+      return fontSizes;
+    };
+
+    service.getFontSize = function(id) {
+      return fontSizes[id];
     };
 
   }

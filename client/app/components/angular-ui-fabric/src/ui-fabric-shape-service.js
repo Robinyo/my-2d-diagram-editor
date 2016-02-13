@@ -130,7 +130,8 @@
 
       fillStyle: '',
       fontFamily: '',
-      fontSize: 20,
+      // fontSize: 20,
+      fontSize: '',
       fontWeight: '',
       // lineHeight: 1.16,
       textAlign: '',
@@ -166,7 +167,8 @@
         var y = 0;
 
         if (this.textBaseline === 'top') {
-          y = -(this.height / 2) + this.fontSize;
+          // y = -(this.height / 2) + this.fontSize;
+          y = -(this.height / 2) + parseInt(this.fontSize, 10);
         }
 
         ctx.fillStyle = this.fillStyle;

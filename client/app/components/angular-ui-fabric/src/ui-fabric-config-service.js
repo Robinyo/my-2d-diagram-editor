@@ -153,7 +153,8 @@
     // RectWithText (a Node or a Container)
     //
 
-    const RECT_WITH_TEXT_FONT_SIZE = 18;
+    // const RECT_WITH_TEXT_FONT_SIZE = 18;
+    const RECT_WITH_TEXT_FONT_SIZE = '18';
     const RECT_WITH_TEXT_FONT_WEIGHT = 'normal';
     const RECT_WITH_TEXT_WIDTH = 100;
     const RECT_WITH_TEXT_HEIGHT = 100;
@@ -161,7 +162,7 @@
     var rectWithTextDefaults = angular.extend({
       fillStyle: 'BLACK',
       fontFamily: FONT_FAMILY,
-      fontSize: RECT_WITH_TEXT_FONT_SIZE,
+      fontSize: RECT_WITH_TEXT_FONT_SIZE,  // option element can only hold string type as its value
       fontWeight: RECT_WITH_TEXT_FONT_WEIGHT,
       originX: 'left',
       originY: 'top',

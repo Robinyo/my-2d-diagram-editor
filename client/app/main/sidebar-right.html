@@ -54,28 +54,21 @@
 
                 <div class="form-group">
                   <label translate="{{ 'NAME' }}"></label>
-                  <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)" autofocus class="form-control form-content"/>
+                  <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)"
+                         autofocus class="form-control form-content"/>
                 </div>
 
                 <div class="form-group">
                   <label translate="{{ 'FONT' }}"></label>
-                  <select class="form-control form-content">
-                    <option>Helvetica</option>
-                    <option selected="selected">Tahoma</option>
-                    <option>Verdana</option>
+                  <select ng-model="main.shape.fontFamily" class="form-control form-content">
+                    <option ng-repeat="font in main.fontFamilies track by font.id">{{font.value}}</option>
                   </select>
                 </div>
 
                 <div class="form-group">
                   <label translate="{{ 'FONT_SIZE' }}"></label>
-                  <select class="form-control form-content">
-                    <option>8pt</option>
-                    <option>10pt</option>
-                    <option selected="selected">12pt</option>
-                    <option>14pt</option>
-                    <option>16pt</option>
-                    <option>18pt</option>
-                    <option>20pt</option>
+                  <select ng-model="main.shape.fontSize" class="form-control form-content">
+                    <option ng-repeat="size in main.fontSizes track by size.id">{{size.value}}</option>
                   </select>
                 </div>
 
@@ -134,22 +127,60 @@
               <form name="styleForm">
 
                 <div class="form-group">
-                  <button type="button" class="btn btn-default btn-lg"></button>
-                  <button type="button" class="btn btn-default btn-lg btn-primary"></button>
-                  <button type="button" class="btn btn-default btn-lg btn-success"></button>
-                  <button type="button" class="btn btn-default btn-lg btn-info"></button>
-                  <button type="button" class="btn btn-default btn-lg btn-warning"></button>
-                  <button type="button" class="btn btn-default btn-lg btn-danger"></button>
+                  <div class="row-fluid">
+
+                    <ul class="thumbnails">
+                      <li class="thumbnail">
+                        <a href="#">
+                          <img src="http://placehold.it/32x32/E3F09B">
+                        </a>
+                      </li>
+                      <li class="thumbnail">
+                        <a href="#" >
+                          <img src="http://placehold.it/32x32/E3F09B">
+                        </a>
+                      </li>
+                    </ul>
+
+                  </div>
                 </div>
 
                 <div class="form-group">
                   <div class="row">
-                    <div class="col-md-1">
+
+                    <div class="col-md-3">
                       <a href="#" class="thumbnail">
+                        <img src="http://placehold.it/32x32/E3F09B">
                       </a>
                     </div>
+
+                    <div class="col-md-3">
+                      <a href="#" class="thumbnail">
+                        <img src="http://placehold.it/32x32/F7D08A">
+                      </a>
+                    </div>
+
+                    <div class="col-md-3">
+                      <a href="#" class="thumbnail">
+                        <img src="http://placehold.it/32x32/87B6A7">
+                      </a>
+                    </div>
+
+                    <div class="col-md-3">
+                      <a href="#" class="thumbnail">
+                        <img src="http://placehold.it/32x32/F79F79">
+                      </a>
+                    </div>
+
+                    <div class="col-md-3">
+                      <a href="#" class="thumbnail">
+                        <img src="http://placehold.it/32x32/5B5941">
+                      </a>
+                    </div>
+
                   </div>
                 </div>
+
 
 
 
@@ -178,6 +209,12 @@
 </div>
 
 <!--
+
+                  <select class="form-control form-content" ng-model="main.shape.fontFamily"
+                          ng-options="font.value for font in main.fontFamilies track by font.id">
+                  </select>
+
+
     <hr class="separator">
               <div class="clearfix"></div>
 

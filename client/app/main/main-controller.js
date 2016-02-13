@@ -47,6 +47,9 @@
     var main = this;
 
     main.shapes = shapeConfig.getShapes();
+    main.fontFamilies = shapeConfig.getFontFamilies();
+    main.fontSizes = shapeConfig.getFontSizes();
+
     main.containers = containerConfig.getContainers();
 
     main.canvas = null;
@@ -76,6 +79,10 @@
 
         main.shape = fabric.getActiveObject();
         main.formatShape = true;
+
+        $log.debug('MainController - main.shape.text: ' + main.shape.text);
+        $log.debug('MainController - main.shape.fontFamily: ' + main.shape.fontFamily);
+        $log.debug('MainController - main.shape.fontSize: ' + main.shape.fontSize);
       });
 
       main.canvas.on('selection:cleared', function(element) {
@@ -136,7 +143,8 @@
 
     const RECT_WIDTH = 300;
     const RECT_HEIGHT = 300;
-    const FONT_SIZE = 20;
+    // const FONT_SIZE = 20;
+    const FONT_SIZE = '20';
     const FONT_WEIGHT = 'bold';
 
     main.newContainer = function(name, fill) {
