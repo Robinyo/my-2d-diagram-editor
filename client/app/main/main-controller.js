@@ -246,6 +246,50 @@
 
     // formatDiagram
 
+    // HTML5 Canvas
+    // font-style: normal, italic and oblique
+    // font-weight: normal, bold, bolder, lighter, 100-900
+
+    main.toggleBold = function() {
+
+      $log.debug('MainController.toggleBold()');
+
+      if (main.shape.fontWeight.indexOf('bold') !== -1) {
+        if (main.shape.fontWeight.indexOf('italic') !== -1) {
+          main.shape.fontWeight = '';
+        } else {
+          main.shape.fontWeight = 'italic';
+        }
+      } else {
+        if (main.shape.fontWeight.indexOf('italic') !== -1) {
+          main.shape.fontWeight = 'bold italic';
+        } else {
+          main.shape.fontWeight = 'bold';
+        }
+      }
+
+    };
+
+    main.toggleItalic = function() {
+
+      $log.debug('MainController.toggleItalic()');
+
+      if (main.shape.fontWeight.indexOf('italic') !== -1) {
+        if (main.shape.fontWeight.indexOf('bold') !== -1) {
+          main.shape.fontWeight = '';
+        } else {
+          main.shape.fontWeight = 'bold';
+        }
+      } else {
+        if (main.shape.fontWeight.indexOf('bold') !== -1) {
+          main.shape.fontWeight = 'bold italic';
+        } else {
+          main.shape.fontWeight = 'italic';
+        }
+      }
+
+    };
+
   }
 
 })();

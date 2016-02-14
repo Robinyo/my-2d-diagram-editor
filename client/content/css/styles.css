@@ -65,7 +65,7 @@ body {
   padding: 0px;  /* padding: 5px; */
   position: fixed;
   overflow-x: hidden;  /* hide the scrollbar */
-  overflow-y: hidden;
+  overflow-y: auto;
 
   /* z-index: 1002;  */
 }

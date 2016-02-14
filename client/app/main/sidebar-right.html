@@ -74,21 +74,13 @@
 
                 <label translate="{{ 'FONT_STYLE' }}"></label>
                 <div class="form-group">
-                  <button type="button" class="btn btn-default"
+                  <button type="button" class="btn btn-default" ng-click="main.toggleBold()"
                           uib-tooltip="{{ 'BOLD' | translate }}">
                     <span class="fa fa-bold fa-fw"></span>
                   </button>
-                  <button type="button" class="btn btn-default"
+                  <button type="button" class="btn btn-default" ng-click="main.toggleItalic()"
                           uib-tooltip="{{ 'ITALIC' | translate }}">
                     <span class="fa fa-italic fa-fw"></span>
-                  </button>
-                  <button type="button" class="btn btn-default"
-                          uib-tooltip="{{ 'UNDERLINE' | translate }}">
-                    <span class="fa fa-underline fa-fw"></span>
-                  </button>
-                  <button type="button" class="btn btn-default"
-                          uib-tooltip="{{ 'STRIKETHROUGH' | translate }}">
-                    <span class="fa fa-strikethrough fa-fw"></span>
                   </button>
                 </div>
 
@@ -207,6 +199,17 @@
   </div> <!-- end <div ng-show="main.formatShape"> -->
 
 </div>
+
+<!--
+<button type="button" class="btn btn-default"
+        uib-tooltip="{{ 'UNDERLINE' | translate }}">
+  <span class="fa fa-underline fa-fw"></span>
+</button>
+<button type="button" class="btn btn-default"
+        uib-tooltip="{{ 'STRIKETHROUGH' | translate }}">
+  <span class="fa fa-strikethrough fa-fw"></span>
+</button>
+-->
 
 <!--
 
