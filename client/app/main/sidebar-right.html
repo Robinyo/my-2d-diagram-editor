@@ -88,21 +88,25 @@
 
                 <label translate="{{ 'ALIGNMENT' }}"></label>
                 <div class="form-group">
-                  <button type="button" class="btn btn-default"
+                  <button type="button" class="btn btn-default" ng-click="main.textXAlign('right')"
                           uib-tooltip="{{ 'ALIGN_LEFT' | translate }}">
                     <span class="fa  fa-align-left fa-fw"></span>
                   </button>
-                  <button type="button" class="btn btn-default"
+                  <button type="button" class="btn btn-default" ng-click="main.textXAlign('center')"
                           uib-tooltip="{{ 'ALIGN_CENTER' | translate }}">
                     <span class="fa fa-align-center fa-fw"></span>
                   </button>
-                  <button type="button" class="btn btn-default"
+                  <button type="button" class="btn btn-default" ng-click="main.textXAlign('left')"
                           uib-tooltip="{{ 'ALIGN_RIGHT' | translate }}">
                     <span class="fa fa-align-right fa-fw"></span>
                   </button>
                   <button type="button" class="btn btn-default"
                           uib-tooltip="{{ 'ALIGN_TOP' | translate }}">
                     <span class="fa fa-arrow-up fa-fw"></span>
+                  </button>
+                  <button type="button" class="btn btn-default"
+                          uib-tooltip="{{ 'ALIGN_CENTER' | translate }}">
+                    <span class="fa fa-align-center fa-fw"></span>
                   </button>
                   <button type="button" class="btn btn-default"
                           uib-tooltip="{{ 'ALIGN_BOTTOM' | translate }}">

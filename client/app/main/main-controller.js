@@ -244,7 +244,7 @@
       $translate.use(key);
     };
 
-    // formatDiagram
+    // Format Shape
 
     // HTML5 Canvas
     // font-style: normal, italic and oblique
@@ -256,9 +256,9 @@
 
       if (main.shape.fontWeight.indexOf('bold') !== -1) {
         if (main.shape.fontWeight.indexOf('italic') !== -1) {
-          main.shape.fontWeight = '';
-        } else {
           main.shape.fontWeight = 'italic';
+        } else {
+          main.shape.fontWeight = '';
         }
       } else {
         if (main.shape.fontWeight.indexOf('italic') !== -1) {
@@ -268,6 +268,7 @@
         }
       }
 
+      $log.debug('MainController.toggleBold() - fontWeight: ' + main.shape.fontWeight);
     };
 
     main.toggleItalic = function() {
@@ -276,9 +277,9 @@
 
       if (main.shape.fontWeight.indexOf('italic') !== -1) {
         if (main.shape.fontWeight.indexOf('bold') !== -1) {
-          main.shape.fontWeight = '';
-        } else {
           main.shape.fontWeight = 'bold';
+        } else {
+          main.shape.fontWeight = '';
         }
       } else {
         if (main.shape.fontWeight.indexOf('bold') !== -1) {
@@ -288,6 +289,16 @@
         }
       }
 
+      $log.debug('MainController.toggleBold() - fontWeight: ' + main.shape.fontWeight);
+    };
+
+    main.textXAlign = function(align) {
+
+      $log.debug('MainController.textXAlign()');
+
+      main.shape.textAlign = align;
+
+      $log.debug('MainController.textXAlign() - align: ' + main.shape.textAlign);
     };
 
   }
