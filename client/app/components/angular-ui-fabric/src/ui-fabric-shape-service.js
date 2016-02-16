@@ -188,6 +188,8 @@
 
         }
 
+        // See Text class 19356 re support for multi-line text
+
         ctx.fillStyle = this.fillStyle;
         ctx.font = this.fontWeight + ' ' + this.fontSize + 'px ' + this.fontFamily;  // 'bold 20px Tahoma';
         ctx.textAlign = this.textXAlign;

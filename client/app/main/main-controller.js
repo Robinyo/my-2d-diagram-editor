@@ -71,6 +71,10 @@
 
       main.toggleGrid();
 
+      /*
+       * Listen for Fabric 'object:selected' event
+       */
+
       main.canvas.on('object:selected', function(element) {
 
         $log.debug('MainController - object:selected');
@@ -79,11 +83,11 @@
 
         main.shape = fabric.getActiveObject();
         main.formatShape = true;
-
-        $log.debug('MainController - main.shape.text: ' + main.shape.text);
-        $log.debug('MainController - main.shape.fontFamily: ' + main.shape.fontFamily);
-        $log.debug('MainController - main.shape.fontSize: ' + main.shape.fontSize);
       });
+
+      /*
+       * Listen for Fabric 'selection:cleared' event
+       */
 
       main.canvas.on('selection:cleared', function(element) {
 
@@ -318,3 +322,11 @@
   }
 
 })();
+
+/*
+
+ $log.debug('MainController - main.shape.text: ' + main.shape.text);
+ $log.debug('MainController - main.shape.fontFamily: ' + main.shape.fontFamily);
+ $log.debug('MainController - main.shape.fontSize: ' + main.shape.fontSize);
+
+ */
