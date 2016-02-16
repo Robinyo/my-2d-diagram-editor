@@ -168,7 +168,8 @@
       originY: 'top',
       scaleX: 1,
       scaleY: 1,
-      textAlign: 'center',
+      textXAlign: 'center',   // left, right, center, start, end
+      textYAlign: 'middle',   // top, bottom, middle
       textBaseline: 'middle'  // top, bottom, middle, alphabetic, hanging
     }, rectDefaults);
 

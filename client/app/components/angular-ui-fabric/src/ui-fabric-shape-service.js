@@ -130,11 +130,11 @@
 
       fillStyle: '',
       fontFamily: '',
-      // fontSize: 20,
       fontSize: '',
       fontWeight: '',
       // lineHeight: 1.16,
-      textAlign: '',
+      textXAlign: '',
+      textYAlign: '',
       textBaseline: '',
       // textDecoration: '',
       // fontStyle: '',
@@ -166,14 +166,31 @@
         var x = 0;
         var y = 0;
 
-        if (this.textBaseline === 'top') {
-          // y = -(this.height / 2) + this.fontSize;
-          y = -(this.height / 2) + parseInt(this.fontSize, 10);
+        // top, bottom, middle
+
+        switch (this.textYAlign) {
+
+          case 'top':
+            y = -(this.height / 2) + parseInt(this.fontSize, 10);
+            break;
+
+          case 'bottom':
+            y = (this.height / 2) - parseInt(this.fontSize, 10);
+            break;
+
+          case 'middle':
+            y = 0;
+            break;
+
+          default:
+            $log.debug('RectWithText - textYAlign: ' + this.textYAlign);
+            break;
+
         }
 
         ctx.fillStyle = this.fillStyle;
         ctx.font = this.fontWeight + ' ' + this.fontSize + 'px ' + this.fontFamily;  // 'bold 20px Tahoma';
-        ctx.textAlign = this.textAlign;
+        ctx.textAlign = this.textXAlign;
         ctx.textBaseline = this.textBaseline;
 
         ctx.fillText(this.text, x, y);

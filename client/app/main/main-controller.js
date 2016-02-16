@@ -160,7 +160,7 @@
       containerDefaults.fontWeight = FONT_WEIGHT;
       containerDefaults.width = RECT_WIDTH;
       containerDefaults.height = RECT_HEIGHT;
-      containerDefaults.textBaseline = 'top';
+      containerDefaults.textYAlign = 'top';
 
       $translate(name)
         .then(function (translatedValue) {
@@ -292,13 +292,27 @@
       $log.debug('MainController.toggleBold() - fontWeight: ' + main.shape.fontWeight);
     };
 
+    // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/textAlign
+    // left, right, center, start, end
+
     main.textXAlign = function(align) {
 
       $log.debug('MainController.textXAlign()');
 
-      main.shape.textAlign = align;
+      main.shape.textXAlign = align;
 
-      $log.debug('MainController.textXAlign() - align: ' + main.shape.textAlign);
+      $log.debug('MainController.textXAlign() - align: ' + main.shape.textXAlign);
+    };
+
+    // top, bottom, middle
+
+    main.textYAlign = function(align) {
+
+      $log.debug('MainController.textYAlign()');
+
+      main.shape.textYAlign = align;
+
+      $log.debug('MainController.textXAlign() - align: ' + main.shape.textYAlign);
     };
 
   }

@@ -73,6 +73,7 @@
   "ALIGN_CENTER":                "Align Center",
   "ALIGN_RIGHT":                 "Align Right",
   "ALIGN_TOP":                   "Align Top",
+  "ALIGN_MIDDLE":                "Align Middle",
   "ALIGN_BOTTOM":                "Align Bottom",
 
   "STYLE":                       "Style",
