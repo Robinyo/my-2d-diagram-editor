@@ -103,7 +103,7 @@
 
     main.setShapeName = function(name) {
       $log.debug('MainController.setShapeName()');
-      fabric.setActiveObject(main.shape);
+      // fabric.setActiveObject(main.shape);
     };
 
     /*

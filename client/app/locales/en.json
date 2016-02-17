@@ -66,8 +66,6 @@
   "FONT_STYLE":                  "Font Style",
   "BOLD":                        "Bold",
   "ITALIC":                      "Italic",
-  "UNDERLINE":                   "Underline",
-  "STRIKETHROUGH":               "Strikethrough",
   "ALIGNMENT":                   "Alignment",
   "ALIGN_LEFT":                  "Align Left",
   "ALIGN_CENTER":                "Align Center",

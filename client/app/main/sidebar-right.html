@@ -48,14 +48,18 @@
 
         <uib-tabset justified="true">
 
-          <uib-tab heading="Text">
+          <!--
+          Text
+          -->
+
+          <uib-tab heading="{{ 'TEXT' | translate }}">
             <div class="tab-content">
               <form name="shapeForm">
 
                 <div class="form-group">
                   <label translate="{{ 'NAME' }}"></label>
-                  <input type="text" ng-model="main.shape.text" ng-blur="main.setShapeName(main.shape.text)"
-                         autofocus class="form-control form-content"/>
+                  <input type="text" ng-model="main.shape.text" class="form-control form-content" autofocus />
+                         <!-- ng-blur="main.setShapeName(main.shape.text)" autofocus /> -->
                 </div>
 
                 <div class="form-group">
@@ -118,7 +122,11 @@
             </div>
           </uib-tab>
 
-          <uib-tab heading="Style">
+          <!--
+          Style
+          -->
+
+          <uib-tab heading="{{ 'STYLE' | translate }}">
             <div class="tab-content">
               <form name="styleForm">
 
@@ -187,7 +195,7 @@
             </div>
           </uib-tab>
 
-          <uib-tab heading="Arrange">
+          <uib-tab heading="{{ 'ARRANGE' | translate }}">
             <div class="tab-content">
               <form name="arrangeForm">
 
@@ -205,55 +213,12 @@
 </div>
 
 <!--
-<button type="button" class="btn btn-default"
-        uib-tooltip="{{ 'UNDERLINE' | translate }}">
-  <span class="fa fa-underline fa-fw"></span>
-</button>
-<button type="button" class="btn btn-default"
-        uib-tooltip="{{ 'STRIKETHROUGH' | translate }}">
-  <span class="fa fa-strikethrough fa-fw"></span>
-</button>
--->
 
-<!--
+ <select class="form-control form-content" ng-model="main.shape.fontFamily"
+   ng-options="font.value for font in main.fontFamilies track by font.id">
+ </select>
 
-                  <select class="form-control form-content" ng-model="main.shape.fontFamily"
-                          ng-options="font.value for font in main.fontFamilies track by font.id">
-                  </select>
-
-
-    <hr class="separator">
-              <div class="clearfix"></div>
-
-  ng-blur="main.setShapeName(main.shape.text)"
-
-  ng-pattern="example.word"
-
-  <div ng-show="!main.formatShape" class="ng-hide">
-  <div ng-show="main.formatShape" class="ng-hide">
-
-  <div ng-show="!main.formatShape">
-  <div ng-show="main.formatShape">
-
-  active="true" disable="false"
-  required ng-model="model.name"
-
-
-
-<div class="input-group">
-  <input type="text" class="form-control">
-  <div class="input-group-btn">
-    <button tabindex="-1" data-toggle="dropdown" class="btn btn-default dropdown-toggle" type="button">
-      <span class="caret"></span>
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <ul class="dropdown-menu pull-right">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li class="divider"></li>
-      <li><a href="#">Separated link</a></li>
-    </ul>
-  </div>
-</div>
+  <hr class="separator">
+  <div class="clearfix"></div>
 
 -->

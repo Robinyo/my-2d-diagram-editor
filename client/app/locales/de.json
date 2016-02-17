@@ -55,6 +55,29 @@
   "PARTNER_ZONE":                "Partnerbereich",
   "MANAGEMENT_ZONE":             "Verwaltungszone",
 
+  "FORMAT_DIAGRAM":              "Formatdiagramm",
+
+  "FORMAT_SHAPE":                "Shape formatieren",
+
+  "TEXT":                        "Text",
+  "NAME":                        "Name",
+  "FONT":                        "Schriftart",
+  "FONT_SIZE":                   "Schriftgröße",
+  "FONT_STYLE":                  "Schriftstil",
+  "BOLD":                        "Fett gedruckt",
+  "ITALIC":                      "Kursiv",
+  "ALIGNMENT":                   "Ausrichtung",
+  "ALIGN_LEFT":                  "Align Left",
+  "ALIGN_CENTER":                "Linksbündig",
+  "ALIGN_RIGHT":                 "Rechts ausrichten",
+  "ALIGN_TOP":                   "oben ausrichten",
+  "ALIGN_MIDDLE":                "Vertikal zentrieren",
+  "ALIGN_BOTTOM":                "unten ausrichten",
+
+  "STYLE":                       "Stil",
+
+  "ARRANGE":                     "Arrangieren",
+
 
   "COMING_SOON":                 "Demnächst :)"
 }
