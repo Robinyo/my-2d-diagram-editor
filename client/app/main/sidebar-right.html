@@ -49,10 +49,10 @@
         <uib-tabset justified="true">
 
           <!--
-          Text
+          Font
           -->
 
-          <uib-tab heading="{{ 'TEXT' | translate }}">
+          <uib-tab heading="{{ 'FONT' | translate }}">
             <div class="tab-content">
               <form name="shapeForm">
 
@@ -123,77 +123,77 @@
           </uib-tab>
 
           <!--
-          Style
+          Styles
           -->
 
-          <uib-tab heading="{{ 'STYLE' | translate }}">
+          <uib-tab heading="{{ 'STYLES' | translate }}">
             <div class="tab-content">
               <form name="styleForm">
 
                 <div class="form-group">
-                  <div class="row-fluid">
-
-                    <ul class="thumbnails">
-                      <li class="thumbnail">
-                        <a href="#">
-                          <img src="http://placehold.it/32x32/E3F09B">
-                        </a>
-                      </li>
-                      <li class="thumbnail">
-                        <a href="#" >
-                          <img src="http://placehold.it/32x32/E3F09B">
-                        </a>
-                      </li>
-                    </ul>
-
-                  </div>
+                  <label translate="{{ 'THEME' }}"></label>
+                  <select class="form-control form-content">
+                    <option ng-repeat="theme in main.themes track by theme.id">{{theme.value}}</option>
+                  </select>
                 </div>
 
                 <div class="form-group">
-                  <div class="row">
+                  <label translate="{{ 'THEME_STYLES' }}"></label>
 
-                    <div class="col-md-3">
+                  <div class="row-fluid">
+                    <div class="col-md-2 thumbnail-column">
                       <a href="#" class="thumbnail">
                         <img src="http://placehold.it/32x32/E3F09B">
                       </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2 thumbnail-column">
                       <a href="#" class="thumbnail">
                         <img src="http://placehold.it/32x32/F7D08A">
                       </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2 thumbnail-column">
                       <a href="#" class="thumbnail">
                         <img src="http://placehold.it/32x32/87B6A7">
                       </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2 thumbnail-column">
                       <a href="#" class="thumbnail">
                         <img src="http://placehold.it/32x32/F79F79">
                       </a>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2 thumbnail-column">
                       <a href="#" class="thumbnail">
                         <img src="http://placehold.it/32x32/5B5941">
                       </a>
                     </div>
-
                   </div>
                 </div>
 
+                <div class="clearfix"></div>
 
+                <div class="form-group">
+                  <label translate="{{ 'FILL' }}"></label>
+                </div>
 
+                <div class="form-group">
+                  <label translate="{{ 'LINE' }}"></label>
+                </div>
 
-
-
+                <div class="form-group">
+                  <label translate="{{ 'EFFECTS' }}"></label>
+                </div>
 
               </form>
             </div>
           </uib-tab>
+
+          <!--
+          Arrange
+          -->
 
           <uib-tab heading="{{ 'ARRANGE' | translate }}">
             <div class="tab-content">

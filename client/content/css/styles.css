@@ -94,6 +94,11 @@ body {
   font-size: 14px;
 }
 
+.thumbnail-column {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
 .bootstrap-select > .btn {
   height: 34px;
 }

@@ -150,6 +150,25 @@
       return fontSizes[id];
     };
 
+    const COOLORS_ID    = 0;
+
+    var themes = [
+      {
+        "id"              : COOLORS_ID,
+        "name"            : "COOLORS",
+        "value"           : "Coolors"
+      }
+
+    ];
+
+    service.getThemes = function() {
+      return themes;
+    };
+
+    service.getTheme = function(id) {
+      return themes[id];
+    };
+
   }
 
 })();

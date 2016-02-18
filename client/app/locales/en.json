@@ -75,9 +75,16 @@
   "ALIGN_BOTTOM":                "Align Bottom",
 
   "STYLE":                       "Style",
+  "STYLES":                      "Styles",
+  "SHAPE_STYLES":                "Shape Styles",
+
+  "THEME":                       "Theme",
+  "THEME_STYLES":                "Theme Styles",
+  "FILL":                        "Fill",
+  "LINE":                        "Line",
+  "EFFECTS":                     "Effects",
 
   "ARRANGE":                     "Arrange",
-
 
   "COMING_SOON":                 "Coming Soon :)"
 }

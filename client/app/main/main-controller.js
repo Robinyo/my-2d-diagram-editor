@@ -49,6 +49,7 @@
     main.shapes = shapeConfig.getShapes();
     main.fontFamilies = shapeConfig.getFontFamilies();
     main.fontSizes = shapeConfig.getFontSizes();
+    main.themes = shapeConfig.getThemes();
 
     main.containers = containerConfig.getContainers();
 
@@ -325,6 +326,7 @@
 
 /*
 
+ // https://coolors.co
  $log.debug('MainController - main.shape.text: ' + main.shape.text);
  $log.debug('MainController - main.shape.fontFamily: ' + main.shape.fontFamily);
  $log.debug('MainController - main.shape.fontSize: ' + main.shape.fontSize);
