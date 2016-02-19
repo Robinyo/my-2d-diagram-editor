@@ -46,6 +46,8 @@
 
     var main = this;
 
+    main.paperSizes = shapeConfig.getPaperSizes();
+
     main.shapes = shapeConfig.getShapes();
     main.fontFamilies = shapeConfig.getFontFamilies();
     main.fontSizes = shapeConfig.getFontSizes();
@@ -63,6 +65,11 @@
 
     main.formatShape = false;
     main.shape = {};
+
+    const A4_ID = 1;
+
+    main.diagram = {};
+    main.diagram.paperSize = main.paperSizes[A4_ID].value;
 
     main.init = function () {
 
@@ -100,11 +107,6 @@
         main.formatShape = false;
       });
 
-    };
-
-    main.setShapeName = function(name) {
-      $log.debug('MainController.setShapeName()');
-      // fabric.setActiveObject(main.shape);
     };
 
     /*
@@ -330,5 +332,11 @@
  $log.debug('MainController - main.shape.text: ' + main.shape.text);
  $log.debug('MainController - main.shape.fontFamily: ' + main.shape.fontFamily);
  $log.debug('MainController - main.shape.fontSize: ' + main.shape.fontSize);
+
+
+ main.setShapeName = function(name) {
+ $log.debug('MainController.setShapeName()');
+ // fabric.setActiveObject(main.shape);
+ };
 
  */

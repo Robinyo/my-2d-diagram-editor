@@ -1,0 +1,54 @@
+<uib-accordion close-others="false">
+  <uib-accordion-group class="accordion-panel" ng-init="formatDiagram.open = true" is-open="formatDiagram.open">
+
+    <uib-accordion-heading>
+      {{ 'FORMAT_DIAGRAM' | translate }}
+      <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': formatDiagram.open,
+          'glyphicon-chevron-right': !formatDiagram.open}">
+      </i>
+    </uib-accordion-heading>
+
+    <div class="panel-content">
+      <form name="diagramForm">
+
+        <div class="form-group">
+          <label translate="{{ 'PAPER_SIZE' }}"></label>
+          <select ng-model="main.diagram.paperSize" class="form-control form-content">
+            <option ng-repeat="paperSize in main.paperSizes track by paperSize.id">{{paperSize.value}}</option>
+          </select>
+        </div>
+
+        <label>
+          <input name="cssPre" id="css1" value="Portrait" type="radio" checked="checked">&nbsp;Portrait&nbsp;&nbsp;
+        </label>
+        <label>
+          <input name="cssPre" id="css3" value="Landscape" type="radio">&nbsp;Landscape
+        </label>
+
+      </form>
+    </div>
+
+  </uib-accordion-group>
+</uib-accordion>
+
+<!--
+
+<uib-tabset justified="true">
+  <uib-tab heading="{{ 'FONT' | translate }}">
+    <div class="tab-content">
+      <form name="shapeForm">
+
+        <div class="form-group">
+          <label translate="{{ 'FONT' }}"></label>
+          <select ng-model="main.shape.fontFamily" class="form-control form-content">
+            <option ng-repeat="font in main.fontFamilies track by font.id">{{font.value}}</option>
+          </select>
+        </div>
+
+
+      </form>
+    </div>
+  </uib-tab>
+</uib-tabset>
+
+-->

@@ -10,25 +10,8 @@
   -->
 
   <div ng-hide="main.formatShape">
-
-    <uib-accordion close-others="false">
-      <uib-accordion-group class="accordion-panel" ng-init="formatDiagram.open = true" is-open="formatDiagram.open">
-
-        <uib-accordion-heading>
-          {{ 'FORMAT_DIAGRAM' | translate }}
-          <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': formatDiagram.open,
-          'glyphicon-chevron-right': !formatDiagram.open}">
-          </i>
-        </uib-accordion-heading>
-
-        <div class="form-group">
-          Diagram stuff goes here ...
-        </div>
-
-      </uib-accordion-group>
-    </uib-accordion>
-
-  </div> <!-- end <div ng-hide="main.formatShape"> -->
+    <div ng-include="'app/main/format-diagram.html'"></div>
+  </div>
 
   <!--
   Format Shape
@@ -198,6 +181,18 @@
           <uib-tab heading="{{ 'ARRANGE' | translate }}">
             <div class="tab-content">
               <form name="arrangeForm">
+
+                <div class="form-group">
+                  <label translate="{{ 'ALIGN' }}"></label>
+                </div>
+
+                <div class="form-group">
+                  <label translate="{{ 'POSITION' }}"></label>
+                </div>
+
+                <div class="form-group">
+                  <label translate="{{ 'GROUP' }}"></label>
+                </div>
 
               </form>
             </div>

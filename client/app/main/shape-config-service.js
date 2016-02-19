@@ -169,6 +169,37 @@
       return themes[id];
     };
 
+    const A3_ID    = 0;
+    const A4_ID    = 1;
+    const A5_ID    = 2;
+
+    var paperSizes = [
+      {
+        "id"              : A3_ID,
+        "name"            : "A3",
+        "value"           : "A3 (297mm x 420mm)"
+      },
+      {
+        "id"              : A4_ID,
+        "name"            : "A4",
+        "value"           : "A4 (210mm x 297mm)"
+      },
+      {
+        "id"              : A5_ID,
+        "name"            : "A5",
+        "value"           : "A5 (148mm x 210mm)"
+      }
+
+    ];
+
+    service.getPaperSizes = function() {
+      return paperSizes;
+    };
+
+    service.getPaperSize = function(id) {
+      return paperSizes[id];
+    };
+
   }
 
 })();

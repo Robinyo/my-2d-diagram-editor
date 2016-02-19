@@ -56,9 +56,9 @@
   "MANAGEMENT_ZONE":             "Management Zone",
 
   "FORMAT_DIAGRAM":              "Format Diagram",
+  "PAPER_SIZE":                  "Paper Size",
 
   "FORMAT_SHAPE":                "Format Shape",
-
   "TEXT":                        "Text",
   "NAME":                        "Name",
   "FONT":                        "Font",
@@ -77,7 +77,6 @@
   "STYLE":                       "Style",
   "STYLES":                      "Styles",
   "SHAPE_STYLES":                "Shape Styles",
-
   "THEME":                       "Theme",
   "THEME_STYLES":                "Theme Styles",
   "FILL":                        "Fill",
@@ -85,6 +84,9 @@
   "EFFECTS":                     "Effects",
 
   "ARRANGE":                     "Arrange",
+  "ALIGN":                       "Align",
+  "POSITION":                    "Position",
+  "GROUP":                       "Group",
 
   "COMING_SOON":                 "Coming Soon :)"
 }
