@@ -1,6 +1,6 @@
 <!-- Note: all includes must be relative to the 'index.html' file in the client directory -->
 
-<div ng-include="'app/main/header.html'"></div>
+<div ng-include="'app/main/templates/header.html'"></div>
 
 <!--
   Bootstrap requires a containing element to wrap site contents and house our grid system.
@@ -14,15 +14,15 @@
   <div class="row">
 
     <div id="sidebar-left-container" class="col-md-3 sidebar-left">
-      <div ng-include="'app/main/sidebar-left.html'"></div>
+      <div ng-include="'app/main/templates/sidebar-left.html'"></div>
     </div>
 
     <div id="content-container" class="col-md-9 col-md-offset-3 content-container">
-      <div ng-include="'app/main/content.html'"></div>
+      <div ng-include="'app/main/templates/content.html'"></div>
     </div>
 
     <div id="sidebar-right-container" class="col-md-3 col-md-offset-9 sidebar-right">
-      <div ng-include="'app/main/sidebar-right.html'"></div>
+      <div ng-include="'app/main/templates/sidebar-right.html'"></div>
     </div>
 
   </div>

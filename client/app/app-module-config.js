@@ -129,7 +129,7 @@
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: 'app/main/layout.html',
+        templateUrl: 'app/main/templates/layout.html',
         controller: 'MainController',
         controllerAs: 'main'
         /*
