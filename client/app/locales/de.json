@@ -1,5 +1,5 @@
 {
-  "BRAND_NAME":                  "Robs Super 2D- Diagrammeditor",
+  "BRAND_NAME":                  "Rob's Awesome 2D Diagrammeditor",
 
   "TOGGLE_NAVIGATION":           "Toggle -Navigation",
   "SIGN_IN":                     "Anmelden",
@@ -22,13 +22,13 @@
 
   "VIEW":                        "Aussicht",
   "GRID":                        "Gitter",
-  "SNAP_TO_GRID":                "Snap to Grid",
+  "SNAP_TO_GRID":                "Am Raster ausrichten",
 
-  "ARRANGE":                     "Arrange",
+  "ARRANGE":                     "Arrangieren",
   "BRING_FORWARD":               "Bring Forward",
-  "BRING_TO_FRONT":              "Bring to Front",
-  "SEND_BACKWARD":               "Send Backward",
-  "SEND_TO_BACK":                "Send to Back",
+  "BRING_TO_FRONT":              "Voran bringen",
+  "SEND_BACKWARD":               "Nach hinten",
+  "SEND_TO_BACK":                "In den Hintergrund",
 
   "OPTIONS":                     "Optionen",
   "LANGUAGE":                    "Sprache",
@@ -37,8 +37,8 @@
   "ZOOM_IN":                     "Hineinzoomen",
   "ZOOM_OUT":                    "Rauszoomen",
 
-  "POINTER":                     "Set Pointer Mode",
-  "CONNECTOR":                   "Set Connector Mode",
+  "POINTER":                     "Set Pointer - Modus",
+  "CONNECTOR":                   "Set Anschluss - Modus",
   "LOCK":                        "Sperren",
   "COMMENT":                     "Kommentar",
 
@@ -46,7 +46,7 @@
   "SQUARE":                      "Platz",
   "RECTANGLE":                   "Rechteck",
 
-  "NODE":                        "Node",
+  "NODE":                        "Knoten",
 
   "CONTAINERS":                  "Behälter",
   "CONTROLLED_ZONE":             "Kontrollierten Zone",
@@ -56,9 +56,11 @@
   "MANAGEMENT_ZONE":             "Verwaltungszone",
 
   "FORMAT_DIAGRAM":              "Formatdiagramm",
+  "PAPER_SIZE":                  "Papier größe",
+  "PORTRAIT":                    "Porträt",
+  "LANDSCAPE":                   "Landschaft",
 
   "FORMAT_SHAPE":                "Shape formatieren",
-
   "TEXT":                        "Text",
   "NAME":                        "Name",
   "FONT":                        "Schriftart",
@@ -75,8 +77,18 @@
   "ALIGN_BOTTOM":                "unten ausrichten",
 
   "STYLE":                       "Stil",
+  "STYLES":                      "Styles",
+  "SHAPE_STYLES":                "Formenarten",
+  "THEME":                       "Thema",
+  "THEME_STYLES":                "Stilarten",
+  "FILL":                        "Füllen",
+  "LINE":                        "Linie",
+  "EFFECTS":                     "Auswirkungen",
 
   "ARRANGE":                     "Arrangieren",
+  "ALIGN":                       "Ausrichten",
+  "POSITION":                    "Position",
+  "GROUP":                       "Gruppe",
 
 
   "COMING_SOON":                 "Demnächst :)"
