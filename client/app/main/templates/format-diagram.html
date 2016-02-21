@@ -1,3 +1,8 @@
+<!--
+  Note: Where possible you should prefer the translateDirective (e.g., translate="{{ 'BRAND_NAME' }}") to
+  the translateFilter (e.g., {{ 'BRAND_NAME' | translate }}).
+-->
+
 <uib-accordion close-others="false">
   <uib-accordion-group class="accordion-panel" ng-init="formatDiagram.open = true" is-open="formatDiagram.open">
 
@@ -18,10 +23,12 @@
           </select>
 
           <label class="radio-button-label">
-            <input class="form-content" type="radio" checked="checked">&nbsp;{{ 'PORTRAIT' | translate }}&nbsp;&nbsp;
+            <input type="radio" ng-checked="main.pageView.portrait"
+                   ng-click="main.togglePageViewOrientation()">&nbsp;{{ 'PORTRAIT' | translate }}&nbsp;&nbsp;
           </label>
           <label class="radio-button-label">
-            <input class="radio-button form-content" type="radio">&nbsp;{{ 'LANDSCAPE' | translate }}
+              <input type="radio" ng-checked="main.pageView.landscape"
+                     ng-click="main.togglePageViewOrientation()">&nbsp;{{ 'LANDSCAPE' | translate }}
           </label>
         </div>
 
@@ -31,7 +38,8 @@
           <div class="clearfix"></div>
 
           <label>
-            <input type="radio">&nbsp;{{ 'GRID' | translate }}
+            <input type="radio" ng-checked="main.grid.show"
+                   ng-click="main.showGrid(!main.grid.show)">&nbsp;{{ 'GRID' | translate }}
           </label>
         </div>
 
@@ -41,7 +49,8 @@
           <div class="clearfix"></div>
 
           <label>
-            <input type="radio">&nbsp;{{ 'SNAP_TO_GRID' | translate }}
+            <input type="radio" ng-checked="main.grid.snapTo"
+                   ng-click="main.snapToGrid(!main.grid.snapTo)">&nbsp;{{ 'SNAP_TO_GRID' | translate }}
           </label>
         </div>
 

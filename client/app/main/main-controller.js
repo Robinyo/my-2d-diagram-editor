@@ -48,6 +48,10 @@
 
     main.paperSizes = shapeConfig.getPaperSizes();
 
+    main.pageView = {};
+    main.pageView.portrait = true;
+    main.pageView.landscape = false;
+
     main.shapes = shapeConfig.getShapes();
     main.fontFamilies = shapeConfig.getFontFamilies();
     main.fontSizes = shapeConfig.getFontSizes();
@@ -187,30 +191,34 @@
       fabric.removeActiveObjectFromCanvas();
     };
 
+    main.togglePageViewOrientation = function() {
+      $log.debug('MainController.togglePageViewOrientation()');
+      main.pageView.portrait = !main.pageView.portrait;
+      main.pageView.landscape = !main.pageView.portrait;
+    };
+
     main.toggleGrid = function() {
-
       $log.debug('MainController.toggleGrid()');
-
       main.grid.show = !main.grid.show;
+      fabric.showGrid(main.grid.show);
+    };
 
-      if (main.grid.show) {
-        fabric.showGrid(true);
-      } else {
-        fabric.showGrid(false);
-      }
+    main.showGrid = function(flag) {
+      $log.debug('MainController.showGrid()');
+      main.grid.show = flag;
+      fabric.showGrid(main.grid.show);
     };
 
     main.toggleSnapToGrid = function() {
-
       $log.debug('MainController.toggleSnapToGrid()');
-
       main.grid.snapTo = !main.grid.snapTo;
+      fabric.snapToGrid(main.grid.snapTo);
+    };
 
-      if (main.grid.snapTo) {
-        fabric.snapToGrid(true);
-      } else {
-        fabric.snapToGrid(false);
-      }
+    main.snapToGrid = function(flag) {
+      $log.debug('MainController.snapToGrid()');
+      main.grid.snapTo = flag;
+      fabric.snapToGrid(main.grid.snapTo);
     };
 
     main.setPointerMode = function() {
