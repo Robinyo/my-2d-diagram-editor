@@ -16,14 +16,36 @@
           <select ng-model="main.diagram.paperSize" class="form-control form-content">
             <option ng-repeat="paperSize in main.paperSizes track by paperSize.id">{{paperSize.value}}</option>
           </select>
+
+          <label class="radio-button-label">
+            <input class="form-content" type="radio" checked="checked">&nbsp;{{ 'PORTRAIT' | translate }}&nbsp;&nbsp;
+          </label>
+          <label class="radio-button-label">
+            <input class="radio-button form-content" type="radio">&nbsp;{{ 'LANDSCAPE' | translate }}
+          </label>
         </div>
 
-        <label>
-          <input name="cssPre" id="css1" value="Portrait" type="radio" checked="checked">&nbsp;Portrait&nbsp;&nbsp;
-        </label>
-        <label>
-          <input name="cssPre" id="css3" value="Landscape" type="radio">&nbsp;Landscape
-        </label>
+        <div class="form-group">
+          <label translate="{{ 'VIEW' }}"></label>
+
+          <div class="clearfix"></div>
+
+          <label>
+            <input type="radio">&nbsp;{{ 'GRID' | translate }}
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label translate="{{ 'OPTIONS' }}"></label>
+
+          <div class="clearfix"></div>
+
+          <label>
+            <input type="radio">&nbsp;{{ 'SNAP_TO_GRID' | translate }}
+          </label>
+        </div>
+
+
 
       </form>
     </div>

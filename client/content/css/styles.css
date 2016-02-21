@@ -87,6 +87,10 @@ body {
   padding: 5px;
 }
 
+.radio-button-label {
+  padding-top: 10px;
+}
+
 .nav-tabs.nav-justified > li.active > a,
 .nav-tabs.nav-justified > li.active > a:hover,
 .nav-tabs.nav-justified > li.active > a:focus{

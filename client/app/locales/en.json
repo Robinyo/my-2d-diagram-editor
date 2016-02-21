@@ -57,6 +57,8 @@
 
   "FORMAT_DIAGRAM":              "Format Diagram",
   "PAPER_SIZE":                  "Paper Size",
+  "PORTRAIT":                    "Portrait",
+  "LANDSCAPE":                   "Landscape",
 
   "FORMAT_SHAPE":                "Format Shape",
   "TEXT":                        "Text",

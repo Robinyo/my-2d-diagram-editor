@@ -156,7 +156,7 @@
       {
         "id"              : COOLORS_ID,
         "name"            : "COOLORS",
-        "value"           : "Coolors"
+        "value"           : "Coolors (coolors.co)"   // https://coolors.co
       }
 
     ];
