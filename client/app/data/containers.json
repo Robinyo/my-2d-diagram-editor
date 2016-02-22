@@ -1,0 +1,37 @@
+[
+  {
+    "id"              : 1,
+    "name"            : "CONTROLLED_ZONE",
+    "value"           : "Controlled Zone",
+    "src"             : "http://placehold.it/32x32/E3F09B",
+    "backgroundColor" : "#E3F09B"
+  },
+  {
+    "id"              : 2,
+    "name"            : "RESTRICTED_ZONE",
+    "value"           : "Restricted Zone",
+    "src"             : "http://placehold.it/32x32/F7D08A",
+    "backgroundColor" : "#F7D08A"
+  },
+  {
+    "id"              : 3,
+    "name"            : "SECURED_ZONE",
+    "value"           : "Secured Zone",
+    "src"             : "http://placehold.it/32x32/87B6A7",
+    "backgroundColor" : "#87B6A7"
+  },
+  {
+    "id"              : 4,
+    "name"            : "PARTNER_ZONE",
+    "value"           : "Partner Zone",
+    "src"             : "http://placehold.it/32x32/F79F79",
+    "backgroundColor" : "#F79F79"
+  },
+  {
+    "id"              : 5,
+    "name"            : "MANAGEMENT_ZONE",
+    "value"           : "Management Zone",
+    "src"             : "http://placehold.it/32x32/5B5941",
+    "backgroundColor" : "#5B5941"
+  }
+]

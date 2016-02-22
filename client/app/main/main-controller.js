@@ -31,9 +31,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  MainController.$inject = ['$log', '$translate', '$scope', 'shapeConfig', 'containerConfig', 'fabric', 'fabricConfig'];
+  MainController.$inject = ['$log', '$translate', '$scope', '$http', 'shapeConfig', 'containerConfig', 'fabric', 'fabricConfig'];
 
-  function MainController($log, $translate, $scope, shapeConfig, containerConfig, fabric, fabricConfig) {
+  function MainController($log, $translate, $scope, $http, shapeConfig, containerConfig, fabric, fabricConfig) {
 
     $log.debug('MainController');
 
@@ -57,7 +57,16 @@
     main.fontSizes = shapeConfig.getFontSizes();
     main.themes = shapeConfig.getThemes();
 
-    main.containers = containerConfig.getContainers();
+    // main.containers = containerConfig.getContainers();
+    main.containers = [];
+
+    $http.get('app/data/containers.json').
+      then(function(response) {
+        main.containers = response.data;
+        $log.debug('MainController - loaded containers.json');
+      }, function(response) {
+        $log.error('Could not load containers.json');
+      });
 
     main.canvas = null;
     main.grid = { show: true, snapTo: false};
