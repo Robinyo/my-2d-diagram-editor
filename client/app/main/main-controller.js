@@ -31,9 +31,9 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  MainController.$inject = ['$log', '$translate', '$scope', '$http', 'shapeConfig', 'containerConfig', 'fabric', 'fabricConfig'];
+  MainController.$inject = ['$log', '$translate', '$scope', 'containersModel', 'shapeConfig', 'containerConfig', 'fabric', 'fabricConfig'];
 
-  function MainController($log, $translate, $scope, $http, shapeConfig, containerConfig, fabric, fabricConfig) {
+  function MainController($log, $translate, $scope, containersModel, shapeConfig, containerConfig, fabric, fabricConfig) {
 
     $log.debug('MainController');
 
@@ -58,15 +58,19 @@
     main.themes = shapeConfig.getThemes();
 
     // main.containers = containerConfig.getContainers();
-    main.containers = [];
+    main.containers = null;
 
-    $http.get('app/data/containers.json').
-      then(function(response) {
-        main.containers = response.data;
-        $log.debug('MainController - loaded containers.json');
-      }, function(response) {
-        $log.error('Could not load containers.json');
-      });
+    main.getContainers = function () {
+      containersModel.find()
+        .then(function (response) {
+          main.containers = (response !== 'null') ? response.data : [];
+          $log.debug('MainController - loaded containers');
+        }, function (response) {
+          $log.debug('MainController - could not load containers');
+        });
+    };
+
+    main.getContainers();
 
     main.canvas = null;
     main.grid = { show: true, snapTo: false};
@@ -163,7 +167,6 @@
 
     const RECT_WIDTH = 300;
     const RECT_HEIGHT = 300;
-    // const FONT_SIZE = 20;
     const FONT_SIZE = '20';
     const FONT_WEIGHT = 'bold';
 
