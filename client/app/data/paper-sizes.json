@@ -1,0 +1,17 @@
+[
+  {
+    "id"              : 1,
+    "name"            : "A3",
+    "value"           : "A3 (297mm x 420mm)"
+  },
+  {
+    "id"              : 2,
+    "name"            : "A4",
+    "value"           : "A4 (210mm x 297mm)"
+  },
+  {
+    "id"              : 3,
+    "name"            : "A5",
+    "value"           : "A5 (148mm x 210mm)"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "id"              : 1,
+    "name"            : "EIGHT",
+    "value"           : "8"
+  },
+  {
+    "id"              : 2,
+    "name"            : "TEN",
+    "value"           : "10"
+  },
+  {
+    "id"              : 3,
+    "name"            : "TWELVE",
+    "value"           : "12"
+  },
+  {
+    "id"              : 4,
+    "name"            : "FOURTEEN",
+    "value"           : "14"
+  },
+  {
+    "id"              : 5,
+    "name"            : "SIXTEEN",
+    "value"           : "16"
+  },
+  {
+    "id"              : 6,
+    "name"            : "EIGHTEEN",
+    "value"           : "18"
+  },
+  {
+    "id"              : 7,
+    "name"            : "TWENTY",
+    "value"           : "20"
+  }
+]

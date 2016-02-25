@@ -31,9 +31,11 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  MainController.$inject = ['$log', '$translate', '$scope', 'containersModel', 'shapeConfig', 'containerConfig', 'fabric', 'fabricConfig'];
+  MainController.$inject = ['$log', '$translate', '$scope', 'containersModel', 'shapesModel',
+    'paperSizesModel', 'fontFamiliesModel', 'fontSizesModel', 'themesModel', 'fabric', 'fabricConfig'];
 
-  function MainController($log, $translate, $scope, containersModel, shapeConfig, containerConfig, fabric, fabricConfig) {
+  function MainController($log, $translate, $scope, containersModel, shapesModel,
+                          paperSizesModel, fontFamiliesModel, fontSizesModel, themesModel, fabric, fabricConfig) {
 
     $log.debug('MainController');
 
@@ -46,47 +48,112 @@
 
     var main = this;
 
-    main.paperSizes = shapeConfig.getPaperSizes();
+    //
+    // Shapes and Containers
+    //
 
+    main.shapes = null;
+    main.containers = null;
+
+    var containerDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
+
+    //
+    // Format Diagram
+    //
+
+    const A4_ARRAY_INDEX = 1;
+
+    main.diagram = {};
+    // main.diagram.paperSize = main.paperSizes[A4_ARRAY_INDEX].value;
+
+    main.paperSizes = null;
     main.pageView = {};
     main.pageView.portrait = true;
     main.pageView.landscape = false;
 
-    main.shapes = shapeConfig.getShapes();
-    main.fontFamilies = shapeConfig.getFontFamilies();
-    main.fontSizes = shapeConfig.getFontSizes();
-    main.themes = shapeConfig.getThemes();
+    //
+    // Format Shape
+    //
 
-    // main.containers = containerConfig.getContainers();
-    main.containers = null;
+    main.formatShape = false;
+    main.shape = {};
+
+    main.fontFamilies = null;
+    main.fontSizes = null;
+    main.themes = null;
+
+    main.nodeId = 1;
+
+    var nodeDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
+
+    //
+    // Canvas
+    //
+
+    main.canvas = null;
+    main.grid = { show: true, snapTo: false};
+
+    main.getShapes = function () {
+      shapesModel.find()
+        .then(function (response) {
+          main.shapes = (response !== 'null') ? response.data : [];
+        }, function (response) {
+          $log.error('MainController - could not load shapes');
+        });
+    };
 
     main.getContainers = function () {
       containersModel.find()
         .then(function (response) {
           main.containers = (response !== 'null') ? response.data : [];
-          $log.debug('MainController - loaded containers');
         }, function (response) {
-          $log.debug('MainController - could not load containers');
+          $log.error('MainController - could not load containers');
         });
     };
 
+    main.getPaperSizes = function () {
+      paperSizesModel.find()
+        .then(function (response) {
+          main.paperSizes = (response !== 'null') ? response.data : [];
+          main.diagram.paperSize = main.paperSizes[A4_ARRAY_INDEX].value;
+        }, function (response) {
+          $log.error('MainController - could not load paper sizes');
+        });
+    };
+
+    main.getFontFamilies = function () {
+      fontFamiliesModel.find()
+        .then(function (response) {
+          main.fontFamilies = (response !== 'null') ? response.data : [];
+        }, function (response) {
+          $log.error('MainController - could not load font families');
+        });
+    };
+
+    main.getFontSizes = function () {
+      fontSizesModel.find()
+        .then(function (response) {
+          main.fontSizes = (response !== 'null') ? response.data : [];
+        }, function (response) {
+          $log.error('MainController - could not load font sizes');
+        });
+    };
+
+    main.getThemes = function () {
+      themesModel.find()
+        .then(function (response) {
+          main.themes = (response !== 'null') ? response.data : [];
+        }, function (response) {
+          $log.error('MainController - could not load themes');
+        });
+    };
+
+    main.getShapes();
     main.getContainers();
-
-    main.canvas = null;
-    main.grid = { show: true, snapTo: false};
-
-    main.nodeId = 1;
-
-    var nodeDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
-    var containerDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
-
-    main.formatShape = false;
-    main.shape = {};
-
-    const A4_ID = 1;
-
-    main.diagram = {};
-    main.diagram.paperSize = main.paperSizes[A4_ID].value;
+    main.getPaperSizes();
+    main.getFontFamilies();
+    main.getFontSizes();
+    main.getThemes();
 
     main.init = function () {
 

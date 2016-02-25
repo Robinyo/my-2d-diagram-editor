@@ -7,7 +7,7 @@
    */
 
   angular.module('app.main')
-    .service('containersModel', containersModel);
+    .service('themesModel', themesModel);
 
   /*
    * Use $inject to manually identify your dependencies for Angular components.
@@ -15,12 +15,12 @@
    * dependencies. If ng-annotate detects injection has already been made, it will not duplicate it.
    */
 
-  containersModel.$inject = ['$log', '$http', 'EndpointConfigService'];
+  themesModel.$inject = ['$log', '$http', 'EndpointConfigService'];
 
-  function containersModel($log, $http, EndpointConfigService) {
+  function themesModel($log, $http, EndpointConfigService) {
 
     var service = this;
-    var MODEL = 'containers';
+    var MODEL = 'themes';
 
     service.find = function () {
       return $http.get(EndpointConfigService.getUrl(MODEL))
@@ -29,9 +29,8 @@
           return response;
         }, function(response) {
           $log.error('Could not load model: ' + MODEL);
-      });
+        });
     };
   }
 
 })();
-

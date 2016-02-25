@@ -24,7 +24,7 @@
     var service = this;
     var CURRENT_BACKEND = 'node';
 
-    $log.debug('EndpointConfigService - endpoint: ' + CURRENT_BACKEND);
+    // $log.debug('EndpointConfigService - endpoint: ' + CURRENT_BACKEND);
 
     var endpointMap = {
         node: { URI: 'http://localhost:3000/', root: 'app/data/', format: '.json'},

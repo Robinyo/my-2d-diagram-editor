@@ -1,0 +1,9 @@
+[
+  {
+    "id"              : 1,
+    "name"            : "NODE",
+    "value"           : "Node",
+    "src"             : "content/images/icons/32x32/light-gray.png",
+    "backgroundColor" : "GRAY"
+  }
+]
