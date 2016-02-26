@@ -175,6 +175,10 @@
 
         main.shape = fabric.getActiveObject();
         main.formatShape = true;
+
+        document.getElementById("format-diagram-container").style.display = "none";
+        document.getElementById("format-shape-container").style.display = "block";
+        // document.getElementById("format-shape-container").focus();
       });
 
       /*
@@ -189,6 +193,10 @@
 
         main.shape = null;
         main.formatShape = false;
+
+        document.getElementById("format-shape-container").style.display = "none";
+        document.getElementById("format-diagram-container").style.display = "block";
+        // document.getElementById("format-diagram-container").focus();
       });
 
     };

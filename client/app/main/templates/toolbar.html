@@ -51,6 +51,11 @@
       </button>
 
     </div>
+
+     <label class="btn btn-primary" uib-tooltip="{{ 'SEND_BACKWARD' | translate }}" tooltip-append-to-body="true">
+        <span class="fa fa-toggle-left fa-lg fa-fw"></span>
+      </label>
+
     -->
 
     <button type="button" class="btn btn-default" ng-click="main.editDelete()"
@@ -58,18 +63,16 @@
       <span class="fa fa-trash fa-lg"></span>
     </button>
 
-    <!--
     <div class="btn-group" role="group">
       <button type="button" class="btn btn-default" ng-click="main.bringForward()"
               uib-tooltip="{{ 'BRING_FORWARD' | translate }}">
         <span class="fa fa-toggle-right fa-lg fa-fw"></span>
       </button>
       <button type="button" class="btn btn-default" ng-click="main.sendBackward()"
-              uib-tooltip="{{ 'SEND_BACKWARD' | translate }}">
+              uib-tooltip="{{ 'SEND_BACKWARD' | translate }}" tooltip-append-to-body="true">
         <span class="fa fa-toggle-left fa-lg fa-fw"></span>
       </button>
     </div>
-    -->
 
     <button type="button" class="btn btn-default" ng-click="main.setPointerMode()"
             uib-tooltip="{{ 'POINTER' | translate }}">

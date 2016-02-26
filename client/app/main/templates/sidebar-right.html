@@ -2,13 +2,27 @@
 
 <div>
 
-  <div ng-hide="main.formatShape">
+  <div id="format-diagram-container">
     <div ng-include="'app/main/templates/format-diagram.html'"></div>
   </div>
 
-  <div ng-show="main.formatShape">
+  <div id="format-shape-container" ng-show="main.formatShape">
     <div ng-include="'app/main/templates/format-shape.html'"></div>
   </div>
 
 </div>
 
+<!--
+
+  ng-style="{'display':none}"
+  ng-style="{display:none}"
+
+  <div id="format-diagram-container" ng-hide="main.formatShape">
+    <div ng-include="'app/main/templates/format-diagram.html'"></div>
+  </div>
+
+  <div id="format-shape-container" ng-show="main.formatShape">
+    <div ng-include="'app/main/templates/format-shape.html'"></div>
+  </div>
+
+-->

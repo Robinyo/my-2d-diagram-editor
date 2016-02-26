@@ -22,14 +22,18 @@
   function EndpointConfigService($log) {
 
     var service = this;
-    var CURRENT_BACKEND = 'node';
+    var CURRENT_BACKEND = 'gulpWebServer';
+    // var CURRENT_BACKEND = 'httpServer';
+    // var CURRENT_BACKEND = 'node';
 
     // $log.debug('EndpointConfigService - endpoint: ' + CURRENT_BACKEND);
 
     var endpointMap = {
-        node: { URI: 'http://localhost:3000/', root: 'app/data/', format: '.json'},
-        firebase: { URI: 'https://my-2d-diagram-editor.firebaseio.com/', root: 'app/data/', format: '.json' }
-      };
+      gulpWebServer: { URI: 'http://localhost:8001/', root: 'app/data/', format: '.json'},
+      httpServer: { URI: 'http://127.0.0.1:8080/', root: 'app/data/', format: '.json'},
+      node: { URI: 'http://localhost:3000/', root: 'app/data/', format: '.json'},
+      firebase: { URI: 'https://my-2d-diagram-editor.firebaseio.com/', root: 'app/data/', format: '.json' }
+    };
 
     var currentEndpoint = endpointMap[CURRENT_BACKEND];
     var backend = CURRENT_BACKEND;
@@ -39,13 +43,15 @@
       return currentEndpoint.URI + currentEndpoint.root + model + currentEndpoint.format;
     };
 
-
   }
 
 })();
 
 /*
 
+ https://github.com/indexzero/http-server
 
+ cd ~/opt/WebStorm/projects/my-2d-diagram-editor/client
+ http-server
 
  */
