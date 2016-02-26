@@ -23,8 +23,12 @@
 
     var service = this;
 
-    const FROM_ARROW_FILL = 'RED';
-    const TO_ARROW_FILL = 'GREEN';
+    // http://htmlcolorcodes.com/color-names/
+
+    const DEFAULT_ARROW_FILL = 'BLACK';
+    const FROM_ARROW_FILL = 'BLACK';  // 'RED'
+    const TO_ARROW_FILL = 'BLACK';    // 'GREEN'
+    const MOUSE_OVER_ARROW_FILL = 'LIME';
 
     service.canvas = null;
 
@@ -48,11 +52,7 @@
     service.isMouseDown = false;
     service.fromObject = null;
 
-
-
-    service.formatShape = { show: false};
-
-
+    // service.formatShape = { show: false};
 
     $log.debug('ui-fabric');
 
@@ -591,7 +591,9 @@
     // actual position of the mouse pointer otherwise fabric.js thinks it is over ('mouse:over') the arrow.
     // TODO: Offset the x coordinate if the line is horizontal, the y coordinate if the line is vertical
 
-    service.mouseMoveListener = function(options) {
+    /*
+
+    service.mouseMoveListenerWithArrow = function(options) {
 
       // $log.debug('mouseMoveListener()');
 
@@ -610,6 +612,23 @@
         service.connectorLineFromArrow = service.createArrow([service.connectorLine.left,
           service.connectorLine.top, (pointer.x - CORNER_SIZE), (pointer.y)], service.arrowDefaults);
 
+        service.canvas.renderAll();
+      }
+    };
+
+    */
+
+    service.mouseMoveListener = function(options) {
+
+      // $log.debug('mouseMoveListener()');
+
+      if (!service.isMouseDown) return;
+
+      if (service.connectorMode) {
+
+        var pointer = service.canvas.getPointer(options.e);
+
+        service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
         service.canvas.renderAll();
       }
     };
@@ -766,7 +785,7 @@
           // $log.debug('service.fromObject.connectors: ' + JSON.stringify(['e', service.fromObject.connectors], null, '\t'));
           // $log.debug('service.selectedObject.connectors: ' + JSON.stringify(['e', service.selectedObject.connectors], null, '\t'));
 
-          arrowOptions.fill = 'BLACK';
+          arrowOptions.fill = DEFAULT_ARROW_FILL;
 
           if (service.connectorLineFromArrow) {
             $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLineFromArrow)');
@@ -883,7 +902,7 @@
 
       if (element.target.type === 'arrow') {
         element.target.hoverCursor = 'pointer';
-        element.target.setFill('BLUE');
+        element.target.setFill(MOUSE_OVER_ARROW_FILL);
         service.canvas.renderAll();
         // return;
       }
@@ -975,8 +994,8 @@
       }
 
       // $rootScope.$broadcast('shape:selected');
-      service.formatShape.show = true;
-      $log.debug('objectSelectedListener() - service.formatShape.show: ' + service.formatShape.show);
+      // service.formatShape.show = true;
+      // $log.debug('objectSelectedListener() - service.formatShape.show: ' + service.formatShape.show);
 
     };
 
@@ -986,8 +1005,8 @@
       service.activeObject = null;
 
       // $rootScope.$broadcast('diagram:selected');
-      service.formatShape.show = false;
-      $log.debug('selectionClearedListener() - service.formatShape.show: ' + service.formatShape.show);
+      // service.formatShape.show = false;
+      // $log.debug('selectionClearedListener() - service.formatShape.show: ' + service.formatShape.show);
 
     };
 
