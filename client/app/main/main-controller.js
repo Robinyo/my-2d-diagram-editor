@@ -55,7 +55,7 @@
     main.shapes = null;
     main.containers = null;
 
-    var containerDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
+    main.containerDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
 
     //
     // Format Diagram
@@ -84,7 +84,7 @@
 
     main.nodeId = 1;
 
-    var nodeDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
+    main.nodeDefaults = angular.copy(fabricConfig.getRectWithTextDefaults());
 
     //
     // Canvas
@@ -212,6 +212,8 @@
       main.newNode(name, fill);
     };
 
+    const GRID_SIZE = 50;
+
     main.newNode = function(name, fill) {
 
       $log.debug('MainController.newNode()');
@@ -219,8 +221,8 @@
       fabric.setConnectorMode(false);
 
       name = name || 'NODE';
-      fill = fill || 'GRAY';
-      nodeDefaults.fill = fill;
+      fill = fill || 'GRAY';  // http://htmlcolorcodes.com/color-names/
+      main.nodeDefaults.fill = fill;
 
       $translate(name)
         .then(function (translatedValue) {
@@ -228,7 +230,9 @@
           var id = main.nodeId++;
           var text = translatedValue + ' ' + id;
 
-          var object = fabric.addRectWithText(text, nodeDefaults);
+          // main.nodeDefaults.left = (main.nodeDefaults.width * id) + (GRID_SIZE * id);
+
+          var object = fabric.addRectWithText(text, main.nodeDefaults);
           object.set('type', 'node');
           object.id = id;
           // object.name = text;
@@ -251,16 +255,16 @@
 
       name = name || 'CONTROLLED_ZONE';
       fill = fill || 'GRAY';
-      containerDefaults.fill = fill;
-      containerDefaults.fontSize = FONT_SIZE;
-      containerDefaults.fontWeight = FONT_WEIGHT;
-      containerDefaults.width = RECT_WIDTH;
-      containerDefaults.height = RECT_HEIGHT;
-      containerDefaults.textYAlign = 'top';
+      main.containerDefaults.fill = fill;
+      main.containerDefaults.fontSize = FONT_SIZE;
+      main.containerDefaults.fontWeight = FONT_WEIGHT;
+      main.containerDefaults.width = RECT_WIDTH;
+      main.containerDefaults.height = RECT_HEIGHT;
+      main.containerDefaults.textYAlign = 'top';
 
       $translate(name)
         .then(function (translatedValue) {
-          var object = fabric.addRectWithText(translatedValue, containerDefaults);
+          var object = fabric.addRectWithText(translatedValue, main.containerDefaults);
           object.set('type', 'container');
 
           fabric.setActiveObject(object);
@@ -314,7 +318,8 @@
     main.setConnectorMode = function() {
       $log.debug('MainController.setConnectorMode()');
       fabric.setConnectorMode(true);
-      fabric.snapToGrid(false);
+      main.grid.snapTo = false;
+      fabric.snapToGrid(main.grid.snapTo);
     };
 
     // Arrange Menu Items

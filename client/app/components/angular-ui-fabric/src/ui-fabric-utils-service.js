@@ -68,6 +68,8 @@
 
     };
 
+    // Clockwise
+
     service.getNextTargetPort = function(port) {
 
       // $log.debug('getNextTargetPort - port: ' + port);

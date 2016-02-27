@@ -528,9 +528,24 @@
       var object = options.target;
 
       //
+      // Snap to grid
+      //
+
+      if (service.canvasDefaults.grid.snapTo) {
+        object.set({
+          left: Math.round(options.target.left /
+          service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size,
+          top: Math.round(options.target.top /
+          service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size
+        });
+      }
+
+      //
       // If the Object being moved has Connectors, we need to update their position.
       //
       if (object.connectors) {
+
+        $log.debug(object.text + ' is moving!');
 
         var portCenter = null;
         var i = null;
@@ -566,23 +581,25 @@
 
         service.canvas.renderAll();
       }
-
-      //
-      // Snap to grid
-      //
-
-      if (service.canvasDefaults.grid.snapTo) {
-        object.set({
-          left: Math.round(options.target.left /
-          service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size,
-          top: Math.round(options.target.top /
-          service.canvasDefaults.grid.size) * service.canvasDefaults.grid.size
-        });
-      }
-
     };
 
     // Mouse
+
+
+    service.mouseMoveListener = function(options) {
+
+      // $log.debug('mouseMoveListener()');
+
+      if (!service.isMouseDown) return;
+
+      if (service.connectorMode) {
+
+        var pointer = service.canvas.getPointer(options.e);
+
+        service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
+        service.canvas.renderAll();
+      }
+    };
 
     const CORNER_SIZE = 10;  // as per ui-fabric-config-service.js
 
@@ -591,11 +608,9 @@
     // actual position of the mouse pointer otherwise fabric.js thinks it is over ('mouse:over') the arrow.
     // TODO: Offset the x coordinate if the line is horizontal, the y coordinate if the line is vertical
 
-    /*
-
     service.mouseMoveListenerWithArrow = function(options) {
 
-      // $log.debug('mouseMoveListener()');
+      // $log.debug('mouseMoveListenerWithArrow()');
 
       if (!service.isMouseDown) return;
 
@@ -616,23 +631,6 @@
       }
     };
 
-    */
-
-    service.mouseMoveListener = function(options) {
-
-      // $log.debug('mouseMoveListener()');
-
-      if (!service.isMouseDown) return;
-
-      if (service.connectorMode) {
-
-        var pointer = service.canvas.getPointer(options.e);
-
-        service.connectorLine.set({ x2: pointer.x, y2: pointer.y });
-        service.canvas.renderAll();
-      }
-    };
-
     service.mouseDownListener = function(options) {
 
       $log.debug('mouseDownListener()');
@@ -648,6 +646,11 @@
           service.fromObject = service.selectedObject;
 
           var points = null;
+
+          //
+          // Fabric "remembers" the last port you we're successfully over.
+          // Which means you will only receive a __corner === 'undefined' once per object (node).
+          //
 
           if (service.fromObject.__corner === undefined) {
             $log.debug('mouseDownListener() - service.fromObject.__corner === undefined');
@@ -702,14 +705,36 @@
         if (service.selectedObject) {
 
           //
-          // If we're not over a connection port, return.
+          // The from object and the to object must be different objects (nodes).
           //
-          if (service.selectedObject.__corner === undefined) {
+          if (service.selectedObject === service.fromObject) {
+
+            $log.debug('mouseUpListener() - service.selectedObject === service.fromObject');
+
             if (service.connectorLine) {
-              $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLine)');
               removeObjectFromCanvas(service.connectorLine, false);
               if (service.connectorLineFromArrow) {
-                $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLineFromArrow)');
+                removeObjectFromCanvas(service.connectorLineFromArrow, false);
+              }
+            }
+
+            service.connectorLineFromArrow = null;
+            service.connectorLineFromPort = null;
+            service.connectorLine = null;
+
+            return;
+          }
+
+          //
+          // If we're not over a connection port, then we need to remove the connector (line) and return.
+          //
+          if (service.selectedObject.__corner === undefined) {
+
+            if (service.connectorLine) {
+              $log.debug('mouseUpListener() - removeObjectFromCanvas(service.connectorLine)');
+              removeObjectFromCanvas(service.connectorLine, false);
+              if (service.connectorLineFromArrow) {
+                $log.debug('mouseUpListener() - removeObjectFromCanvas(service.connectorLineFromArrow)');
                 removeObjectFromCanvas(service.connectorLineFromArrow, false);
               }
             }
@@ -718,14 +743,14 @@
             return;
           }
 
-          //
-          // End of the line (from --> to)
-          //
+          // We're over a connection port, and the user has finished (mouse:up) drawing the connector (line).
+          // object(fromPort) <-- toArrow -- connector -- fromArrow --> (toPort)otherObject
+          // one arrow faces towards the object <--, the other faces away from --> the object
 
           var toPort = service.selectedObject.__corner;
           var arrowOptions = service.arrowDefaults;
 
-          $log.debug('mouse:up - toPort: ' + toPort);
+          $log.debug('mouseUpListener() - toPort: ' + toPort);
 
           portCenter = fabricUtils.getPortCenterPoint(service.selectedObject, toPort);
           service.connectorLine.set({ x2: portCenter.x2, y2: portCenter.y2 });
@@ -758,7 +783,18 @@
           toArrow.port = service.connectorLineFromPort;
           toArrow.line = fromArrow.line;
 
+          //
+          // Arrays in JavaScript are zero-based.
+          //
+
           var index = service.fromObject.connectors.fromPort.length;
+
+          if (index !== 0) {
+            index = index - 1;
+          }
+
+          $log.debug('mouseUpListener() - index: ' + index);
+
           fromArrow.index = index;
           toArrow.index = index;
 
@@ -782,6 +818,8 @@
           service.selectedObject.connectors.toArrow.push(toArrow);
           service.selectedObject.connectors.otherObject.push(service.fromObject);
 
+          $log.info(service.fromObject.text + ' and ' + service.selectedObject.text + ' are connected!');
+
           // $log.debug('service.fromObject.connectors: ' + JSON.stringify(['e', service.fromObject.connectors], null, '\t'));
           // $log.debug('service.selectedObject.connectors: ' + JSON.stringify(['e', service.selectedObject.connectors], null, '\t'));
 
@@ -796,16 +834,20 @@
           service.connectorLineFromPort = null;
           service.connectorLine = null;
 
-        } else {
+        } else {  // if (service.selectedObject)
 
           if (service.connectorLine) {
-            $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLine)');
+            $log.debug('mouseUpListener() - removeObjectFromCanvas(service.connectorLine)');
             removeObjectFromCanvas(service.connectorLine, false);
             if (service.connectorLineFromArrow) {
-              $log.debug('mouse:up - removeObjectFromCanvas(service.connectorLineFromArrow)');
+              $log.debug('mouseUpListener() - removeObjectFromCanvas(service.connectorLineFromArrow)');
               removeObjectFromCanvas(service.connectorLineFromArrow, false);
             }
           }
+
+          service.connectorLineFromArrow = null;
+          service.connectorLineFromPort = null;
+          service.connectorLine = null;
         }
 
         service.canvas.renderAll();
@@ -834,8 +876,8 @@
             arrow.line.x2 = portCenter.x2;
             arrow.line.y2 = portCenter.y2;
 
-            $log.debug('mouse:up - arrow.otherObject.name: ' + arrow.otherObject.name);
-            $log.debug('mouse:up - fromArrow - arrow.line x2: ' + arrow.line.x2 + ' y2: ' + arrow.line.y2);
+            $log.debug('mouseUpListener() - arrow.otherObject.name: ' + arrow.otherObject.name);
+            $log.debug('mouseUpListener() - fromArrow - arrow.line x2: ' + arrow.line.x2 + ' y2: ' + arrow.line.y2);
 
           } else {
 
@@ -846,8 +888,8 @@
             arrow.line.x1 = portCenter.x1;
             arrow.line.y1 = portCenter.y1;
 
-            $log.debug('mouse:up - arrow.object.name: ' + arrow.object.name);
-            $log.debug('mouse:up - toArrow - arrow.line x1: ' + arrow.line.x1 + ' y1: ' + arrow.line.y1);
+            $log.debug('mouseUpListener() - arrow.object.name: ' + arrow.object.name);
+            $log.debug('mouseUpListener() - toArrow - arrow.line x1: ' + arrow.line.x1 + ' y1: ' + arrow.line.y1);
           }
 
           service.canvas.renderAll();
@@ -889,6 +931,9 @@
           service.selectedObject.setControlsVisibility({ tl: false, tr: false, br: false, bl: false });
 
           service.canvas.renderAll();
+
+          // $log.debug('mouseOverListener() - selectedObject: ' + service.selectedObject.text);
+
           return;
         }
 
@@ -1018,6 +1063,7 @@
         'object:moving': service.objectMovingListener,
         // 'object:selected': service.objectSelectedListener,
         'mouse:move': service.mouseMoveListener,
+        // 'mouse:move': mouseMoveListenerWithArrow
         'mouse:down': service.mouseDownListener,
         'mouse:up': service.mouseUpListener,
         'mouse:over': service.mouseOverListener,

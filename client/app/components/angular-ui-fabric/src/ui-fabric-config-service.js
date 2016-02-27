@@ -79,9 +79,9 @@
     var rectDefaults = angular.extend({
       fill: 'GRAY',
       height: RECT_HEIGHT,
-      left: GRID_SIZE,
+      left: GRID_SIZE * 2,
       opacity: 0.7,
-      top: GRID_SIZE,
+      top: GRID_SIZE * 2,
       width: RECT_WIDTH
     }, objectDefaults);
 
