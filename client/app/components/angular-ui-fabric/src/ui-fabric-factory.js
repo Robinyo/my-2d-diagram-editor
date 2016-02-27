@@ -26,8 +26,8 @@
     // http://htmlcolorcodes.com/color-names/
 
     const DEFAULT_ARROW_FILL = 'BLACK';
-    const FROM_ARROW_FILL = 'BLACK';  // 'RED'
-    const TO_ARROW_FILL = 'BLACK';    // 'GREEN'
+    const FROM_ARROW_FILL = 'RED';  // 'RED'
+    const TO_ARROW_FILL = 'GREEN';    // 'GREEN'
     const MOUSE_OVER_ARROW_FILL = 'LIME';
 
     service.canvas = null;
@@ -314,6 +314,8 @@
 
     service.createArrow = function(points, options) {
 
+      // $log.debug('createArrow()');
+
       var x1 = points[0];
       var y1 = points[1];
       var x2 = points[2];
@@ -328,9 +330,11 @@
       angle *= 180 / Math.PI;
       angle += 90;
 
-      options.angle = angle;
-      options.top = y2;
       options.left = x2;
+      options.top = y2;
+      options.angle = angle;
+
+      $log.debug('createArrow() - left: ' + options.left + ' top: ' + options.top + ' angle: ' + options.angle);
 
       // TODO - http://fabricjs.com/fabric-intro-part-3/#subclassing
 
@@ -662,7 +666,7 @@
           points = fabricUtils.findTargetPort(service.fromObject);
           service.connectorLineFromPort = service.fromObject.__corner;
 
-          // $log.debug('mouse:down - points: ' + JSON.stringify(['e', points], null, '\t'));
+          $log.debug('mouseDownListener() - points: ' + JSON.stringify(['e', points], null, '\t'));
 
           var connectorOptions = service.connectorDefaults;
 
@@ -761,9 +765,13 @@
 
           // service.fromObject <-- toArrow -- connector -- fromArrow --> service.selectedObject
 
+          $log.debug('mouseUpListener() - create fromArrow');
+
           arrowOptions.fill = FROM_ARROW_FILL;
-          var fromArrow = service.createArrow([service.connectorLine.left,
-            service.connectorLine.top, portCenter.x2, portCenter.y2], arrowOptions);
+          // var fromArrow = service.createArrow([service.connectorLine.left, service.connectorLine.top,
+          //   portCenter.x2, portCenter.y2], arrowOptions);
+          var fromArrow = service.createArrow([service.connectorLine.x1, service.connectorLine.y1,
+            portCenter.x2, portCenter.y2], arrowOptions);
           fromArrow.object = service.fromObject;
           fromArrow.otherObject = service.selectedObject;
           fromArrow.isFromArrow = true;
@@ -774,9 +782,13 @@
           // Create the 'to' arrow
           //
 
+          $log.debug('mouseUpListener() - create toArrow');
+
           arrowOptions.fill = TO_ARROW_FILL;
+          // var toArrow = service.createArrow([portCenter.x2, portCenter.y2,
+          //   service.connectorLine.left, service.connectorLine.top], arrowOptions);
           var toArrow = service.createArrow([portCenter.x2, portCenter.y2,
-            service.connectorLine.left, service.connectorLine.top], arrowOptions);
+            service.connectorLine.x1, service.connectorLine.y1], arrowOptions);
           toArrow.object = fromArrow.object;
           toArrow.otherObject = fromArrow.otherObject;
           toArrow.isFromArrow = false;
