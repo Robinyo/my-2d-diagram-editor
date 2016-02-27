@@ -26,8 +26,8 @@
     // http://htmlcolorcodes.com/color-names/
 
     const DEFAULT_ARROW_FILL = 'BLACK';
-    const FROM_ARROW_FILL = 'RED';  // 'RED'
-    const TO_ARROW_FILL = 'GREEN';    // 'GREEN'
+    const FROM_ARROW_FILL = 'ORANGE';
+    const TO_ARROW_FILL = 'YELLOW';
     const MOUSE_OVER_ARROW_FILL = 'LIME';
 
     service.canvas = null;
@@ -354,6 +354,8 @@
 
       $log.debug('moveFromArrows()');
 
+      var arrowOptions = service.arrowDefaults;
+
       removeObjectFromCanvas(object.connectors.fromArrow[index], false);
       removeObjectFromCanvas(object.connectors.toArrow[index], false);
 
@@ -367,7 +369,9 @@
 
       var otherObject = object.connectors.otherObject[index];
 
-      var fromArrow = service.createArrow([ x1, y1, x2, y2 ]);
+      arrowOptions.fill = FROM_ARROW_FILL;
+
+      var fromArrow = service.createArrow([ x1, y1, x2, y2 ], arrowOptions);
       fromArrow.index = index;
       fromArrow.object = object;
       fromArrow.otherObject = otherObject;
@@ -375,7 +379,9 @@
       fromArrow.port = fromArrow.object.connectors.toPort[index];
       fromArrow.line = fromArrow.object.connectors.fromLine[index];
 
-      var toArrow = service.createArrow([ x2, y2, x1, y1 ]);
+      arrowOptions.fill = TO_ARROW_FILL;
+
+      var toArrow = service.createArrow([ x2, y2, x1, y1 ], arrowOptions);
       toArrow.index = fromArrow.index;
       toArrow.object = fromArrow.object;
       toArrow.otherObject = fromArrow.otherObject;
@@ -394,6 +400,8 @@
 
       $log.debug('moveToArrows()');
 
+      var arrowOptions = service.arrowDefaults;
+
       removeObjectFromCanvas(object.connectors.fromArrow[index], false);
       removeObjectFromCanvas(object.connectors.toArrow[index], false);
 
@@ -411,7 +419,9 @@
       // object and otherObject are reversed for the toLine
       //
 
-      var fromArrow = service.createArrow([ x2, y2, x1, y1 ]);
+      arrowOptions.fill = FROM_ARROW_FILL;
+
+      var fromArrow = service.createArrow([ x2, y2, x1, y1 ], arrowOptions);
       fromArrow.index = index;
       fromArrow.object = otherObject;
       fromArrow.otherObject = object;
@@ -419,7 +429,9 @@
       fromArrow.port = object.connectors.toPort[index];
       fromArrow.line = object.connectors.toLine[index];
 
-      var toArrow = service.createArrow([ x1, y1, x2, y2  ]);
+      arrowOptions.fill = TO_ARROW_FILL;
+
+      var toArrow = service.createArrow([ x1, y1, x2, y2  ], arrowOptions);
       toArrow.index = fromArrow.index;
       toArrow.object = fromArrow.object;
       toArrow.otherObject = fromArrow.otherObject;
@@ -549,7 +561,7 @@
       //
       if (object.connectors) {
 
-        $log.debug(object.text + ' is moving!');
+        $log.info(object.text + ' is moving!');
 
         var portCenter = null;
         var i = null;
