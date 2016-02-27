@@ -72,7 +72,7 @@
 
     service.getNextTargetPort = function(port) {
 
-      // $log.debug('getNextTargetPort - port: ' + port);
+      $log.debug('getNextTargetPort - port: ' + port);
 
       var nextPort = 'mt';
 
@@ -101,6 +101,8 @@
     };
 
     service.getPortCenterPoint = function(object, port) {
+
+      $log.debug('getPortCenterPoint - port: ' + port);
 
       var x1 = 0;
       var y1 = 0;
@@ -132,8 +134,8 @@
       }
 
       return {
-        x1: x1, y1: y1,
-        x2: x1, y2: y1
+        'x1': x1, 'y1': y1,
+        'x2': x1, 'y2': y1
       }
     };
 
@@ -145,4 +147,21 @@
 
 })();
 
-// $log.debug('x1: ' + x1 + ' y1: ' + y1 + ' x2: ' + x2 + ' y2: ' + y2);
+/*
+
+
+return {
+  x1: x1, y1: y1,
+  x2: x1, y2: y1
+}
+
+return {
+  'x1': x1, 'y1': y1,
+  'x2': x1, 'y2': y1
+}
+
+ // $log.debug('x1: ' + x1 + ' y1: ' + y1 + ' x2: ' + x2 + ' y2: ' + y2);
+
+*/
+
+

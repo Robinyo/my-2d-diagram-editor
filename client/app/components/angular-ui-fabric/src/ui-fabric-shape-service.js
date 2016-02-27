@@ -139,6 +139,11 @@
       // textDecoration: '',
       // fontStyle: '',
 
+      // TODO: Tried to move this from main-controller.js - had some issues ???
+
+      // id: '',
+      // connectors: { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] },
+
       initialize: function(text, options) {
 
         this.callSuper('initialize', options);

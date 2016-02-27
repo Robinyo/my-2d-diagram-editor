@@ -212,7 +212,7 @@
       main.newNode(name, fill);
     };
 
-    const GRID_SIZE = 50;
+    // const GRID_SIZE = 50;
 
     main.newNode = function(name, fill) {
 
@@ -234,9 +234,11 @@
 
           var object = fabric.addRectWithText(text, main.nodeDefaults);
           object.set('type', 'node');
-          object.id = id;
-          // object.name = text;
-          object.connectors = { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] };
+
+          // object(fromPort) <-- toArrow -- connector(fromLine or toLine) -- fromArrow --> (toPort)otherObject
+
+          // object.connectors = { fromPort: [], fromLine: [], fromArrow: [], toPort: [], toLine: [], toArrow: [], otherObject: [] };
+          object.connectors = { fromPort: [], toArrow: [], fromLine: [],  toLine: [], fromArrow: [], toPort: [], otherObject: [] };
 
           fabric.setActiveObject(object);
         });
