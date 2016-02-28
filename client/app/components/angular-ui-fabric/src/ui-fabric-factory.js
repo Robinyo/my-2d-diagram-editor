@@ -441,9 +441,12 @@
 
     service.moveFromLineArrows = function(object, portCenter, index) {
 
-      $log.debug('moveFromLineArrows()');
+      $log.debug('moveFromLineArrows() - index: ' + index);
 
       var arrowOptions = service.arrowDefaults;
+
+      $log.debug('moveFromLineArrows() - removeObjectFromCanvas: ' + object.connectors.fromArrow[index].text);
+      $log.debug('moveFromLineArrows() - removeObjectFromCanvas: ' + object.connectors.toArrow[index].text);
 
       removeObjectFromCanvas(object.connectors.fromArrow[index], false);
       removeObjectFromCanvas(object.connectors.toArrow[index], false);
@@ -468,6 +471,7 @@
       fromArrow.isFromArrow = true;
       fromArrow.port = fromArrow.object.connectors.toPort[index];
       fromArrow.line = fromArrow.object.connectors.fromLine[index];
+      fromArrow.text = object.text + ' ' + fromArrow.port + ': ->';
 
       arrowOptions.fill = TO_ARROW_FILL;
 
@@ -480,6 +484,7 @@
       toArrow.isFromArrow = false;
       toArrow.port = fromArrow.object.connectors.fromPort[index];
       toArrow.line = fromArrow.line;
+      toArrow.text = object.text + ' ' + toArrow.port + ': <-';
 
       object.connectors.fromArrow[index] = fromArrow;
       object.connectors.toArrow[index] = toArrow;
@@ -490,12 +495,17 @@
 
     service.moveToLineArrows = function(object, portCenter, index) {
 
-      $log.debug('moveToLineArrows()');
+      $log.debug('moveToLineArrows() - index: ' + index);
 
       var arrowOptions = service.arrowDefaults;
 
+      $log.debug('moveToLineArrows() - removeObjectFromCanvas: ' + object.connectors.fromArrow[index].text);
+      $log.debug('moveToLineArrows() - removeObjectFromCanvas: ' + object.connectors.toArrow[index].text);
+
       removeObjectFromCanvas(object.connectors.fromArrow[index], false);
       removeObjectFromCanvas(object.connectors.toArrow[index], false);
+
+      // /*
 
       var x1 = portCenter.x2;
       var y1 = portCenter.y2;
@@ -521,6 +531,7 @@
       fromArrow.isFromArrow = true;
       fromArrow.port = object.connectors.toPort[index];
       fromArrow.line = object.connectors.toLine[index];
+      fromArrow.text = otherObject.text + ' ' + fromArrow.port + ': ->';
 
       $log.debug('moveToLineArrows() - toArrow <-');
 
@@ -533,12 +544,15 @@
       toArrow.isFromArrow = false;
       toArrow.port = object.connectors.fromPort[index];
       toArrow.line = fromArrow.line;
+      toArrow.text = otherObject.text + ' ' + toArrow.port + ': <-';
 
       object.connectors.fromArrow[index] = fromArrow;
       object.connectors.toArrow[index] = toArrow;
 
       otherObject.connectors.fromArrow[index] = fromArrow;
       otherObject.connectors.toArrow[index] = toArrow;
+
+      // */
     };
 
     // Object
@@ -727,6 +741,11 @@
 
       if (service.connectorMode) {
 
+        if (service.isMouseDown !== true) {
+          $log.debug('mouseUpListener() - service.isMouseDown !== true');
+          return;
+        }
+
         service.isMouseDown = false;
 
         //
@@ -799,6 +818,7 @@
           fromArrow.isFromArrow = true;
           fromArrow.port = toPort;
           fromArrow.line = service.connectorLine;
+          fromArrow.text = service.fromObject.text + ' ' + fromArrow.port + ': ->';
 
           //
           // Create the 'to <-' arrow
@@ -814,6 +834,7 @@
           toArrow.isFromArrow = false;
           toArrow.port = service.connectorLineFromPort;
           toArrow.line = fromArrow.line;
+          toArrow.text = service.fromObject.text + ' ' + toArrow.port + ': <-';
 
           //
           // Arrays in JavaScript are zero-based.
@@ -984,6 +1005,7 @@
         element.target.hoverCursor = 'pointer';
         element.target.setFill(MOUSE_OVER_ARROW_FILL);
         service.canvas.renderAll();
+        $log.debug('mouseOverListener() - ' + element.target.text + ' isFromArrow: ' + element.target.isFromArrow );
         // return;
       }
 
