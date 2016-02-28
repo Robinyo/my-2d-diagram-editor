@@ -572,15 +572,17 @@
         var portCenter = null;
         var i = null;
 
-        // object(fromPort) <-- toArrow -- connector -- fromArrow --> (toPort)otherObject
-        // one arrow faces towards the object <--, the other faces away from --> the object
+        // object(fromPort) <-- toArrow -- connector(fromLine) -- fromArrow --> (toPort)otherObject
 
-        if (object.connectors.fromLine.length) {
+        if (object.connectors.fromLine.length) {  // a line drawn 'from' this object
 
           $log.debug('objectMovingListener() - object.connectors.fromLine.length: ' + object.connectors.fromLine.length);
 
           i = 0;
           object.connectors.fromLine.forEach(function(line) {
+
+            // the center of the 'fromPort' is the line's starting point (x1, y1)
+            // the center of the 'toPort' is the line's end point (x2, y2)
             portCenter = fabricUtils.getPortCenterPoint(object, object.connectors.fromPort[i]);
             line.set({ 'x1': portCenter.x1, 'y1': portCenter.y1 });
 
@@ -589,14 +591,18 @@
           });
         }
 
-        if (object.connectors.toLine.length) {
+        // object(fromPort) <-- toArrow -- connector(toLine) -- fromArrow --> (toPort)otherObject
+
+        if (object.connectors.toLine.length) {  // a line drawn 'to' this object
 
           $log.debug('objectMovingListener() - object.connectors.toLine.length: ' + object.connectors.toLine.length);
 
           i = 0;
           object.connectors.toLine.forEach(function(line) {
+
+            // the center of the 'fromPort' is the line's starting point (x1, y1)
+            // the center of the 'toPort' is the line's end point (x2, y2)
             portCenter = fabricUtils.getPortCenterPoint(object, object.connectors.toPort[i]);
-            // portCenter = fabricUtils.getPortCenterPoint(object.connectors.otherObject[i], object.connectors.toPort[i]);
             line.set({ 'x2': portCenter.x2, 'y2': portCenter.y2 });
 
             service.moveToLineArrows(object, portCenter, i);
@@ -608,10 +614,7 @@
       }
     };
 
-
-
     // Mouse
-
 
     service.mouseMoveListener = function(options) {
 
