@@ -27,7 +27,7 @@ A sample Logical Security Zone Model diagram:
 
 ![screenshot](https://github.com/Robinyo/my-2d-diagram-editor/blob/master/client/content/images/logical-security-zone-model-diagram.png)
 
-####Copyright & License
+#### Copyright & License
 
-Copyright (c) 2015-2016 Rob Ferguson - Released under the MIT license.
+Copyright (c) 2015-2017 Rob Ferguson - Released under the MIT license.
 
